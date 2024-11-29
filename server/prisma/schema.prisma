@@ -22,7 +22,7 @@ model Recipe{
   title         String
   ingredients   String
   instructions  String
-  cookingTime   Int
+  cookingTime   Int     //in minutes
   imageUrl      String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
