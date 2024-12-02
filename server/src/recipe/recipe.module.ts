@@ -8,5 +8,6 @@ import { UserModule } from 'src/user/user.module';
   controllers: [RecipeController],
   providers: [RecipeService],
   imports: [PrismaModule, UserModule],
+  exports: [RecipeService],
 })
 export class RecipeModule {}
