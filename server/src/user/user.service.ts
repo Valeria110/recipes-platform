@@ -14,7 +14,7 @@ import { validate as uuidValidate } from 'uuid';
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
   async create(createUserDto: CreateUserDto) {
-    if (!(await this.isUserExist(createUserDto))) {
+    if (!(await this.isUserExist(createUserDto.email))) {
       const user = await this.prismaService.user.create({
         data: createUserDto,
       });
@@ -22,9 +22,9 @@ export class UserService {
     }
   }
 
-  private async isUserExist(createUserDto: CreateUserDto) {
+  private async isUserExist(email: string) {
     const user = await this.prismaService.user.findUnique({
-      where: { email: createUserDto.email },
+      where: { email },
       select: { id: true },
     });
     if (user) {
