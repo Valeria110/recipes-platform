@@ -71,7 +71,7 @@ export class UserService {
   async remove(id: string) {
     const user = await this.findOne(id);
     if (user) {
-      return this.prismaService.user.delete({ where: { id } });
+      return await this.prismaService.user.delete({ where: { id } });
     }
   }
 }
