@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -9,10 +10,15 @@ import { PrismaService } from 'src/services/prisma.service';
 import { plainToClass } from 'class-transformer';
 import { User } from './entities/user.entity';
 import { validate as uuidValidate } from 'uuid';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {}
   async create(createUserDto: CreateUserDto) {
     if (!(await this.isUserExist(createUserDto.email))) {
       const user = await this.prismaService.user.create({
@@ -73,5 +79,17 @@ export class UserService {
     if (user) {
       return await this.prismaService.user.delete({ where: { id } });
     }
+  }
+
+  private async getCachedData<T>(key: string, fetchDataFunc: () => Promise<T>) {
+    const cachedData = await this.cacheManager.get<T>(key);
+
+    if (cachedData) {
+      return cachedData;
+    }
+
+    const value = await fetchDataFunc();
+    await this.cacheManager.set(key, value);
+    return value;
   }
 }
