@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -22,12 +23,12 @@ model Recipe{
   title         String
   ingredients   String
   instructions  String
-  cookingTime   Int
+  cookingTime   Int     //in minutes
   imageUrl      String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  authorId      String
-  author        User      @relation(fields: [authorId], references: [id])
+  authorId      String?
+  author        User?      @relation(fields: [authorId], references: [id], onDelete: SetNull )
   comments      Comment[]
   favorites     Favorite[]
 } 
@@ -38,14 +39,14 @@ model Comment {
   createdAt     DateTime @default(now())
   recipeId      String
   recipe        Recipe   @relation(fields: [recipeId], references: [id])
-  userId        String
-  user          User     @relation(fields: [userId], references: [id])
+  userId        String?
+  user          User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
 }
 
 model Favorite {
   id            String   @id @default(uuid())
   userId        String
-  user          User     @relation(fields: [userId], references: [id])
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   recipeId      String
   recipe        Recipe   @relation(fields: [recipeId], references: [id])
 }

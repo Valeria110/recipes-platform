@@ -1,0 +1,47 @@
+services:
+  app:
+    container_name: recipes-app
+    build:
+      dockerfile: Dockerfile
+      context: .
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@ep-green-paper-a5ytxn21-pooler.us-east-2.aws.neon.tech/${POSTGRES_DB}?sslmode=require"
+    volumes:
+      - .:/server
+      - ./node_modules:/server/node_modules
+    depends_on:
+      - postgres
+    networks:
+      - recipes-network
+    ports:
+      - '${PORT}:${PORT}'
+      - 9229:9229
+    restart: always
+
+  postgres:
+    container_name: recipes-db
+    image: postgres:13
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - recipes-network
+    command: ['-c', 'ssl=off']
+
+volumes:
+  pgdata:
+
+networks:
+  recipes-network:
+    driver: bridge
