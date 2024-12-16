@@ -1,0 +1,24 @@
+@keyframes cards-showup {
+  from {
+    translate: -25vw;
+    opacity: 0;
+  }
+  to {
+    translate: 0px;
+    opacity: 1;
+  }
+}
+
+.cardsContainer {
+  animation-name: cards-showup;
+  animation-timing-function: ease-in;
+  animation-fill-mode: both;
+  view-timeline-name: --showup-container;
+  animation-timeline: --showup-container;
+  animation-range: 5% 20%;
+  @media screen and (min-width: 992px) {
+    & {
+      animation-range: 20% 40%;
+    }
+  }
+}

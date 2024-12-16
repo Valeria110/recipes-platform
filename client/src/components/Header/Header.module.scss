@@ -1,0 +1,15 @@
+@keyframes header-scrolling {
+  to {
+    height: 60px;
+    background-color: rgba(251, 146, 60, 0.8);
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .header {
+    animation: header-scrolling ease-in-out both;
+    animation-timeline: scroll();
+    view-timeline-name: --header-scrolling;
+    animation-range: 0px 100px;
+  }
+}
