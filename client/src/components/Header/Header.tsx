@@ -8,6 +8,7 @@ import { NavBar } from '../NavBar/NavBar';
 // import { useEffect, useState } from 'react';
 import { ProfileToolKit } from './ProfileToolKit/ProfileToolKit';
 import { StoreProvider } from '../StoreProvider/StoreProvider';
+import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
 
 export const Header = () => {
   //   const [isUserAuthorized, setIsUserAuthorized] = useState<boolean>(isUserLoggedIn);
@@ -17,18 +18,19 @@ export const Header = () => {
   //   };
   //   checkUserAuthorization();
   // }, []);
-
   return (
     <StoreProvider>
-      <header
-        className={`sticky top-0 left-0 z-20 flex flex-col lg:flex-row items-center justify-between bg-orange-400 px-4 py-2 h-52 lg:h-20 ${styles.header}`}
-      >
-        <Link href='/'>
-          <Image className={styles.imgLogo} src={headerLogo} height={60} alt='CookIt logo' />
-        </Link>
-        <NavBar />
-        <ProfileToolKit />
-      </header>
+      <ErrorBoundary>
+        <header
+          className={`sticky top-0 left-0 z-20 flex flex-col lg:flex-row items-center justify-between bg-orange-400 px-4 py-2 h-52 lg:h-20 ${styles.header}`}
+        >
+          <Link href='/'>
+            <Image className={styles.imgLogo} src={headerLogo} height={60} alt='CookIt logo' />
+          </Link>
+          <NavBar />
+          <ProfileToolKit />
+        </header>
+      </ErrorBoundary>
     </StoreProvider>
   );
 };
