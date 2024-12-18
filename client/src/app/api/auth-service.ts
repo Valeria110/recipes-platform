@@ -1,7 +1,10 @@
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
 class AuthService {
-  constructor(private accessToken: string = '') {}
+  constructor(
+    private accessToken: string = '',
+    private userId: string = '',
+  ) {}
 
   async login(email: string, password: string) {
     try {
@@ -10,21 +13,48 @@ class AuthService {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-      if (res.ok) {
-        const { accessToken, refreshToken, userId } = await res.json();
-        console.log('login data: ', { accessToken, refreshToken, userId });
-        this.storeAccessToken(accessToken);
-        this.storeRefreshToken(refreshToken);
-
-        return { accessToken, refreshToken, userId };
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw errorData.message;
       }
+
+      const { accessToken, refreshToken, userId } = await res.json();
+      console.log('tokens data: ', { accessToken, refreshToken, userId });
+      this.storeAccessToken(accessToken);
+      this.storeRefreshToken(refreshToken);
+
+      return { accessToken, refreshToken, userId };
     } catch (err) {
-      console.error(`Error: ${err}`);
+      return { errorMessage: err };
+    }
+  }
+
+  async signup(name: string, email: string, password: string) {
+    try {
+      const res = await fetch(`${BASE_URL}/auth/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw errorData.message;
+      }
+
+      const data = await res.json();
+      this.userId = data.id;
+      return await this.login(email, password);
+    } catch (err) {
+      return { errorMessage: err };
     }
   }
 
   logout() {
     this.accessToken = '';
+    this.userId = '';
     document.cookie = 'refreshToken=; max-age=-1';
   }
 
@@ -32,7 +62,8 @@ class AuthService {
     const refreshToken = this.getRefreshToken();
 
     if (!refreshToken) {
-      throw new Error('No refresh token available');
+      // console.error('No refresh token available');
+      return { errorMessage: 'No refresh token available' };
     }
 
     try {
@@ -50,9 +81,9 @@ class AuthService {
       const { accessToken, refreshToken: newRefreshToken } = await res.json();
       this.storeAccessToken(accessToken);
       this.storeRefreshToken(newRefreshToken);
-      return accessToken;
+      return { accessToken };
     } catch (err) {
-      throw new Error(`${err}`);
+      return { errorMessage: err };
     }
   }
 
@@ -71,7 +102,7 @@ class AuthService {
   private getRefreshToken() {
     const cookies = document.cookie.split(';');
     for (const cookie of cookies) {
-      if (cookie.startsWith('refreshToken=')) {
+      if (cookie.trim().startsWith('refreshToken=')) {
         return cookie.split('=')[1];
       }
     }
