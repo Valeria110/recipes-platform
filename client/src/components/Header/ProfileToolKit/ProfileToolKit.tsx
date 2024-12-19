@@ -11,7 +11,11 @@ import profileSvg from '../../../../public/svg/user-profile.svg';
 import logoutSvg from '../../../../public/svg/logout.svg';
 import { Button } from '@/components/Button/Button';
 
-export const ProfileToolKit = () => {
+interface IProfileToolKitProps {
+  closeMenu?: () => void;
+}
+
+export const ProfileToolKit = ({ closeMenu }: IProfileToolKitProps) => {
   const { isLoggedIn } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
@@ -31,6 +35,18 @@ export const ProfileToolKit = () => {
     authService.logout();
     dispatch(logout());
   };
+  const handleSignUp = () => {
+    router.push('signup');
+    if (closeMenu) {
+      closeMenu();
+    }
+  };
+  const handleLogIn = () => {
+    router.push('login');
+    if (closeMenu) {
+      closeMenu();
+    }
+  };
 
   return isLoggedIn ? (
     <div className='flex gap-3 items-center'>
@@ -45,13 +61,13 @@ export const ProfileToolKit = () => {
   ) : (
     <div className='flex gap-3'>
       <button
-        onClick={() => router.push('signup')}
+        onClick={handleSignUp}
         className='flex justify-center items-center rounded-3xl border-2 border-white bg-white text-orange-400  hoverable:hover:bg-orange-700 hoverable:hover:text-white hoverable:hover:border-orange-700 active:bg-orange-700 active:text-white active:border-orange-700 transition-colors duration-200 ease-in-out w-28 h-11'
       >
         Sign Up
       </button>
       <button
-        onClick={() => router.push('login')}
+        onClick={handleLogIn}
         className='flex justify-center items-center rounded-3xl border-2 border-white bg-orange-400 text-white hoverable:hover:text-orange-700 hoverable:hover:border-orange-700 active:text-orange-700 active:border-orange-700 transition-colors duration-200 ease-in-out w-28 h-11'
       >
         Log In
