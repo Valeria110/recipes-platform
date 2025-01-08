@@ -1,5 +1,5 @@
+import { SignUpForm } from '@/widgets/sign-in';
 import styles from './signup.module.scss';
-import { SignUpForm } from '@/components/SignUpForm/SignUpForm';
 
 export default function SignUpPage() {
   return (

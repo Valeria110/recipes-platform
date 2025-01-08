@@ -1,4 +1,4 @@
-import { LoginForm } from '@/components/LoginForm/LoginForm';
+import { LoginForm } from '@/widgets/sign-in';
 import styles from './login.module.scss';
 
 export default function LoginPage() {

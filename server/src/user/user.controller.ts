@@ -16,11 +16,11 @@ import { plainToClass } from 'class-transformer';
 import { User } from './entities/user.entity';
 import { AuthGuard } from 'src/guards/auth.guard';
 
-@UseGuards(AuthGuard)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @UseGuards(AuthGuard)
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     return await this.userService.create(createUserDto);
@@ -37,6 +37,7 @@ export class UserController {
     return plainToClass(User, user);
   }
 
+  @UseGuards(AuthGuard)
   @Put(':id')
   async update(
     @Param('id') id: string,
@@ -46,6 +47,7 @@ export class UserController {
     return plainToClass(User, user);
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   @HttpCode(204)
   remove(@Param('id') id: string) {

@@ -14,11 +14,11 @@ import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
 
-@UseGuards(AuthGuard)
 @Controller('recipe')
 export class RecipeController {
   constructor(private readonly recipeService: RecipeService) {}
 
+  @UseGuards(AuthGuard)
   @Post()
   async create(@Body() createRecipeDto: CreateRecipeDto) {
     return await this.recipeService.create(createRecipeDto);
@@ -34,6 +34,7 @@ export class RecipeController {
     return this.recipeService.findOne(id);
   }
 
+  @UseGuards(AuthGuard)
   @Put(':id')
   async update(
     @Param('id') id: string,
@@ -42,6 +43,7 @@ export class RecipeController {
     return this.recipeService.update(id, updateRecipeDto);
   }
 
+  @UseGuards(AuthGuard)
   @HttpCode(204)
   @Delete(':id')
   async remove(@Param('id') id: string) {

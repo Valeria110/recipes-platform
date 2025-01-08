@@ -17,9 +17,12 @@ import { AuthGuard } from 'src/guards/auth.guard';
 export class FavsController {
   constructor(private readonly favsService: FavsService) {}
 
-  @Post()
-  async create(@Body() createFavDto: CreateFavDto) {
-    return await this.favsService.create(createFavDto);
+  @Post(':userId')
+  async create(
+    @Param('userId') userId: string,
+    @Body() createFavDto: CreateFavDto,
+  ) {
+    return await this.favsService.create(createFavDto, userId);
   }
 
   @Get(':userId')

@@ -3,6 +3,7 @@
   "ignorePatterns": ["dist", "coverage", ".eslintrc.cjs", ".next", "node_modules"],
   "plugins": ["prettier"],
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "react/display-name": "off"
   }
 }
