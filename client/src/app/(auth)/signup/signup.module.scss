@@ -1,0 +1,22 @@
+.formContainer {
+  position: relative;
+  width: 100%;
+  height: auto;
+  background-image: url('../../../shared/assets/img/signup-bg.jpg');
+  background-position: top left;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 25% 25%;
+}
+
+.formContainer::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}

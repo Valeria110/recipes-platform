@@ -31,6 +31,10 @@ model Recipe{
   author        User?      @relation(fields: [authorId], references: [id], onDelete: SetNull )
   comments      Comment[]
   favorites     Favorite[]
+
+  // Filtration:
+  category      String?   // 'category1,category2,category3'
+  cuisineType   String?   // 'cuisine1,cuisine2,cuisine3'
 } 
 
 model Comment {

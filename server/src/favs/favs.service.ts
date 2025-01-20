@@ -12,11 +12,13 @@ export class FavsService {
     private readonly usersService: UserService,
   ) {}
 
-  async create(createFavDto: CreateFavDto) {
-    const user = await this.usersService.findOne(createFavDto.userId);
+  async create(createFavDto: CreateFavDto, userId: string) {
+    const user = await this.usersService.findOne(userId);
     const recipe = await this.recipeService.findOne(createFavDto.recipeId);
     if (user && recipe) {
-      return await this.prismaService.favorite.create({ data: createFavDto });
+      return await this.prismaService.favorite.create({
+        data: { userId, recipeId: createFavDto.recipeId },
+      });
     }
   }
 

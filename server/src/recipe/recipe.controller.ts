@@ -8,25 +8,39 @@ import {
   HttpCode,
   Put,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { RecipeService } from './recipe.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { IRecipeFilters } from './types/recipe-filters.interface';
 
-@UseGuards(AuthGuard)
 @Controller('recipe')
 export class RecipeController {
   constructor(private readonly recipeService: RecipeService) {}
 
+  @UseGuards(AuthGuard)
   @Post()
   async create(@Body() createRecipeDto: CreateRecipeDto) {
     return await this.recipeService.create(createRecipeDto);
   }
 
   @Get()
-  async findAll() {
-    return this.recipeService.findAll();
+  async findAll(
+    @Query('category') category?: string,
+    @Query('cuisineType') cuisineType?: string,
+  ) {
+    const filters: IRecipeFilters = {};
+    if (category) {
+      const categoriesArr = category.split(',');
+      filters.category = { in: categoriesArr, mode: 'insensitive' };
+    }
+    if (cuisineType) {
+      const cuisinesArr = category.split(',');
+      filters.cuisineType = { in: cuisinesArr, mode: 'insensitive' };
+    }
+    return this.recipeService.findAll(filters);
   }
 
   @Get(':id')
@@ -34,6 +48,7 @@ export class RecipeController {
     return this.recipeService.findOne(id);
   }
 
+  @UseGuards(AuthGuard)
   @Put(':id')
   async update(
     @Param('id') id: string,
@@ -42,6 +57,7 @@ export class RecipeController {
     return this.recipeService.update(id, updateRecipeDto);
   }
 
+  @UseGuards(AuthGuard)
   @HttpCode(204)
   @Delete(':id')
   async remove(@Param('id') id: string) {
