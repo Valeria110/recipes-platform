@@ -8,11 +8,13 @@ import {
   HttpCode,
   Put,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { RecipeService } from './recipe.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { IRecipeFilters } from './types/recipe-filters.interface';
 
 @Controller('recipe')
 export class RecipeController {
@@ -25,8 +27,20 @@ export class RecipeController {
   }
 
   @Get()
-  async findAll() {
-    return this.recipeService.findAll();
+  async findAll(
+    @Query('category') category?: string,
+    @Query('cuisineType') cuisineType?: string,
+  ) {
+    const filters: IRecipeFilters = {};
+    if (category) {
+      const categoriesArr = category.split(',');
+      filters.category = { in: categoriesArr, mode: 'insensitive' };
+    }
+    if (cuisineType) {
+      const cuisinesArr = category.split(',');
+      filters.cuisineType = { in: cuisinesArr, mode: 'insensitive' };
+    }
+    return this.recipeService.findAll(filters);
   }
 
   @Get(':id')

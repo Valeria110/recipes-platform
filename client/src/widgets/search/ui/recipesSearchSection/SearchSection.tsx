@@ -1,7 +1,7 @@
 'use client';
 
 import { SearchBar } from '@/shared/ui/client';
-import { FiltersBtn } from '@/shared/ui/server';
+import { FiltersBtn } from '@/shared/ui/client';
 
 export const SearchSection = () => {
   return (

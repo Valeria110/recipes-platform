@@ -13,6 +13,9 @@ import logoutSvg from './svg/logout.svg';
 import heartSvg from './svg/heart-empty-svg.svg';
 import heartClickedSvg from './svg/heart-clicked.svg';
 import githubLogo from './svg/github-logo.svg';
+import crossSvg from './svg/cross.svg';
+import downArrow from './svg/downArrow.svg';
+import upArrow from './svg/upArrow.svg';
 
 export {
   foodImg,
@@ -27,4 +30,7 @@ export {
   heartSvg,
   heartClickedSvg,
   githubLogo,
+  crossSvg,
+  downArrow,
+  upArrow,
 };

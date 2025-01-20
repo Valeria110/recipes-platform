@@ -13,9 +13,9 @@ export interface IRecipeRes {
 }
 
 class RecipeService {
-  async getRecipes() {
+  async getRecipes(category: string = '', cuisineType: string = '') {
     try {
-      const res = await fetch(`${BASE_URL}/recipe`);
+      const res = await fetch(`${BASE_URL}/recipe?category=${category}&cuisineType=${cuisineType}`);
 
       if (!res.ok) {
         const errorData = await res.json();

@@ -8,6 +8,7 @@ import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { PrismaService } from 'src/services/prisma.service';
 import { validate as uuidValidate } from 'uuid';
 import { UserService } from 'src/user/user.service';
+import { IRecipeFilters } from './types/recipe-filters.interface';
 
 @Injectable()
 export class RecipeService {
@@ -24,8 +25,19 @@ export class RecipeService {
     });
   }
 
-  async findAll() {
-    return await this.prismaService.recipe.findMany();
+  async findAll(filters: IRecipeFilters) {
+    if (!filters.category && !filters.cuisineType) {
+      return await this.prismaService.recipe.findMany();
+    }
+
+    return await this.prismaService.recipe.findMany({
+      where: {
+        AND: [
+          filters.category ? { category: filters.category } : {},
+          filters.cuisineType ? { cuisineType: filters.cuisineType } : {},
+        ],
+      },
+    });
   }
 
   async findOne(id: string) {

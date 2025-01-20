@@ -1,0 +1,15 @@
+export const foodCategories = [
+  'Baked goods',
+  'Sweets and desserts',
+  'Meat and poultry',
+  'Vegetables',
+  'Snacks',
+  'Breakfast',
+  'Dessert',
+  'Gluten free',
+  'Lactose free',
+  'Seafood',
+  'Low calories',
+  'Dairy products',
+  'Condiments and sauces',
+];
