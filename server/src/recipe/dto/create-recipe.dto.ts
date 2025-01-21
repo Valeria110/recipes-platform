@@ -1,4 +1,7 @@
 import {
+  ArrayMinSize,
+  ArrayNotEmpty,
+  IsArray,
   IsInt,
   IsNotEmpty,
   IsString,
@@ -11,9 +14,11 @@ export class CreateRecipeDto {
   @IsNotEmpty()
   title: string;
 
-  @IsString()
-  @IsNotEmpty()
-  ingredients: string;
+  @IsArray()
+  @ArrayNotEmpty()
+  @ArrayMinSize(1)
+  @IsString({ each: true })
+  ingredients: string[];
 
   @IsString()
   @IsNotEmpty()

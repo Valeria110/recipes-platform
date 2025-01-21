@@ -9,13 +9,16 @@ import { useUser } from '@/shared/hooks/useUser';
 import { IFav } from '@/shared/model/fav';
 import { favsService } from '@/shared/api';
 import { HeartButton } from '@/shared/ui/client';
+import { useRouter } from 'next/navigation';
+import { Route } from '@/shared/types';
+import { CookingTimeInfo, ServingNumberInfo } from '@/shared/ui/server';
 
 interface IRecipeCardProps {
   imageUrl: string | null;
   title: string;
   authorId: string | null;
   cookingTime: number;
-  ingredients: string;
+  ingredients: string[];
   instructions: string;
   recipeId: string;
   createdAt: string;
@@ -28,6 +31,7 @@ export const RecipeCard = ({ recipeId, imageUrl, title, authorId, cookingTime, f
   const [favId, setFavId] = useState('');
   const [isHeartLoading, setIsHeartLoading] = useState(false);
   const { data, error, isLoading } = useUser(authorId);
+  const router = useRouter();
 
   useEffect(() => {
     const isRecipeFav = async () => {
@@ -84,11 +88,12 @@ export const RecipeCard = ({ recipeId, imageUrl, title, authorId, cookingTime, f
 
   const handleCardCLick = () => {
     // redirect to the recipe page
+    router.push(`${Route.RECIPES}/${recipeId}`);
   };
 
   return (
     <div
-      className='recipe-card flex flex-col gap-2 w-64 h-full lg:w-52 p-2 shadow-lg rounded-xl bg-white hover:cursor-pointer'
+      className='recipe-card flex flex-col flex-grow gap-2 w-64 h-full lg:min-w-52 lg:flex-grow-0 p-2 shadow-lg rounded-xl bg-white hover:cursor-pointer'
       onClick={handleCardCLick}
     >
       <div className='relative overflow-hidden flex justify-center items-center w-full h-44 rounded-xl'>
@@ -110,11 +115,9 @@ export const RecipeCard = ({ recipeId, imageUrl, title, authorId, cookingTime, f
       </div>
 
       <div className='flex items-center gap-2 pt-2 mt-auto text-orange-400'>
-        <Image src={clockSvg} width={25} alt='clock svg image' />
-        <span className='text-xs'>{cookingTime ?? '50'}</span>
+        <CookingTimeInfo cookingTime={cookingTime} />
         <span className='text-xs'>|</span>
-        <Image src={peopleSvg} width={25} alt='people svg image' />
-        <span className='text-xs'>4 people</span>
+        <ServingNumberInfo peopleNum={4} />
       </div>
     </div>
   );

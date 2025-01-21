@@ -21,7 +21,7 @@ model User {
 model Recipe{
   id            String    @id @default(uuid())
   title         String
-  ingredients   String
+  ingredients   String[]
   instructions  String
   cookingTime   Int     //in minutes
   imageUrl      String?

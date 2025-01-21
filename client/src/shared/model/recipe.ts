@@ -6,6 +6,6 @@ export interface IRecipe {
   createdAt: string;
   updatedAt: string;
   imageUrl: string | null;
-  ingredients: string;
+  ingredients: string[];
   instructions: string;
 }

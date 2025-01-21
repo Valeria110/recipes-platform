@@ -5,6 +5,8 @@ export const foodCategories = [
   'Vegetables',
   'Snacks',
   'Breakfast',
+  'Lunch',
+  'Dinner',
   'Dessert',
   'Gluten free',
   'Lactose free',
