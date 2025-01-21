@@ -6,7 +6,8 @@ interface IProps {
 }
 
 export const RecipePage = async ({ recipeData }: IProps) => {
-  const { id, title, imageUrl, authorId, ingredients, instructions, cookingTime, createdAt, updatedAt } = recipeData;
+  const { title, imageUrl, authorId, ingredients, instructions, cookingTime, createdAt, updatedAt, servingNum } =
+    recipeData;
   let authorName = 'unknown author';
   if (authorId) {
     const user = await usersService.getUserById(authorId);
@@ -26,7 +27,7 @@ export const RecipePage = async ({ recipeData }: IProps) => {
 
       <div className='flex flex-col gap-2'>
         <CookingTimeInfo cookingTime={cookingTime} />
-        <ServingNumberInfo peopleNum={4} />
+        <ServingNumberInfo peopleNum={servingNum} />
       </div>
 
       <div>

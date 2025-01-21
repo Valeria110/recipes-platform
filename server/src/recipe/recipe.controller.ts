@@ -37,7 +37,7 @@ export class RecipeController {
       filters.category = { in: categoriesArr, mode: 'insensitive' };
     }
     if (cuisineType) {
-      const cuisinesArr = category.split(',');
+      const cuisinesArr = cuisineType.split(',');
       filters.cuisineType = { in: cuisinesArr, mode: 'insensitive' };
     }
     return this.recipeService.findAll(filters);

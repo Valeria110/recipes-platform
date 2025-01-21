@@ -1,4 +1,4 @@
-import { RecipePage } from '@/pages/recipe/ui/client/recipePage';
+import { RecipePage } from '@/pages/recipe/ui/server';
 import { recipeService } from '@/shared/api';
 
 export async function generateStaticParams() {

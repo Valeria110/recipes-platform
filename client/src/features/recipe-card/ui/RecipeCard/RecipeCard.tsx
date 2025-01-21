@@ -1,10 +1,7 @@
 'use client';
 
-import Image from 'next/image';
 import { foodImg } from '@/shared/assets';
-import { clockSvg } from '@/shared/assets';
-import { peopleSvg } from '@/shared/assets';
-import { useEffect, useState } from 'react';
+import { MouseEvent, TouchEvent, useEffect, useState } from 'react';
 import { useUser } from '@/shared/hooks/useUser';
 import { IFav } from '@/shared/model/fav';
 import { favsService } from '@/shared/api';
@@ -24,9 +21,18 @@ interface IRecipeCardProps {
   createdAt: string;
   updatedAt: string;
   favsData?: IFav[];
+  servingNum: number;
 }
 
-export const RecipeCard = ({ recipeId, imageUrl, title, authorId, cookingTime, favsData = [] }: IRecipeCardProps) => {
+export const RecipeCard = ({
+  recipeId,
+  imageUrl,
+  title,
+  authorId,
+  cookingTime,
+  servingNum,
+  favsData = [],
+}: IRecipeCardProps) => {
   const [isFave, setIsFave] = useState(false);
   const [favId, setFavId] = useState('');
   const [isHeartLoading, setIsHeartLoading] = useState(false);
@@ -87,13 +93,12 @@ export const RecipeCard = ({ recipeId, imageUrl, title, authorId, cookingTime, f
   };
 
   const handleCardCLick = () => {
-    // redirect to the recipe page
     router.push(`${Route.RECIPES}/${recipeId}`);
   };
 
   return (
     <div
-      className='recipe-card flex flex-col flex-grow gap-2 w-64 h-full lg:min-w-52 lg:flex-grow-0 p-2 shadow-lg rounded-xl bg-white hover:cursor-pointer'
+      className='recipe-card flex flex-col flex-grow gap-2 w-64 max-w-80 h-full max-h-80 lg:min-w-52 lg:flex-grow-0 p-2 shadow-lg rounded-xl bg-white hover:cursor-pointer'
       onClick={handleCardCLick}
     >
       <div className='relative overflow-hidden flex justify-center items-center w-full h-44 rounded-xl'>
@@ -103,7 +108,9 @@ export const RecipeCard = ({ recipeId, imageUrl, title, authorId, cookingTime, f
           alt='food image'
         />
       </div>
-      <h4 className='font-semibold hover:underline'>{title ?? 'Recipe Name'}</h4>
+      <h4 className='font-semibold whitespace-nowrap overflow-hidden text-ellipsis hover:underline'>
+        {title ?? 'Recipe Name'}
+      </h4>
 
       <div className='flex justify-between items-center'>
         <div className='flex flex-col text-gray-400'>
@@ -117,7 +124,7 @@ export const RecipeCard = ({ recipeId, imageUrl, title, authorId, cookingTime, f
       <div className='flex items-center gap-2 pt-2 mt-auto text-orange-400'>
         <CookingTimeInfo cookingTime={cookingTime} />
         <span className='text-xs'>|</span>
-        <ServingNumberInfo peopleNum={4} />
+        <ServingNumberInfo peopleNum={servingNum} />
       </div>
     </div>
   );

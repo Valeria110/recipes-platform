@@ -4,6 +4,7 @@ import {
   IsArray,
   IsInt,
   IsNotEmpty,
+  IsNumber,
   IsString,
   IsUUID,
   ValidateIf,
@@ -35,4 +36,8 @@ export class CreateRecipeDto {
   @IsUUID()
   @IsNotEmpty()
   authorId: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  servingNum: number;
 }

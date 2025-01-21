@@ -10,6 +10,7 @@ export interface IRecipeRes {
   imageUrl: string | null;
   ingredients: string[];
   instructions: string;
+  servingNum: number;
 }
 
 class RecipeService {

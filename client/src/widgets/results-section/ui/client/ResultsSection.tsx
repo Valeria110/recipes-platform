@@ -14,7 +14,10 @@ export const ResultsSection = () => {
     `recipe?category=${categoriesQuery}&cuisineType=${cuisinesQuery}`,
     () => recipeService.getRecipes(categoriesQuery, cuisinesQuery),
   );
+  console.log(categoriesQuery, cuisinesQuery);
+
   const { data: favsData, error: favsError, isLoading: isFavsLoading } = useSWR('favs', () => favsService.getFavs());
+  console.log(cuisinesQuery, categoriesQuery);
 
   const filteredRecipes = data?.filter((recipe) => recipe.title.toLowerCase().includes(searchValue));
 
@@ -33,8 +36,18 @@ export const ResultsSection = () => {
       <h4 className='font-semibold'>Based on your search</h4>
       <div className='flex flex-col  sm:flex-row sm:flex-wrap gap-5 items-center sm:items-stretch'>
         {filteredRecipes.map((recipe) => {
-          const { imageUrl, title, authorId, ingredients, instructions, cookingTime, id, createdAt, updatedAt } =
-            recipe;
+          const {
+            imageUrl,
+            title,
+            authorId,
+            ingredients,
+            instructions,
+            cookingTime,
+            id,
+            createdAt,
+            updatedAt,
+            servingNum,
+          } = recipe;
           return (
             <RecipeCard
               recipeId={id}
@@ -48,6 +61,7 @@ export const ResultsSection = () => {
               createdAt={createdAt}
               updatedAt={updatedAt}
               favsData={favsData}
+              servingNum={servingNum}
             />
           );
         })}

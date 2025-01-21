@@ -12,12 +12,14 @@ interface IHeartButtonProps {
 
 export const HeartButton = ({ handleHeartClick, isHeartLoading, isFave }: IHeartButtonProps) => {
   const { isLoggedIn } = useAppSelector((state) => state.user);
-
   return (
     isLoggedIn && (
       <button
         disabled={isHeartLoading}
-        onClick={handleHeartClick}
+        onClick={(e) => {
+          e.stopPropagation();
+          handleHeartClick();
+        }}
         className={`p-1 w-8 ${isHeartLoading ? 'pointer-events-none opacity-50' : ''}`}
       >
         {isHeartLoading ? (
