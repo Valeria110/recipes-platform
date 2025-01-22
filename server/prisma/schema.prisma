@@ -21,7 +21,7 @@ model User {
 model Recipe{
   id            String    @id @default(uuid())
   title         String
-  ingredients   String
+  ingredients   String[]
   instructions  String
   cookingTime   Int     //in minutes
   imageUrl      String?
@@ -31,6 +31,7 @@ model Recipe{
   author        User?      @relation(fields: [authorId], references: [id], onDelete: SetNull )
   comments      Comment[]
   favorites     Favorite[]
+  servingNum    Int        @default(4)
 
   // Filtration:
   category      String?   // 'category1,category2,category3'

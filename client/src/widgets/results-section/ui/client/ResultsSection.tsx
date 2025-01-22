@@ -14,12 +14,11 @@ export const ResultsSection = () => {
     `recipe?category=${categoriesQuery}&cuisineType=${cuisinesQuery}`,
     () => recipeService.getRecipes(categoriesQuery, cuisinesQuery),
   );
-  const { data: favsData, error: favsError, isLoading: isFavsLoading } = useSWR('favs', () => favsService.getFavs());
 
+  const { data: favsData, error: favsError, isLoading: isFavsLoading } = useSWR('favs', () => favsService.getFavs());
   const filteredRecipes = data?.filter((recipe) => recipe.title.toLowerCase().includes(searchValue));
 
   if (error || favsError) return <div className='mt-10'>Data fetching error :(</div>;
-  console.log('isLoading', isLoading, 'error', error);
   if (isLoading || isFavsLoading)
     return (
       <div className='mt-10'>
@@ -31,10 +30,20 @@ export const ResultsSection = () => {
   return (
     <section className='mt-10'>
       <h4 className='font-semibold'>Based on your search</h4>
-      <div className='flex flex-col sm:flex-row sm:flex-wrap gap-5 items-center sm:items-stretch'>
+      <div className='flex flex-col  sm:flex-row sm:flex-wrap gap-5 items-center sm:items-stretch'>
         {filteredRecipes.map((recipe) => {
-          const { imageUrl, title, authorId, ingredients, instructions, cookingTime, id, createdAt, updatedAt } =
-            recipe;
+          const {
+            imageUrl,
+            title,
+            authorId,
+            ingredients,
+            instructions,
+            cookingTime,
+            id,
+            createdAt,
+            updatedAt,
+            servingNum,
+          } = recipe;
           return (
             <RecipeCard
               recipeId={id}
@@ -48,6 +57,7 @@ export const ResultsSection = () => {
               createdAt={createdAt}
               updatedAt={updatedAt}
               favsData={favsData}
+              servingNum={servingNum}
             />
           );
         })}

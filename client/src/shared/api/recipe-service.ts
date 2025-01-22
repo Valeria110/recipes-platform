@@ -8,8 +8,9 @@ export interface IRecipeRes {
   createdAt: string;
   updatedAt: string;
   imageUrl: string | null;
-  ingredients: string;
+  ingredients: string[];
   instructions: string;
+  servingNum: number;
 }
 
 class RecipeService {
@@ -37,7 +38,7 @@ class RecipeService {
         return { errorMessage: errorData.message, status: res.status };
       }
 
-      const data = await res.json();
+      const data: IRecipeRes = await res.json();
       return data;
     } catch (err) {
       throw err;
