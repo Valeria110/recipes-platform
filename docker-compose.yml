@@ -1,0 +1,44 @@
+services:
+  client:
+    container_name: client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: "${NEXT_PUBLIC_API_URL}"
+    depends_on:
+      - server
+    restart: always
+
+  server:
+    container_name: server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      PORT: 4000
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+      DATABASE_URL: "${DATABASE_URL}"
+      JWT_SECRET_KEY: "${JWT_SECRET_KEY}"
+      JWT_SECRET_REFRESH_KEY: "${JWT_SECRET_REFRESH_KEY}"
+      TOKEN_EXPIRE_TIME: "${TOKEN_EXPIRE_TIME}"
+      TOKEN_REFRESH_EXPIRE_TIME: "${TOKEN_REFRESH_EXPIRE_TIME}"
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+    restart: always
