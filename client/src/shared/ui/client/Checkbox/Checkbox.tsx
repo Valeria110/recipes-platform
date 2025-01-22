@@ -1,7 +1,7 @@
 'use client';
 
 import { addCategory, addCuisineType, removeCategory, removeCuisineType } from '@/features/user/search.slice';
-import { useAppDispatch, useAppSelector, useDeboubce } from '@/shared/hooks';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks';
 import { FilterType } from '@/shared/types';
 import { memo, useEffect, useState } from 'react';
 

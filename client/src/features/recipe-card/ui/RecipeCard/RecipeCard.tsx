@@ -1,7 +1,7 @@
 'use client';
 
 import { foodImg } from '@/shared/assets';
-import { MouseEvent, TouchEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUser } from '@/shared/hooks/useUser';
 import { IFav } from '@/shared/model/fav';
 import { favsService } from '@/shared/api';

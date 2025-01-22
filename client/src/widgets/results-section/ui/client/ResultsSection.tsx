@@ -14,15 +14,11 @@ export const ResultsSection = () => {
     `recipe?category=${categoriesQuery}&cuisineType=${cuisinesQuery}`,
     () => recipeService.getRecipes(categoriesQuery, cuisinesQuery),
   );
-  console.log(categoriesQuery, cuisinesQuery);
 
   const { data: favsData, error: favsError, isLoading: isFavsLoading } = useSWR('favs', () => favsService.getFavs());
-  console.log(cuisinesQuery, categoriesQuery);
-
   const filteredRecipes = data?.filter((recipe) => recipe.title.toLowerCase().includes(searchValue));
 
   if (error || favsError) return <div className='mt-10'>Data fetching error :(</div>;
-  console.log('isLoading', isLoading, 'error', error);
   if (isLoading || isFavsLoading)
     return (
       <div className='mt-10'>

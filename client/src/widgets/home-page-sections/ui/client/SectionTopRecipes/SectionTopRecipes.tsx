@@ -17,7 +17,8 @@ export const SectionTopRecipes = () => {
             imageUrl={null}
             title={'Recipe name'}
             authorId={null}
-            ingredients={''}
+            ingredients={['']}
+            servingNum={4}
             cookingTime={0}
             instructions={''}
             recipeId={'1'}
@@ -28,7 +29,8 @@ export const SectionTopRecipes = () => {
             imageUrl={null}
             title={'Recipe name'}
             authorId={null}
-            ingredients={''}
+            ingredients={['']}
+            servingNum={4}
             cookingTime={0}
             instructions={''}
             recipeId={'2'}
@@ -39,7 +41,8 @@ export const SectionTopRecipes = () => {
             imageUrl={null}
             title={'Recipe name'}
             authorId={null}
-            ingredients={''}
+            ingredients={['']}
+            servingNum={4}
             cookingTime={0}
             instructions={''}
             recipeId={'3'}
@@ -50,7 +53,8 @@ export const SectionTopRecipes = () => {
             imageUrl={null}
             title={'Recipe name'}
             authorId={null}
-            ingredients={''}
+            ingredients={['']}
+            servingNum={4}
             cookingTime={0}
             instructions={''}
             recipeId={'4'}
