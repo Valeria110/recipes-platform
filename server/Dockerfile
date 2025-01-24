@@ -1,10 +1,11 @@
 FROM node:lts-alpine3.20
-WORKDIR /server
-COPY package*.json /server
-COPY ./prisma /server/prisma
+WORKDIR /app
+COPY package*.json ./
+# COPY ./prisma /server/prisma
 # RUN apk add --no-cache openssl
 RUN npm install
+COPY . .
+RUN npm run build
 RUN npx prisma generate
-COPY . /server
-CMD ["npm", "run", "start"]
 EXPOSE 4000
+CMD ["npm", "run", "start:prod"]
