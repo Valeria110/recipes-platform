@@ -10,6 +10,7 @@ import { profileSvg } from '@/shared/assets';
 import { logoutSvg } from '@/shared/assets';
 import { Button } from '@/shared/ui/server/Button/Button';
 import { authService } from '@/shared/api';
+import { Route } from '@/shared/types';
 
 interface IProfileToolKitProps {
   closeMenu?: () => void;
@@ -49,11 +50,18 @@ export const ProfileToolKit = ({ closeMenu }: IProfileToolKitProps) => {
   };
 
   return isLoggedIn ? (
-    <div className='flex gap-3 items-center'>
-      <Link className='p-2 hoverable:hover:scale-110 ease-in-out duration-300' href='/profile'>
+    <div className='flex flex-col sm:flex-row mt-5 sm:mt-0 gap-3 items-center'>
+      <Button
+        width='w-fit'
+        onClick={() => router.push(Route.SHARE_RECIPE)}
+        className='p-3 lg:mr-3 bg-white !text-orange-400 hoverable:hover:!text-white order-3 sm:order-none'
+      >
+        Share your recipe
+      </Button>
+      <Link className='order-1 sm:order-none p-2 hoverable:hover:scale-110 ease-in-out duration-300' href='/profile'>
         <Image src={profileSvg} alt='user profile svg' width={45} />
       </Link>
-      <Button width='w-28' className='border-white' onClick={handleLogOut}>
+      <Button width='w-28' className='border-white order-2 sm:order-none' onClick={handleLogOut}>
         Log out
         <Image src={logoutSvg} alt='logout svg' width={25} />
       </Button>

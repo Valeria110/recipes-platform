@@ -7,3 +7,5 @@ export { ErrorBoundary } from './ErrorBoundary/ErrorBoundary';
 export { FiltersBtn } from './FiltersBtn/FiltersBtn';
 export { FiltersForm } from './FiltersForm/FiltersForm';
 export { Checkbox } from './Checkbox/Checkbox';
+export { Select } from './Select/Select';
+export { Option } from './Option/Option';

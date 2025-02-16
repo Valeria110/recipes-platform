@@ -4,3 +4,6 @@ export { Logo } from './Logo/Logo';
 export { FormInput } from './FormInput/FormInput';
 export { CookingTimeInfo } from './CookingTimeInfo/CookingTimeInfo';
 export { ServingNumberInfo } from './ServingNumberInfo/ServingNumberInfo';
+export { TextField } from './TextField/TextField';
+export { Textarea } from './Textarea/Textarea';
+export { NumberField } from './NumberField/NumberField';
