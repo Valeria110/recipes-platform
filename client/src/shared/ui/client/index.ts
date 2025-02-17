@@ -9,3 +9,4 @@ export { FiltersForm } from './FiltersForm/FiltersForm';
 export { Checkbox } from './Checkbox/Checkbox';
 export { Select } from './Select/Select';
 export { Option } from './Option/Option';
+export { RecipeImage } from './RecipeImage/RecipeImage';

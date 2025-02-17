@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 import { IRecipeForm } from '../model';
 import Image from 'next/image';
 import { addImgSvg, trashSvg } from '@/shared/assets';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone';
 
 interface IProps {
@@ -15,6 +15,13 @@ export const ImageUpload = ({ onChange }: IProps) => {
     formState: { errors },
   } = useFormContext<IRecipeForm>();
   const [uploadError, setUploadError] = useState<FileRejection | null>(null);
+
+  useEffect(() => {
+    const imageBase64 = sessionStorage.getItem('imageBase64');
+    if (imageBase64) {
+      setFileUrl(imageBase64);
+    }
+  }, []);
 
   const onDrop = useCallback((acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
     const file = acceptedFiles[0];
@@ -48,6 +55,7 @@ export const ImageUpload = ({ onChange }: IProps) => {
   const removeImage = () => {
     onChange('');
     setFileUrl(null);
+    sessionStorage.removeItem('imageBase64');
   };
 
   return (

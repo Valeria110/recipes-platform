@@ -5,7 +5,7 @@ export const formDefaultValues = {
   smallDescription: '',
   preparationTime: { hours: 0, minutes: 0, seconds: 0 },
   cookingTime: { hours: 0, minutes: 0, seconds: 0 },
-  servingNumber: 1,
+  servingNum: 1,
   ingredients: [{ name: '', quantity: 0, units: '' }],
   instructions: '',
 };

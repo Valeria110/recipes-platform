@@ -73,11 +73,11 @@ export const PreparationInfoForm = () => {
         <h4>Serving number</h4>
         <NumberField
           register={register}
-          registerName='servingNumber'
+          registerName='servingNum'
           label='Enter serving number'
           placeholder='0'
           max={100}
-          error={errors.servingNumber}
+          error={errors.servingNum}
         />
       </div>
     </div>

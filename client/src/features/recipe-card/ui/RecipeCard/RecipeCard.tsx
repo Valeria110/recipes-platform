@@ -11,7 +11,7 @@ import { Route } from '@/shared/types';
 import { CookingTimeInfo, ServingNumberInfo } from '@/shared/ui/server';
 
 interface IRecipeCardProps {
-  imageUrl: string | null;
+  imageUrl: string | null | File;
   title: string;
   authorId: string | null;
   cookingTime: number;
@@ -104,7 +104,7 @@ export const RecipeCard = ({
       <div className='relative overflow-hidden flex justify-center items-center w-full h-44 rounded-xl'>
         <img
           className='absolute object-cover w-full h-full hoverable:hover:scale-110 active:scale-110 hover:cursor-pointer transition-transform duration-500 ease-in-out'
-          src={imageUrl ?? foodImg.src}
+          src={(imageUrl as string) ?? foodImg.src}
           alt='food image'
         />
       </div>

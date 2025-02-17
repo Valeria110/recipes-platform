@@ -58,7 +58,7 @@ export const schema = object({
         .max(59, 'Seconds cannot exceed 59'),
     })
     .required(),
-  servingNumber: yup
+  servingNum: yup
     .number()
     .required('Serving number is required')
     .min(1, 'At least 1 serving is required')

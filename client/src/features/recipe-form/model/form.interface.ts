@@ -5,7 +5,7 @@ export interface IRecipeForm {
   recipeDesc: string;
   preparationTime: ITime;
   cookingTime: ITime;
-  servingNumber: number;
+  servingNum: number;
   ingredients: IngredientType[];
   instructions: string;
   image: File | string;
@@ -18,7 +18,7 @@ interface ITime {
   seconds: number;
 }
 
-type IngredientType = {
+export type IngredientType = {
   name: string;
   quantity: number;
   units: string;

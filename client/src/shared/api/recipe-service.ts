@@ -7,7 +7,7 @@ export interface IRecipeRes {
   cookingTime: number;
   createdAt: string;
   updatedAt: string;
-  imageUrl: string | null;
+  imageUrl: string | null | File;
   ingredients: string[];
   instructions: string;
   servingNum: number;

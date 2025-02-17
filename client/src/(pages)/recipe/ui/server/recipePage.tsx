@@ -1,13 +1,21 @@
 import { IRecipeRes, usersService } from '@/shared/api';
+import { RecipeImage } from '@/shared/ui/client';
 import { CookingTimeInfo, ServingNumberInfo } from '@/shared/ui/server';
+import DOMPurify from 'isomorphic-dompurify';
+
+interface IRecipeData extends Omit<IRecipeRes, 'authorId' | 'id'> {
+  authorId?: string | null;
+  id?: string | null;
+}
 
 interface IProps {
-  recipeData: IRecipeRes;
+  recipeData: IRecipeData;
 }
 
 export const RecipePage = async ({ recipeData }: IProps) => {
   const { title, imageUrl, authorId, ingredients, instructions, cookingTime, createdAt, updatedAt, servingNum } =
     recipeData;
+
   let authorName = 'unknown author';
   if (authorId) {
     const user = await usersService.getUserById(authorId);
@@ -17,13 +25,7 @@ export const RecipePage = async ({ recipeData }: IProps) => {
   return (
     <div className='flex flex-col gap-7 p-6'>
       <h2 className='text-2xl font-semibold mx-auto md:mx-0 sm:text-3xl'>{title}</h2>
-      <div className='relative w-full sm:w-3/4 lg:w-2/5 h-80 flex justify-center items-center rounded-2xl overflow-hidden'>
-        <img
-          className='absolute w-full h-full object-cover hoverable:hover:scale-110 active:scale-110 transition-transform duration-500 ease-in-out'
-          src={imageUrl ?? ''}
-          alt='recipe image'
-        />
-      </div>
+      {imageUrl && <RecipeImage url={imageUrl} />}
 
       <div className='flex flex-col gap-2'>
         <CookingTimeInfo cookingTime={cookingTime} />
@@ -43,7 +45,7 @@ export const RecipePage = async ({ recipeData }: IProps) => {
 
       <div>
         <h4 className='text-lg font-semibold mb-3'>&#128221; Instructions:</h4>
-        <p className='leading-7'>{instructions}</p>
+        <p className='leading-7' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(instructions) }} />
       </div>
 
       <div className='flex justify-between text-sm text-gray-400'>
