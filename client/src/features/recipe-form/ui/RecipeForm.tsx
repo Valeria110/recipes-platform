@@ -71,7 +71,7 @@ export const RecipeForm = () => {
         <Controller
           name='image'
           control={control}
-          render={({ field: { onChange, value } }) => <ImageUpload onChange={onChange} />}
+          render={({ field: { onChange } }) => <ImageUpload onChange={onChange} />}
         />
 
         <div className='flex gap-5 justify-between w-full'>

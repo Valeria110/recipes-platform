@@ -1,6 +1,6 @@
 'use client';
 
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 
 interface ImageProps {
   url: string | File;
@@ -9,6 +9,7 @@ interface ImageProps {
 export const RecipeImage = memo(({ url }: ImageProps) => {
   let imageSrc = typeof url === 'string' ? url : url instanceof File ? URL.createObjectURL(url) : null;
 
+  useEffect(() => {});
   if (!imageSrc) {
     const imageBase64 = sessionStorage.getItem('imageBase64');
     if (imageBase64) {

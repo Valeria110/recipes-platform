@@ -10,7 +10,7 @@ interface IOptionProps {
 
 export const Option = memo(({ option, isSelected, handleSelect }: IOptionProps) => {
   const [isChecked, setIsChecked] = useState<boolean>(isSelected);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = () => {
     setIsChecked(!isChecked);
     handleSelect(option);
   };
@@ -23,7 +23,7 @@ export const Option = memo(({ option, isSelected, handleSelect }: IOptionProps) 
         className='relative peer mr-2 appearance-none w-4 h-4 bg-white border-1 border-gray-400 rounded-md shrink-0 checked:bg-orange-400 checked:border-0 hoverable:hover:cursor-pointer focus:outline-none focus:ring-offset-0'
         type='checkbox'
         checked={isChecked}
-        onChange={(e) => handleChange(e)}
+        onChange={handleChange}
         value={option}
       ></input>
       {option}

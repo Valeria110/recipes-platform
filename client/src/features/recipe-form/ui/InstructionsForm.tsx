@@ -16,8 +16,8 @@ export const InstructionsForm = () => {
     <section className='flex flex-col gap-5'>
       <h3 className='text-2xl font-semibold'>Instructions</h3>
       <p className='text-gray-500'>
-        To unlock the full flavor and perfect your culinary masterpiece, it's crucial to meticulously detail every step
-        of the recipe!
+        To unlock the full flavor and perfect your culinary masterpiece, it&apos;s crucial to meticulously detail every
+        step of the recipe!
       </p>
       <Controller
         control={control}

@@ -37,13 +37,13 @@ export const ProfileToolKit = ({ closeMenu }: IProfileToolKitProps) => {
     dispatch(logout());
   };
   const handleSignUp = () => {
-    router.push('signup');
+    router.push('/signup');
     if (closeMenu) {
       closeMenu();
     }
   };
   const handleLogIn = () => {
-    router.push('login');
+    router.push('/login');
     if (closeMenu) {
       closeMenu();
     }

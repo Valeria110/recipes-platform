@@ -1,13 +1,13 @@
 'use client';
 
 import Image from 'next/image';
-import { Control, Controller, FieldError, FieldValues, Path } from 'react-hook-form';
+import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { downArrow, searchSvg, upArrow } from '@/shared/assets';
 import { useState } from 'react';
 import { Option } from '@/shared/ui/client';
 
 interface ISelectProps<T extends FieldValues> extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  control: Control<T, any>;
+  control: Control<T>;
   registerName: Path<T>;
   options: string[];
   isMultiSelect?: boolean;
@@ -26,13 +26,13 @@ export const Select = <T extends FieldValues>({
   error,
   ...props
 }: ISelectProps<T>) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <Controller
       control={control}
       name={registerName}
       render={({ field: { onChange, value } }) => {
-        const [isOpen, setIsOpen] = useState(false);
-
         const handleSelect = (option: string) => {
           if (isMultiSelect) {
             const selectedValues = value.includes(option)
