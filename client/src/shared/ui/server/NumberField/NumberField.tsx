@@ -25,7 +25,7 @@ const NumberFieldComponent = <T extends FieldValues>({
           placeholder={props.placeholder ?? ''}
           {...register(registerName)}
           type='number'
-          max={props.max ?? 100}
+          max={props.max ?? Infinity}
           min={props.min ?? 0}
         />
         {label}
