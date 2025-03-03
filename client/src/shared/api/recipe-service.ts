@@ -1,4 +1,6 @@
 import { BASE_URL } from '../config';
+import { ICreateRecipeDto } from '../types';
+import { TokenService } from './token-service';
 
 export interface IRecipeRes {
   id: string;
@@ -42,6 +44,31 @@ class RecipeService {
       return data;
     } catch (err) {
       throw err;
+    }
+  }
+
+  async createRecipe(recipeData: ICreateRecipeDto) {
+    try {
+      const res = await fetch(`${BASE_URL}/recipe`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${TokenService.accessToken}`,
+        },
+        body: JSON.stringify(recipeData),
+      });
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.log(errorData);
+
+        return { success: false, data: null };
+      }
+      const data = await res.json();
+      console.log('successful response:', data);
+
+      return { success: true, data };
+    } catch (err) {
+      return { success: false, data: null };
     }
   }
 }

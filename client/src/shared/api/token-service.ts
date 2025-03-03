@@ -15,7 +15,9 @@ export class TokenService {
     const refreshToken = this.getRefreshToken();
 
     if (!refreshToken) {
-      return { errorMessage: 'No refresh token available' };
+      document.cookie = 'isUserLoggedIn=; max-age=-1';
+      this.removeUserId();
+      return { success: false, errorMessage: 'No refresh token available' };
     }
 
     try {
@@ -27,15 +29,17 @@ export class TokenService {
       });
 
       if (!res.ok) {
-        throw new Error('Failed to refresh token');
+        document.cookie = 'isUserLoggedIn=; max-age=-1';
+        this.removeUserId();
+        return { success: false, errorMessage: 'Failed to refresh token' };
       }
 
       const { accessToken, refreshToken: newRefreshToken } = await res.json();
       this.storeAccessToken(accessToken);
       this.storeRefreshToken(newRefreshToken);
-      return { accessToken };
+      return { accessToken, newRefreshToken, success: true };
     } catch (err) {
-      return { errorMessage: err };
+      return { success: false, errorMessage: err };
     }
   }
 

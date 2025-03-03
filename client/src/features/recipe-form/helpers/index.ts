@@ -1,2 +1,2 @@
-export { transformInMin } from './transformIntoMin';
 export { ingredientsIntoStr } from './ingredientsIntoStr';
+export { transformInMin } from './transformIntoMin';

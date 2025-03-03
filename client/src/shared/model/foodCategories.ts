@@ -4,6 +4,7 @@ export const foodCategories = [
   'Meat and poultry',
   'Vegetables',
   'Snacks',
+  'Salads',
   'Breakfast',
   'Lunch',
   'Dinner',

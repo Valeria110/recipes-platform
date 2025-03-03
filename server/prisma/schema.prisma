@@ -19,23 +19,25 @@ model User {
 }
 
 model Recipe{
-  id            String    @id @default(uuid())
-  title         String
-  ingredients   String[]
-  instructions  String
-  cookingTime   Int     //in minutes
-  imageUrl      String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  authorId      String?
-  author        User?      @relation(fields: [authorId], references: [id], onDelete: SetNull )
-  comments      Comment[]
-  favorites     Favorite[]
-  servingNum    Int        @default(4)
+  id                String    @id @default(uuid())
+  title             String
+  description       String    @default("Default description")
+  ingredients       String[]
+  instructions      String
+  cookingTime       Int                     //in minutes
+  preparationTime   Int       @default(0)   //in minutes
+  imageUrl          String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  authorId          String?
+  author            User?      @relation(fields: [authorId], references: [id], onDelete: SetNull )
+  comments          Comment[]
+  favorites         Favorite[]
+  servingNum        Int        @default(4)
 
   // Filtration:
-  category      String?   // 'category1,category2,category3'
-  cuisineType   String?   // 'cuisine1,cuisine2,cuisine3'
+  category          String[]   // [category1, category2, category3]
+  cuisineType       String[]   // [cuisine1, cuisine2, cuisine3]
 } 
 
 model Comment {

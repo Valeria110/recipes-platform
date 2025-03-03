@@ -10,6 +10,8 @@ import { InstructionsForm } from './InstructionsForm';
 import { ImageUpload } from './ImageUpload';
 import { Button } from '@/shared/ui/server';
 import { useRouter } from 'next/navigation';
+import { submitForm } from '../api';
+import { Route } from '@/shared/types';
 
 export const RecipeForm = () => {
   const methods = useForm<IRecipeForm>({
@@ -22,34 +24,22 @@ export const RecipeForm = () => {
 
   function loadFormData() {
     const savedFormData = sessionStorage.getItem('formData');
+
     if (savedFormData) {
-      const formData: IRecipeForm = JSON.parse(savedFormData);
-      const imageBase64 = sessionStorage.getItem('imageBase64');
-      if (imageBase64) {
-        formData.image = imageBase64;
-      }
       return JSON.parse(savedFormData);
     }
     return null;
   }
 
-  const onFormSubmit: SubmitHandler<IRecipeForm> = (formData) => {
-    console.log(formData);
-    sessionStorage.removeItem('formData');
-    sessionStorage.removeItem('imageBase64');
+  const onFormSubmit: SubmitHandler<IRecipeForm> = async (formData) => {
+    const res = await submitForm(formData);
+    if (res.success) {
+      router.replace(`${Route.RECIPES}`);
+    }
   };
 
   const showPreview = () => {
     const formData = getValues();
-    const image = formData.image;
-    if (image && image instanceof File) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const imageBase64 = reader.result as string;
-        sessionStorage.setItem('imageBase64', imageBase64);
-      };
-      reader.readAsDataURL(image);
-    }
     sessionStorage.setItem('formData', JSON.stringify(formData));
     router.push(`share-recipe/preview?data=${encodeURIComponent(JSON.stringify(formData))}`);
   };

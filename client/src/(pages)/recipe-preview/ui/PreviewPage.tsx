@@ -1,6 +1,6 @@
 import { RecipePage } from '@/(pages)/recipe/ui/server';
 import { IRecipeForm } from '@/features/recipe-form/model';
-import { ingredientsIntoStr, transformInMin } from '../helpers';
+import { ingredientsIntoStr, transformInMin } from '@/features/recipe-form/helpers';
 
 export const PreviewPage = async ({ data }: { data: string }) => {
   if (data) {

@@ -15,4 +15,5 @@ export const cuisineTypes = [
   'Moroccan cuisine',
   'Brazilian cuisine',
   'Vietnamese cuisine',
+  'Other',
 ];

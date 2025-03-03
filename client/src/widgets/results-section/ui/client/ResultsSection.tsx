@@ -14,7 +14,6 @@ export const ResultsSection = () => {
     `recipe?category=${categoriesQuery}&cuisineType=${cuisinesQuery}`,
     () => recipeService.getRecipes(categoriesQuery, cuisinesQuery),
   );
-
   const { data: favsData, error: favsError, isLoading: isFavsLoading } = useSWR('favs', () => favsService.getFavs());
   const filteredRecipes = data?.filter((recipe) => recipe.title.toLowerCase().includes(searchValue));
 

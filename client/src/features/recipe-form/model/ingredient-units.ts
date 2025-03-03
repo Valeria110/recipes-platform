@@ -1,10 +1,10 @@
 export const ingredientUnits = [
-  'Gram (g)',
-  'Piece',
-  'Pinch',
-  'Ounce (oz)',
-  'Cup',
-  'Teaspoon (tsp)',
-  'Tablespoon (tbsp)',
+  'gram (g)',
+  'piece',
+  'pinch',
+  'ounce (oz)',
+  'cup',
+  'teaspoon (tsp)',
+  'tablespoon (tbsp)',
   'ml',
 ];

@@ -16,7 +16,7 @@ export const schema = object({
   recipeDesc: yup
     .string()
     .min(50, 'Small description is required')
-    .max(200, 'Description must not exceed 200 characters')
+    .max(500, 'Description must not exceed 200 characters')
     .required(),
 
   // Block "Preparation and Serving Information"
@@ -76,8 +76,8 @@ export const schema = object({
             .typeError('Quantity must be a number')
             .positive('Quantity must be positive')
             .required('Quantity is required')
-            .min(1, 'Quantity must be at least 1'),
-          units: yup.string().required('Unit is required'),
+            .min(0.1, 'Quantity must be more than 0'),
+          units: yup.string(),
         })
         .required(),
     )
@@ -93,9 +93,14 @@ export const schema = object({
   // image
   image: yup
     .mixed<File | string>()
-    .test('required', 'Image is required', (value) => value instanceof File)
+    .test(
+      'required',
+      'Image is required',
+      (value) => value instanceof File || (typeof value === 'string' && value !== ''),
+    )
     .test('fileSize', 'The size of the file should not exceed 5Mb', (value) => {
       if (!value) return false;
+      if (typeof value === 'string') return true;
       return (value as File).size <= 5 * 1024 * 1024;
     })
     .required('Image is required'),
