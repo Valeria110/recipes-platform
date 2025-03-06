@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 
 interface ImageProps {
   url: string;

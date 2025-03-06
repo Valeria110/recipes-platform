@@ -12,37 +12,43 @@ import { Button } from '@/shared/ui/server';
 import { useRouter } from 'next/navigation';
 import { submitForm } from '../api';
 import { Route } from '@/shared/types';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export const RecipeForm = () => {
+  const [formData, setFormData] = useState<IRecipeForm>(formDefaultValues);
   const methods = useForm<IRecipeForm>({
     mode: 'onChange',
     resolver: yupResolver(schema),
-    defaultValues: loadFormData() || formDefaultValues,
+    defaultValues: formData,
   });
-  const { handleSubmit, control, getValues } = methods;
+  const { handleSubmit, control, getValues, reset } = methods;
   const router = useRouter();
 
-  function loadFormData() {
+  useEffect(() => {
     const savedFormData = sessionStorage.getItem('formData');
 
     if (savedFormData) {
-      return JSON.parse(savedFormData);
+      const parsedData: IRecipeForm = JSON.parse(savedFormData);
+      setFormData(parsedData);
+      reset(parsedData);
+    } else {
+      setFormData(formDefaultValues);
     }
-    return null;
-  }
+  }, [reset]);
 
   const onFormSubmit: SubmitHandler<IRecipeForm> = async (formData) => {
     const res = await submitForm(formData);
     if (res.success) {
       router.replace(`${Route.RECIPES}`);
+      reset(formDefaultValues);
     }
   };
 
   const showPreview = useCallback(() => {
-    const formData = getValues();
-    sessionStorage.setItem('formData', JSON.stringify(formData));
-    router.push(`share-recipe/preview?data=${encodeURIComponent(JSON.stringify(formData))}`);
+    const recipeFormData = getValues();
+    sessionStorage.setItem('formData', JSON.stringify(recipeFormData));
+    setFormData(recipeFormData);
+    router.push(`share-recipe/preview?data=${encodeURIComponent(JSON.stringify(recipeFormData))}`);
   }, [getValues, router]);
 
   return (
