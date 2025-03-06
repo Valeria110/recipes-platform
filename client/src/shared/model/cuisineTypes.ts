@@ -8,6 +8,7 @@ export const cuisineTypes = [
   'Indian cuisine',
   'Japanese cuisine',
   'Russian cuisine',
+  'Belarussian cuisine',
   'Thai cuisine',
   'Spanish cuisine',
   'Korean cuisine',

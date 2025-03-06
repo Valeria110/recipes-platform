@@ -1,6 +1,6 @@
 import { IRecipeRes, usersService } from '@/shared/api';
 import { RecipeImage } from '@/shared/ui/client';
-import { CookingTimeInfo, ServingNumberInfo } from '@/shared/ui/server';
+import { ServingNumberInfo, TimeInfo } from '@/shared/ui/server';
 import DOMPurify from 'isomorphic-dompurify';
 
 interface IRecipeData extends Omit<IRecipeRes, 'authorId' | 'id'> {
@@ -13,8 +13,19 @@ interface IProps {
 }
 
 export const RecipePage = async ({ recipeData }: IProps) => {
-  const { title, imageUrl, authorId, ingredients, instructions, cookingTime, createdAt, updatedAt, servingNum } =
-    recipeData;
+  const {
+    title,
+    description,
+    imageUrl,
+    authorId,
+    ingredients,
+    instructions,
+    cookingTime,
+    preparationTime,
+    createdAt,
+    updatedAt,
+    servingNum,
+  } = recipeData;
 
   let authorName = 'unknown author';
   if (authorId) {
@@ -27,9 +38,24 @@ export const RecipePage = async ({ recipeData }: IProps) => {
       <h2 className='text-2xl font-semibold mx-auto md:mx-0 sm:text-3xl'>{title}</h2>
       {imageUrl && <RecipeImage url={imageUrl} />}
 
-      <div className='flex flex-col gap-2'>
-        <CookingTimeInfo cookingTime={cookingTime} />
-        <ServingNumberInfo peopleNum={servingNum} />
+      <div className='flex flex-col sm:flex-row gap-6 sm:gap-12'>
+        <div className='flex flex-col gap-2'>
+          <span className='text-sm font-semibold text-orange-400'>Preparation time </span>
+          <TimeInfo time={preparationTime} />
+        </div>
+        <div className='flex flex-col gap-2'>
+          <span className='text-sm font-semibold text-orange-400'>Cooking time </span>
+          <TimeInfo time={cookingTime} />
+        </div>
+        <div className='flex flex-col gap-2'>
+          <span className='text-sm font-semibold text-orange-400'>Servings </span>
+          <ServingNumberInfo peopleNum={servingNum} />
+        </div>
+      </div>
+
+      <div>
+        <h4 className='text-lg font-semibold mb-3'>&#128204; Description:</h4>
+        <p>{description}</p>
       </div>
 
       <div>

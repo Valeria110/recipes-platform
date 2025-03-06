@@ -7,22 +7,23 @@ export const PreviewPage = async ({ data }: { data: string }) => {
     const formData: IRecipeForm = await JSON.parse(decodeURIComponent(data));
     const {
       recipeTitle: title,
-      image: imageUrl,
       cookingTime: { hours, minutes, seconds },
+      preparationTime: { hours: prepHours, minutes: prepMin, seconds: prepSec },
       ingredients,
     } = formData;
     const nowDate = new Date().toDateString();
     const cookingTimeInMin = transformInMin(hours, minutes, seconds);
+    const prepTimeInMin = transformInMin(prepHours, prepMin, prepSec);
 
     return (
       <RecipePage
         recipeData={{
           ...formData,
           title,
-          imageUrl,
           createdAt: nowDate,
           updatedAt: nowDate,
           cookingTime: cookingTimeInMin,
+          preparationTime: prepTimeInMin,
           ingredients: ingredientsIntoStr(ingredients),
         }}
       />

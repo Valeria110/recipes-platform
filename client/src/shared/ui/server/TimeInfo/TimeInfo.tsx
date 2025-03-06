@@ -3,10 +3,10 @@ import Image from 'next/image';
 import { memo } from 'react';
 
 interface IProps {
-  cookingTime: number;
+  time: number;
 }
 
-export const CookingTimeInfo = memo(({ cookingTime }: IProps) => {
+export const TimeInfo = memo(({ time }: IProps) => {
   const transformTime = (totalMinutes: number) => {
     const h = Math.floor(totalMinutes / 60);
     const m = totalMinutes % 60;
@@ -19,7 +19,7 @@ export const CookingTimeInfo = memo(({ cookingTime }: IProps) => {
   return (
     <div className='flex items-center gap-2 text-orange-400'>
       <Image src={clockSvg} width={25} alt='clock svg image' />
-      <span className='text-xs'>{transformTime(cookingTime) ?? '30 min'}</span>
+      <span className='text-xs'>{transformTime(time) ?? '30 min'}</span>
     </div>
   );
 });

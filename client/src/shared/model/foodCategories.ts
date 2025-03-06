@@ -11,6 +11,7 @@ export const foodCategories = [
   'Dessert',
   'Gluten free',
   'Lactose free',
+  'Sugar free',
   'Seafood',
   'Low calories',
   'Dairy products',

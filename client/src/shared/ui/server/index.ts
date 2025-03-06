@@ -2,7 +2,7 @@ export { Button } from './Button/Button';
 export { Loader } from './Loader/Loader';
 export { Logo } from './Logo/Logo';
 export { FormInput } from './FormInput/FormInput';
-export { CookingTimeInfo } from './CookingTimeInfo/CookingTimeInfo';
+export { TimeInfo } from './TimeInfo/TimeInfo';
 export { ServingNumberInfo } from './ServingNumberInfo/ServingNumberInfo';
 export { TextField } from './TextField/TextField';
 export { Textarea } from './Textarea/Textarea';

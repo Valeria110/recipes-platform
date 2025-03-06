@@ -13,7 +13,7 @@ export const schema = object({
     .min(1, 'At least one food category must be selected')
     .required(),
   cuisineType: yup.array().of(yup.string().required()).min(1, 'At least one cuisine type must be selected').required(),
-  recipeDesc: yup
+  description: yup
     .string()
     .min(50, 'Small description is required')
     .max(500, 'Description must not exceed 200 characters')
@@ -91,19 +91,7 @@ export const schema = object({
     .min(50, 'Instructions must be at least 50 characters long'),
 
   // image
-  image: yup
-    .mixed<File | string>()
-    .test(
-      'required',
-      'Image is required',
-      (value) => value instanceof File || (typeof value === 'string' && value !== ''),
-    )
-    .test('fileSize', 'The size of the file should not exceed 5Mb', (value) => {
-      if (!value) return false;
-      if (typeof value === 'string') return true;
-      return (value as File).size <= 5 * 1024 * 1024;
-    })
-    .required('Image is required'),
+  imageUrl: yup.string().required('Image is required'),
 
   // video
   // video: yup.mixed<File>().test('fileSize', 'The size of the file should not exceed 20Mb', (value) => {

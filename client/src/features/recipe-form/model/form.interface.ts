@@ -2,13 +2,13 @@ export interface IRecipeForm {
   recipeTitle: string;
   foodCategory: string[];
   cuisineType: string[];
-  recipeDesc: string;
+  description: string;
   preparationTime: ITime;
   cookingTime: ITime;
   servingNum: number;
   ingredients: IngredientType[];
   instructions: string;
-  image: File | string;
+  imageUrl: string;
   // video?: File;
 }
 

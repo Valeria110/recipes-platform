@@ -46,8 +46,8 @@ export const RecipeDetailsForm = () => {
       <Textarea
         register={register}
         label='Small description'
-        registerName='recipeDesc'
-        error={errors.recipeDesc}
+        registerName='description'
+        error={errors.description}
         placeholder='Enter a small description'
       />
     </div>

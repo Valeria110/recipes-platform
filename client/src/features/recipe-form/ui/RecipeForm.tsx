@@ -12,6 +12,7 @@ import { Button } from '@/shared/ui/server';
 import { useRouter } from 'next/navigation';
 import { submitForm } from '../api';
 import { Route } from '@/shared/types';
+import { useCallback } from 'react';
 
 export const RecipeForm = () => {
   const methods = useForm<IRecipeForm>({
@@ -38,11 +39,11 @@ export const RecipeForm = () => {
     }
   };
 
-  const showPreview = () => {
+  const showPreview = useCallback(() => {
     const formData = getValues();
     sessionStorage.setItem('formData', JSON.stringify(formData));
     router.push(`share-recipe/preview?data=${encodeURIComponent(JSON.stringify(formData))}`);
-  };
+  }, [getValues, router]);
 
   return (
     <FormProvider {...methods}>
@@ -59,7 +60,7 @@ export const RecipeForm = () => {
           </h2>
         </div>
         <Controller
-          name='image'
+          name='imageUrl'
           control={control}
           render={({ field: { onChange } }) => <ImageUpload onChange={onChange} />}
         />

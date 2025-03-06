@@ -5,11 +5,13 @@ import { TokenService } from './token-service';
 export interface IRecipeRes {
   id: string;
   title: string;
+  description: string;
   authorId: string | null;
   cookingTime: number;
+  preparationTime: number;
   createdAt: string;
   updatedAt: string;
-  imageUrl: string | null | File;
+  imageUrl: string | null;
   ingredients: string[];
   instructions: string;
   servingNum: number;
@@ -67,7 +69,7 @@ class RecipeService {
       console.log('successful response:', data);
 
       return { success: true, data };
-    } catch (err) {
+    } catch {
       return { success: false, data: null };
     }
   }

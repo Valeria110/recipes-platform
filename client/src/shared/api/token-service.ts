@@ -9,6 +9,7 @@ export class TokenService {
 
   static storeAccessToken(accessToken: string) {
     this.accessToken = accessToken;
+    document.cookie = `isUserLoggedIn=${true};`;
   }
 
   static async refreshToken() {
@@ -30,8 +31,9 @@ export class TokenService {
 
       if (!res.ok) {
         document.cookie = 'isUserLoggedIn=; max-age=-1';
+        const error = await res.json();
         this.removeUserId();
-        return { success: false, errorMessage: 'Failed to refresh token' };
+        return { success: false, errorMessage: error.message, statusCode: error.statusCode };
       }
 
       const { accessToken, refreshToken: newRefreshToken } = await res.json();

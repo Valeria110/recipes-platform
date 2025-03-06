@@ -22,6 +22,7 @@ export class AuthService {
       });
       if (!res.ok) {
         const errorData = await res.json();
+        document.cookie = 'isUserLoggedIn=; max-age=-1';
         throw { errorMessage: errorData.message, status: res.status };
       }
 
@@ -49,6 +50,7 @@ export class AuthService {
 
       if (!res.ok) {
         const errorData = await res.json();
+        document.cookie = 'isUserLoggedIn=; max-age=-1';
         throw { errorMessage: errorData.message, status: res.status };
       }
 

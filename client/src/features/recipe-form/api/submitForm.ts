@@ -6,8 +6,8 @@ import { ICreateRecipeDto } from '@/shared/types';
 export const submitForm = async (formData: IRecipeForm) => {
   const {
     recipeTitle: title,
-    image,
-    recipeDesc: description,
+    imageUrl,
+    description,
     ingredients,
     foodCategory: category,
     cuisineType,
@@ -19,7 +19,6 @@ export const submitForm = async (formData: IRecipeForm) => {
   const authorId = TokenService.getUserId();
   const cookingTime = transformInMin(hours, minutes, seconds);
   const preparationTime = transformInMin(prepHours, prepMin, prepSec);
-  let imageUrl = typeof image === 'string' ? image : (sessionStorage.getItem('imageBase64') ?? null);
   const recipeData: ICreateRecipeDto = {
     title,
     imageUrl,
@@ -38,7 +37,6 @@ export const submitForm = async (formData: IRecipeForm) => {
 
   if (res.success) {
     sessionStorage.removeItem('formData');
-    sessionStorage.removeItem('imageBase64');
   }
 
   return res;

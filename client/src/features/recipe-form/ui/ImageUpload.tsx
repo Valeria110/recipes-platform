@@ -7,7 +7,15 @@ import { CldUploadWidget } from 'next-cloudinary';
 import { cloudUploadPreset } from '../config/cloudinary-config';
 
 interface IProps {
-  onChange: (e: File | string) => void;
+  onChange: (e: string) => void;
+}
+
+interface CloudinaryUploadResult {
+  event: string;
+  info: {
+    secure_url: string;
+    resource_type: string;
+  };
 }
 
 export const ImageUpload = ({ onChange }: IProps) => {
@@ -19,16 +27,20 @@ export const ImageUpload = ({ onChange }: IProps) => {
   useEffect(() => {
     const formData = sessionStorage.getItem('formData');
     if (formData) {
-      const image = JSON.parse(formData).image;
-      image && setImageUrl(image);
+      const image = JSON.parse(formData).imageUrl;
+      if (image) {
+        setImageUrl(image);
+      }
     }
   }, []);
 
-  const handleUpload = (result: any) => {
-    if (result.event === 'success') {
+  const handleUpload = (result: CloudinaryUploadResult) => {
+    if (result.event === 'success' && result.info.resource_type === 'image') {
       const uploadedImageUrl: string = result.info.secure_url;
       setImageUrl(uploadedImageUrl);
       onChange(uploadedImageUrl);
+    } else {
+      removeImage();
     }
   };
 
@@ -56,9 +68,16 @@ export const ImageUpload = ({ onChange }: IProps) => {
           ) : (
             <CldUploadWidget
               uploadPreset={cloudUploadPreset}
-              options={{ maxFiles: 1, multiple: false, showCompletedButton: true, cropping: true }}
+              options={{
+                maxFiles: 1,
+                multiple: false,
+                maxImageFileSize: 5 * 1024 * 1024,
+                resourceType: 'image',
+                showCompletedButton: true,
+                cropping: true,
+              }}
               onSuccess={(result) => {
-                handleUpload(result);
+                handleUpload(result as CloudinaryUploadResult);
               }}
               onQueuesEnd={(_, { widget }) => {
                 widget.close();
@@ -83,7 +102,7 @@ export const ImageUpload = ({ onChange }: IProps) => {
           </button>
         )}
 
-        {errors.image && <p className='mt-3 text-sm text-red-600'>{errors.image.message}</p>}
+        {errors.imageUrl && <p className='mt-3 text-sm text-red-600'>{errors.imageUrl.message}</p>}
       </div>
     </section>
   );

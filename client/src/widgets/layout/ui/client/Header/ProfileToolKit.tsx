@@ -35,15 +35,16 @@ export const ProfileToolKit = ({ closeMenu }: IProfileToolKitProps) => {
   const handleLogOut = () => {
     authService.logout();
     dispatch(logout());
+    router.push(`${Route.HOME}`);
   };
   const handleSignUp = () => {
-    router.push('/signup');
+    router.push(`${Route.SIGNUP}`);
     if (closeMenu) {
       closeMenu();
     }
   };
   const handleLogIn = () => {
-    router.push('/login');
+    router.push(`${Route.LOGIN}`);
     if (closeMenu) {
       closeMenu();
     }
