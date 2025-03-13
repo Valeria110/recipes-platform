@@ -67,7 +67,7 @@ class FavsService {
 
     if (res.status === 401) {
       const refreshTokenRes = await TokenService.refreshToken();
-      if (refreshTokenRes.errorMessage) {
+      if (refreshTokenRes.success) {
         throw new Error('Unable to refresh token: ' + refreshTokenRes.errorMessage);
       }
 

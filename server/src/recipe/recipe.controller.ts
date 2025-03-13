@@ -34,11 +34,11 @@ export class RecipeController {
     const filters: IRecipeFilters = {};
     if (category) {
       const categoriesArr = category.split(',');
-      filters.category = { in: categoriesArr, mode: 'insensitive' };
+      filters.category = { hasSome: categoriesArr };
     }
     if (cuisineType) {
       const cuisinesArr = cuisineType.split(',');
-      filters.cuisineType = { in: cuisinesArr, mode: 'insensitive' };
+      filters.cuisineType = { hasSome: cuisinesArr };
     }
     return this.recipeService.findAll(filters);
   }

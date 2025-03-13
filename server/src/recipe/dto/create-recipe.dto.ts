@@ -21,6 +21,22 @@ export class CreateRecipeDto {
   @IsString({ each: true })
   ingredients: string[];
 
+  @IsArray()
+  @ArrayNotEmpty()
+  @ArrayMinSize(1)
+  @IsString({ each: true })
+  category: string[];
+
+  @IsArray()
+  @ArrayNotEmpty()
+  @ArrayMinSize(1)
+  @IsString({ each: true })
+  cuisineType: string[];
+
+  @IsString()
+  @IsNotEmpty()
+  description: string;
+
   @IsString()
   @IsNotEmpty()
   instructions: string;
@@ -28,6 +44,10 @@ export class CreateRecipeDto {
   @IsInt()
   @IsNotEmpty()
   cookingTime: number;
+
+  @IsInt()
+  @IsNotEmpty()
+  preparationTime: number;
 
   @ValidateIf(({ imageUrl }) => !!imageUrl)
   @IsString()

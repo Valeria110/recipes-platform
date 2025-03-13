@@ -1,9 +1,17 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript", "plugin:prettier/recommended", "prettier"],
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
   "ignorePatterns": ["dist", "coverage", ".eslintrc.cjs", ".next", "node_modules"],
   "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": "error",
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }

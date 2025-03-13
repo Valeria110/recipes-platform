@@ -16,6 +16,11 @@ import githubLogo from './svg/github-logo.svg';
 import crossSvg from './svg/cross.svg';
 import downArrow from './svg/downArrow.svg';
 import upArrow from './svg/upArrow.svg';
+import searchSvg from './svg/search-svg.svg';
+import plusSvg from './svg/plus.svg';
+import minusSvg from './svg/minus.svg';
+import addImgSvg from './svg/add-img.svg';
+import trashSvg from './svg/trash.svg';
 
 export {
   foodImg,
@@ -33,4 +38,9 @@ export {
   crossSvg,
   downArrow,
   upArrow,
+  searchSvg,
+  plusSvg,
+  minusSvg,
+  addImgSvg,
+  trashSvg,
 };

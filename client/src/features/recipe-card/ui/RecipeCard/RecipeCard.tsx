@@ -8,10 +8,10 @@ import { favsService } from '@/shared/api';
 import { HeartButton } from '@/shared/ui/client';
 import { useRouter } from 'next/navigation';
 import { Route } from '@/shared/types';
-import { CookingTimeInfo, ServingNumberInfo } from '@/shared/ui/server';
+import { ServingNumberInfo, TimeInfo } from '@/shared/ui/server';
 
 interface IRecipeCardProps {
-  imageUrl: string | null;
+  imageUrl: string | null | File;
   title: string;
   authorId: string | null;
   cookingTime: number;
@@ -50,7 +50,7 @@ export const RecipeCard = ({
       }
     };
     isRecipeFav();
-  }, [favsData]);
+  }, [favsData, recipeId]);
 
   const handleHeartClick = async () => {
     const start = Date.now();
@@ -104,7 +104,7 @@ export const RecipeCard = ({
       <div className='relative overflow-hidden flex justify-center items-center w-full h-44 rounded-xl'>
         <img
           className='absolute object-cover w-full h-full hoverable:hover:scale-110 active:scale-110 hover:cursor-pointer transition-transform duration-500 ease-in-out'
-          src={imageUrl ?? foodImg.src}
+          src={(imageUrl as string) ?? foodImg.src}
           alt='food image'
         />
       </div>
@@ -122,7 +122,7 @@ export const RecipeCard = ({
       </div>
 
       <div className='flex items-center gap-2 pt-2 mt-auto text-orange-400'>
-        <CookingTimeInfo cookingTime={cookingTime} />
+        <TimeInfo time={cookingTime} />
         <span className='text-xs'>|</span>
         <ServingNumberInfo peopleNum={servingNum} />
       </div>

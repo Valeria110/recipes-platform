@@ -1,0 +1,1 @@
+export { fromBytesToMb } from './fromBytesToMb';

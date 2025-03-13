@@ -22,6 +22,7 @@ export class AuthService {
       });
       if (!res.ok) {
         const errorData = await res.json();
+        document.cookie = 'isUserLoggedIn=; max-age=-1';
         throw { errorMessage: errorData.message, status: res.status };
       }
 
@@ -29,6 +30,7 @@ export class AuthService {
       TokenService.storeAccessToken(accessToken);
       TokenService.storeRefreshToken(refreshToken);
       TokenService.storeUserId(userId);
+      document.cookie = `isUserLoggedIn=${true};`;
 
       return { accessToken, refreshToken, userId };
     } catch (err) {
@@ -48,6 +50,7 @@ export class AuthService {
 
       if (!res.ok) {
         const errorData = await res.json();
+        document.cookie = 'isUserLoggedIn=; max-age=-1';
         throw { errorMessage: errorData.message, status: res.status };
       }
 
@@ -63,6 +66,7 @@ export class AuthService {
     TokenService.accessToken = '';
     TokenService.removeUserId();
     document.cookie = 'refreshToken=; max-age=-1';
+    document.cookie = 'isUserLoggedIn=; max-age=-1';
   }
 
   async refreshToken() {
