@@ -7,3 +7,4 @@ export { ServingNumberInfo } from './ServingNumberInfo/ServingNumberInfo';
 export { TextField } from './TextField/TextField';
 export { Textarea } from './Textarea/Textarea';
 export { NumberField } from './NumberField/NumberField';
+export { TabButton } from './TabButton/TabButton';

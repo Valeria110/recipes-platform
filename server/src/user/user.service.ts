@@ -52,7 +52,10 @@ export class UserService {
       throw new BadRequestException('Invalid user id');
     }
 
-    const user = await this.prismaService.user.findUnique({ where: { id } });
+    const user = await this.prismaService.user.findUnique({
+      where: { id },
+      include: { recipes: true, favorites: true },
+    });
     if (!user) {
       throw new NotFoundException('User with this id does not exist');
     }

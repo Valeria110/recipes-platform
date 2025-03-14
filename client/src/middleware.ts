@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const protectedRoutes = ['/share-recipe/:path*'];
+const protectedRoutes = ['/share-recipe/:path*', '/profile'];
 const authRoutes = ['/login', '/signup'];
 
 export function middleware(request: NextRequest) {
