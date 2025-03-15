@@ -1,7 +1,6 @@
 'use client';
 
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { getUserData } from '../api';
+import { Dispatch, SetStateAction } from 'react';
 import { IUser } from '@/shared/model';
 import { Button, TabButton } from '@/shared/ui/server';
 import { logoutSvg } from '@/shared/assets';
@@ -15,25 +14,12 @@ import { useRouter } from 'next/navigation';
 interface IProps {
   setSelectedSection: Dispatch<SetStateAction<'favorites' | 'edit' | 'my recipes'>>;
   selectedSection: 'favorites' | 'edit' | 'my recipes';
+  userData: null | IUser;
 }
 
-export const ProfileSidebar = ({ setSelectedSection, selectedSection }: IProps) => {
-  const [userData, setUserData] = useState<IUser | null>(null);
+export const ProfileSidebar = ({ setSelectedSection, selectedSection, userData }: IProps) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-
-  useEffect(() => {
-    const getUserNameAndEmail = async () => {
-      const userData = await getUserData();
-      if (userData) {
-        console.log(userData);
-
-        setUserData(userData);
-      }
-    };
-
-    getUserNameAndEmail();
-  }, []);
 
   const handleLogOut = () => {
     authService.logout();
@@ -42,7 +28,7 @@ export const ProfileSidebar = ({ setSelectedSection, selectedSection }: IProps) 
   };
 
   return (
-    <div className='flex flex-col items-center gap-10 w-72 min-h-80 p-5 rounded-2xl shadow-xl shadow-black/10'>
+    <div className='flex flex-col flex-shrink-0 items-center gap-10 w-72 min-h-80 h-fit p-5 rounded-2xl shadow-xl shadow-black/10'>
       {userData && (
         <div className='flex flex-col items-center gap-7'>
           <div className='flex flex-col items-center gap-1'>

@@ -43,6 +43,7 @@ export const RecipeCard = ({
     const isRecipeFav = async () => {
       if (Array.isArray(favsData) && favsData.length) {
         const fav = favsData.find((fav) => fav.recipeId === recipeId);
+
         if (fav) {
           setIsFave(true);
           setFavId(fav.id);

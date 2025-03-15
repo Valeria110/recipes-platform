@@ -54,7 +54,12 @@ export class UserService {
 
     const user = await this.prismaService.user.findUnique({
       where: { id },
-      include: { recipes: true, favorites: true },
+      include: {
+        recipes: true,
+        favorites: {
+          select: { id: true, userId: true, recipeId: true, recipe: true },
+        },
+      },
     });
     if (!user) {
       throw new NotFoundException('User with this id does not exist');

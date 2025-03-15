@@ -1,33 +1,55 @@
 'use client';
 
-import { ProfileSidebar } from '@/features/profile/ui';
+import { ProfileSidebar, Recipes } from '@/features/profile/ui';
 import { TokenService, usersService } from '@/shared/api';
+import { useUser } from '@/shared/hooks';
 import { Route } from '@/shared/types';
+import { Loader } from '@/shared/ui/server';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export const ProfilePage = () => {
   const [selectedSection, setSelectedSection] = useState<'favorites' | 'edit' | 'my recipes'>('favorites');
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [userId, setUserId] = useState('');
   const router = useRouter();
+
+  const { data: userData, error, isLoading } = useUser(userId);
 
   useEffect(() => {
     const accessToken = TokenService.getAccessToken();
 
     if (accessToken) {
       setIsLoggedIn(true);
+      setUserId(TokenService.getUserId());
     } else {
       router.replace(Route.LOGIN);
     }
   }, []);
 
+  const getFavRecipesData = () => {
+    if (userData?.favorites) {
+      return userData.favorites.map((fav) => fav.recipe);
+    }
+    return null;
+  };
+
   if (isLoggedIn) {
     return (
       <main className='flex gap-10 mt-10 p-5'>
-        <ProfileSidebar setSelectedSection={setSelectedSection} selectedSection={selectedSection} />
-        {selectedSection === 'favorites' && <h1>Favorite recipes</h1>}
-        {selectedSection === 'edit' && <h1>Edit profile</h1>}
-        {selectedSection === 'my recipes' && <h1>My recipes</h1>}
+        <ProfileSidebar setSelectedSection={setSelectedSection} selectedSection={selectedSection} userData={userData} />
+        {error && <div className='mt-10'>Data fetching error &#128577;</div>}
+        {isLoading && !error ? (
+          <Loader />
+        ) : (
+          (selectedSection === 'favorites' && (
+            <Recipes recipes={getFavRecipesData()} favsData={userData?.favorites} />
+          )) ||
+          (selectedSection === 'my recipes' && (
+            <Recipes recipes={userData?.recipes ?? null} favsData={userData?.favorites} />
+          )) ||
+          (selectedSection === 'edit' && <h1>Edit profile</h1>)
+        )}
       </main>
     );
   }

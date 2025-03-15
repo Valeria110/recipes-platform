@@ -1,9 +1,10 @@
-import { IRecipeRes, usersService } from '@/shared/api';
+import { usersService } from '@/shared/api';
+import { IRecipe } from '@/shared/model';
 import { RecipeImage } from '@/shared/ui/client';
 import { ServingNumberInfo, TimeInfo } from '@/shared/ui/server';
 import DOMPurify from 'isomorphic-dompurify';
 
-interface IRecipeData extends Omit<IRecipeRes, 'authorId' | 'id'> {
+interface IRecipeData extends Omit<IRecipe, 'authorId' | 'id'> {
   authorId?: string | null;
   id?: string | null;
 }

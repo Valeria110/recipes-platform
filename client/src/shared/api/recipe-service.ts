@@ -1,21 +1,7 @@
 import { BASE_URL } from '../config';
+import { IRecipe } from '../model';
 import { ICreateRecipeDto } from '../types';
 import { TokenService } from './token-service';
-
-export interface IRecipeRes {
-  id: string;
-  title: string;
-  description: string;
-  authorId: string | null;
-  cookingTime: number;
-  preparationTime: number;
-  createdAt: string;
-  updatedAt: string;
-  imageUrl: string | null;
-  ingredients: string[];
-  instructions: string;
-  servingNum: number;
-}
 
 class RecipeService {
   async getRecipes(category: string = '', cuisineType: string = '') {
@@ -27,7 +13,7 @@ class RecipeService {
         throw { errorMessage: errorData.message, status: res.status };
       }
 
-      const recipes: IRecipeRes[] = await res.json();
+      const recipes: IRecipe[] = await res.json();
       return recipes;
     } catch (err) {
       throw err;
@@ -42,7 +28,7 @@ class RecipeService {
         return { errorMessage: errorData.message, status: res.status };
       }
 
-      const data: IRecipeRes = await res.json();
+      const data: IRecipe = await res.json();
       return data;
     } catch (err) {
       throw err;
