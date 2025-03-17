@@ -23,7 +23,7 @@ const TextFieldComponent = <T extends FieldValues>({
     <label className={`flex flex-col gap-2 ${width}`}>
       {label}
       <input
-        type='text'
+        type={props.type ? props.type : 'text'}
         {...register(registerName)}
         className={`p-3 border-gray-400 border-1 rounded-3xl text-sm sm:text-md text-start focus-within:outline-none w-full ${height}`}
         {...props}

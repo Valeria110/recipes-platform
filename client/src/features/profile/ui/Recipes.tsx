@@ -2,7 +2,6 @@
 
 import { RecipeCard } from '@/features/recipe-card';
 import { IFav, IRecipe } from '@/shared/model';
-import { useEffect } from 'react';
 
 interface IProps {
   recipes: IRecipe[] | null;

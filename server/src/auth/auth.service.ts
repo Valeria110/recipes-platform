@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { PrismaService } from 'src/services/prisma.service';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { UserService } from 'src/user/user.service';
@@ -7,6 +11,8 @@ import { LoginUserDto } from './dto/loginUser.dto';
 import { JwtService } from '@nestjs/jwt';
 import { accessTokenConfig, refreshTokenConfig } from './jwt-config/jwt.config';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { UpdateUserDto } from './dto/updateAuthData.dto';
+import { UpdateUserData } from './entities/update-user';
 
 @Injectable()
 export class AuthService {
@@ -56,13 +62,48 @@ export class AuthService {
     }
   }
 
+  async update(id: string, updatePasswordDto: UpdateUserDto) {
+    const user = await this.userService.findOne(id);
+
+    if (user) {
+      const { newPassword, oldPassword, name, email } = updatePasswordDto;
+
+      if (oldPassword && user.password !== updatePasswordDto.oldPassword) {
+        const isPasswordCorrect = await this.isPasswordMatch(
+          oldPassword,
+          user.password,
+        );
+
+        if (!isPasswordCorrect) {
+          throw new BadRequestException('Incorrect old password');
+        }
+        if (!newPassword) {
+          throw new BadRequestException('New password is not provided');
+        }
+      }
+      if (newPassword && !oldPassword) {
+        throw new BadRequestException('Incorrect old password');
+      }
+
+      const newData: UpdateUserData = {};
+      if (newPassword) newData.password = await this.hashPassword(newPassword);
+      if (name) newData.name = name;
+      if (email) newData.email = email;
+
+      return await this.prismaService.user.update({
+        where: { id },
+        data: newData,
+      });
+    }
+  }
+
   private async hashPassword(password: string) {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     return hashedPassword;
   }
 
-  private async isPasswordMatch(plainPassword: string, hashedPassword: string) {
+  async isPasswordMatch(plainPassword: string, hashedPassword: string) {
     return await bcrypt.compare(plainPassword, hashedPassword);
   }
 

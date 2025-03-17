@@ -1,7 +1,7 @@
 'use client';
 
-import { ProfileSidebar, Recipes } from '@/features/profile/ui';
-import { TokenService, usersService } from '@/shared/api';
+import { EditProfileForm, ProfileSidebar, Recipes } from '@/features/profile/ui';
+import { TokenService } from '@/shared/api';
 import { useUser } from '@/shared/hooks';
 import { Route } from '@/shared/types';
 import { Loader } from '@/shared/ui/server';
@@ -25,7 +25,7 @@ export const ProfilePage = () => {
     } else {
       router.replace(Route.LOGIN);
     }
-  }, []);
+  }, [router]);
 
   const getFavRecipesData = () => {
     if (userData?.favorites) {
@@ -48,7 +48,7 @@ export const ProfilePage = () => {
           (selectedSection === 'my recipes' && (
             <Recipes recipes={userData?.recipes ?? null} favsData={userData?.favorites} />
           )) ||
-          (selectedSection === 'edit' && <h1>Edit profile</h1>)
+          (selectedSection === 'edit' && <EditProfileForm name={userData?.name} email={userData?.email} />)
         )}
       </main>
     );

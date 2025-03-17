@@ -1,4 +1,5 @@
 import { BASE_URL } from '../config';
+import { IUserUpdateDto } from '../model';
 import { TokenService } from './token-service';
 
 export interface ILoginRes {
@@ -71,6 +72,29 @@ export class AuthService {
 
   async refreshToken() {
     return TokenService.refreshToken();
+  }
+
+  async updateUserAuthData(updateUserDto: IUserUpdateDto) {
+    try {
+      const userId = TokenService.getUserId();
+      const res = await fetch(`${BASE_URL}/auth/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${TokenService.accessToken}`,
+        },
+        body: JSON.stringify(updateUserDto),
+      });
+      if (!res.ok) {
+        const errorData = await res.json();
+        return { success: false, data: null, error: errorData.message };
+      }
+
+      const data = await res.json();
+      return { success: true, data, error: null };
+    } catch (err) {
+      return { success: false, data: null, error: err };
+    }
   }
 }
 

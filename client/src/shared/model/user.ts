@@ -8,3 +8,10 @@ export interface IUser {
   recipes: IRecipe[];
   favorites: IFav[];
 }
+
+export interface IUserUpdateDto {
+  name?: string;
+  email?: string;
+  oldPassword?: string;
+  newPassword?: string;
+}

@@ -13,8 +13,6 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
   if (isAuthRoute && isUserLoggedIn) {
-    console.log('user is already logged in');
-
     return NextResponse.redirect(new URL('/', request.url));
   }
 

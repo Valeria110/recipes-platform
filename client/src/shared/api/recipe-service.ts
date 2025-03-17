@@ -1,3 +1,4 @@
+import { error } from 'console';
 import { BASE_URL } from '../config';
 import { IRecipe } from '../model';
 import { ICreateRecipeDto } from '../types';
@@ -46,17 +47,15 @@ class RecipeService {
         body: JSON.stringify(recipeData),
       });
       if (!res.ok) {
-        const errorData = await res.json();
-        console.log(errorData);
+        const error = await res.json();
 
-        return { success: false, data: null };
+        return { success: false, data: null, error };
       }
       const data = await res.json();
-      console.log('successful response:', data);
 
-      return { success: true, data };
-    } catch {
-      return { success: false, data: null };
+      return { success: true, data, error: null };
+    } catch (err) {
+      return { success: false, data: null, error: err };
     }
   }
 }

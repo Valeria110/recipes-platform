@@ -1,6 +1,8 @@
+import { error } from 'console';
 import { BASE_URL } from '../config';
-import { IUser } from '../model';
+import { IUser, IUserUpdateDto } from '../model';
 import { AuthService } from './auth-service';
+import { TokenService } from './token-service';
 
 class UsersService extends AuthService {
   constructor() {

@@ -1,4 +1,4 @@
-import { oneLowercaseLetter, oneNumber, oneSpecialChar, oneUppercaseLetter } from '@/widgets/sign-in/utils/regex';
+import { oneLowercaseLetter, oneNumber, oneSpecialChar, oneUppercaseLetter } from '@/shared/model';
 import { object, string } from 'yup';
 
 export const schema = object({
