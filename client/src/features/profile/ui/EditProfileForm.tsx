@@ -18,6 +18,7 @@ export const EditProfileForm = ({ name = '', email = '' }: IProps) => {
     formState: { errors, isValid, isSubmitting },
     handleSubmit,
     control,
+    resetField,
   } = useForm<IEditForm>({
     mode: 'onChange',
     resolver: yupResolver(schema),
@@ -36,6 +37,8 @@ export const EditProfileForm = ({ name = '', email = '' }: IProps) => {
     }
     if (success && !error) {
       setSubmitError(null);
+      resetField('oldPassword');
+      resetField('newPassword');
       toast.success('Data was successfully updated');
     }
   };
