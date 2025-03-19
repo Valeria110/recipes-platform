@@ -1,10 +1,10 @@
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { ingredientUnits, IRecipeForm } from '../model';
-import { Button, NumberField, TextField } from '@/shared/ui/server';
-import { Select } from '@/shared/ui/client';
-import Image from 'next/image';
-import { minusSvg, plusSvg } from '@/shared/assets';
+import { Button, NumberField } from '@/shared/ui/server';
+import { Select, TextField } from '@/shared/ui/client';
 import { useEffect } from 'react';
+import { HiOutlineMinus } from 'react-icons/hi';
+import { BsPlusLg } from 'react-icons/bs';
 
 export const IngredientsForm = () => {
   const {
@@ -56,14 +56,14 @@ export const IngredientsForm = () => {
                   error={errors?.ingredients?.[i]?.units && errors.ingredients[i].units.message}
                 />
                 <Button width='w-10' height='h-10' className='lg:mt-auto' onClick={() => remove(i)}>
-                  <Image src={minusSvg} alt='minus svg image' width={25} height={25} />
+                  <HiOutlineMinus size={25} />
                 </Button>
               </div>
             );
           })}
         </div>
         <Button width='w-10' height='h-10' onClick={() => append({ name: '', quantity: 0, units: '' })}>
-          <Image src={plusSvg} alt='plus svg image' width={25} height={25} />
+          <BsPlusLg size={25} />
         </Button>
       </div>
     </section>

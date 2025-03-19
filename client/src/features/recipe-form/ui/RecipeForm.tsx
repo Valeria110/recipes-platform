@@ -14,6 +14,7 @@ import { submitForm } from '../api';
 import { Route } from '@/shared/types';
 import { useCallback, useEffect, useState } from 'react';
 import { TokenService } from '@/shared/api';
+import { toast, ToastContainer } from 'react-toastify';
 
 export const RecipeForm = () => {
   const [formData, setFormData] = useState<IRecipeForm>(formDefaultValues);
@@ -54,6 +55,7 @@ export const RecipeForm = () => {
     if (res.success) {
       router.replace(`${Route.RECIPES}`);
       reset(formDefaultValues);
+      toast.success('New recipe was successfully published');
     }
   };
 
@@ -94,6 +96,8 @@ export const RecipeForm = () => {
             </Button>
           </div>
         </form>
+
+        <ToastContainer />
       </FormProvider>
     );
   }

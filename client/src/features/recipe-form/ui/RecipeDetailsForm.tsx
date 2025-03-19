@@ -1,8 +1,8 @@
 'use client';
 
-import { Textarea, TextField } from '@/shared/ui/server';
+import { Textarea } from '@/shared/ui/server';
 import { useFormContext } from 'react-hook-form';
-import { Select } from '@/shared/ui/client';
+import { Select, TextField } from '@/shared/ui/client';
 import { cuisineTypes, foodCategories } from '@/shared/model';
 import { IRecipeForm } from '../model';
 

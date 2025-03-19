@@ -1,9 +1,11 @@
-import { Button, TextField } from '@/shared/ui/server';
+import { TextField } from '@/shared/ui/client';
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { IEditForm, schema } from '../model';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
-import { authService, usersService } from '@/shared/api';
+import { authService } from '@/shared/api';
+import { toast, ToastContainer } from 'react-toastify';
+import { Button } from '@/shared/ui/server';
 
 interface IProps {
   name?: string;
@@ -27,13 +29,14 @@ export const EditProfileForm = ({ name = '', email = '' }: IProps) => {
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleFormSubmit: SubmitHandler<IEditForm> = async (formData) => {
-    console.log('formData: ', formData);
     const { success, error } = await authService.updateUserAuthData(formData);
     if (!success && error) {
       setSubmitError(error);
+      toast.error(`Oops, error occured: ${error}`);
     }
     if (success && !error) {
       setSubmitError(null);
+      toast.success('Data was successfully updated');
     }
   };
 
@@ -70,6 +73,7 @@ export const EditProfileForm = ({ name = '', email = '' }: IProps) => {
         </Button>
         {submitError && <p className='text-red-500 text-sm'>{submitError}</p>}
       </form>
+      <ToastContainer />
     </div>
   );
 };

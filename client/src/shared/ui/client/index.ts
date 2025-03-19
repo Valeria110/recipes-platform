@@ -10,3 +10,4 @@ export { Checkbox } from './Checkbox/Checkbox';
 export { Select } from './Select/Select';
 export { Option } from './Option/Option';
 export { RecipeImage } from './RecipeImage/RecipeImage';
+export { TextField } from './TextField/TextField';

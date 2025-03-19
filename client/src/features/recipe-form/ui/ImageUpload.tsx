@@ -1,10 +1,11 @@
 import { useFormContext } from 'react-hook-form';
 import { IRecipeForm } from '../model';
 import Image from 'next/image';
-import { addImgSvg, trashSvg } from '@/shared/assets';
+import { trashSvg } from '@/shared/assets';
 import { useEffect, useState } from 'react';
 import { CldUploadWidget } from 'next-cloudinary';
 import { cloudUploadPreset } from '../config/cloudinary-config';
+import { CiCirclePlus } from 'react-icons/ci';
 
 interface IProps {
   onChange: (e: string) => void;
@@ -89,7 +90,7 @@ export const ImageUpload = ({ onChange }: IProps) => {
                   onClick={() => open()}
                   className='flex justify-center items-center w-full h-full p-3 '
                 >
-                  <Image src={addImgSvg} alt='add image' width={40} height={40} />
+                  <CiCirclePlus size={40} className='text-orange-400' />
                 </button>
               )}
             </CldUploadWidget>
