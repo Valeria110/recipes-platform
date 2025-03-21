@@ -27,11 +27,11 @@ export const FiltersForm = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const categoriesArr = categoriesQuery.split(',');
-    const cuisinessArr = cuisinesQuery.split(',');
+    const categoriesArr = categoriesQuery ? categoriesQuery.split(',') : [];
+    const cuisinesArr = cuisinesQuery ? cuisinesQuery.split(',') : [];
 
     dispatch(setCategories(categoriesArr));
-    dispatch(setCuisines(cuisinessArr));
+    dispatch(setCuisines(cuisinesArr));
   }, []);
 
   const handleApplyBtnClick = () => {

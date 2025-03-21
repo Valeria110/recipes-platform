@@ -1,4 +1,3 @@
-import { error } from 'console';
 import { BASE_URL } from '../config';
 import { IRecipe } from '../model';
 import { ICreateRecipeDto } from '../types';

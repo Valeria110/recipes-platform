@@ -11,4 +11,6 @@ export interface IRecipe {
   ingredients: string[];
   instructions: string;
   servingNum: number;
+  category: string[];
+  cuisineType: string[];
 }
