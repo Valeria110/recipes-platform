@@ -3,6 +3,7 @@ import foodImg from './img/foog-image.jpg';
 import headerLogo from './img/header-logo2.png';
 import signUpImg from './img/signup-img.jpg';
 import signUpImg2 from './img/signup-img2.jpg';
+import myImg from './img/my-img.jpg';
 
 // svg:
 import peopleSvg from './svg/people.svg';
@@ -22,6 +23,7 @@ export {
   foodImg,
   signUpImg,
   signUpImg2,
+  myImg,
   peopleSvg,
   headerLogo,
   filtersSvg,
