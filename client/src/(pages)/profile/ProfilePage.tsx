@@ -37,12 +37,12 @@ export const ProfilePage = () => {
 
   if (isLoggedIn) {
     return (
-      <main className='flex gap-10 mt-10 p-5'>
+      <main className='flex flex-col items-center md:items-start md:flex-row gap-16 md:gap-10 mt-10 p-5'>
         <ProfileSidebar setSelectedSection={setSelectedSection} selectedSection={selectedSection} userData={userData} />
         <section className='flex flex-col gap-5 w-full h-fit'>
           {(selectedSection === 'favorites' || selectedSection === 'my recipes') && (
-            <div className='flex justify-end items-center gap-8'>
-              <SearchBar className='border-1 border-gray-300'>Search for the recipes...</SearchBar>
+            <div className='flex flex-col lg:flex-row md:items-end lg:justify-end lg:items-center gap-8'>
+              <SearchBar className='border-1 border-gray-300 w-full md:w-fit'>Search for the recipes...</SearchBar>
               <FiltersBtn />
             </div>
           )}
