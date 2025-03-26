@@ -6,9 +6,9 @@ import { FaLinkedin } from 'react-icons/fa6';
 export const AboutPage = () => {
   return (
     <div className='flex flex-col gap-10 px-4 py-8'>
-      <section className='mb-8'>
-        <h1 className='text-4xl font-semibold text-center mb-8'>About Recipe Platform</h1>
-        <p className='text-gray-700'>
+      <section className='mb-8 w-full'>
+        <h1 className='text-4xl font-semibold text-center mb-6'>About Recipe Platform</h1>
+        <p className='text-gray-700 ml-auto mr-auto text-center' style={{ maxWidth: '800px', width: '100%' }}>
           Welcome to the Recipe Platform, a place where cooking enthusiasts can discover, share, and organize their
           favorite recipes. This platform is designed to make cooking easier and more enjoyable by providing a
           user-friendly interface and a wide range of features to help you manage your culinary creations.
