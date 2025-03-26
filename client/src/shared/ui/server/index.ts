@@ -4,6 +4,7 @@ export { Logo } from './Logo/Logo';
 export { FormInput } from './FormInput/FormInput';
 export { TimeInfo } from './TimeInfo/TimeInfo';
 export { ServingNumberInfo } from './ServingNumberInfo/ServingNumberInfo';
-export { TextField } from './TextField/TextField';
+export { PasswordToggle } from './PasswordToggle/PasswordToggle';
 export { Textarea } from './Textarea/Textarea';
 export { NumberField } from './NumberField/NumberField';
+export { TabButton } from './TabButton/TabButton';

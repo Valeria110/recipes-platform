@@ -1,8 +1,12 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { plainToClass } from 'class-transformer';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { User } from 'src/user/entities/user.entity';
+import { UpdateUserDto } from './dto/updateAuthData.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -21,5 +25,15 @@ export class AuthController {
   @Post('refresh')
   async refresh(@Body() refreshTokenDto: RefreshTokenDto) {
     return await this.authService.refresh(refreshTokenDto);
+  }
+
+  @UseGuards(AuthGuard)
+  @Put(':userId')
+  async update(
+    @Param('userId') userId: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    const user = await this.authService.update(userId, updateUserDto);
+    return plainToClass(User, user);
   }
 }

@@ -3,21 +3,22 @@
 import { useAppSelector } from '@/shared/hooks/store.hooks';
 import useSWR from 'swr';
 import { favsService } from '@/shared/api/favs-service';
-import { IRecipeRes, recipeService } from '@/shared/api';
+import { recipeService } from '@/shared/api';
 import { RecipeCard } from '@/features/recipe-card/ui/RecipeCard/RecipeCard';
 import { Loader } from '@/shared/ui/server';
+import { IRecipe } from '@/shared/model';
 
 export const ResultsSection = () => {
   const { searchValue, filters } = useAppSelector((state) => state.search);
   const { categoriesQuery, cuisinesQuery } = filters;
-  const { data, error, isLoading } = useSWR<IRecipeRes[]>(
+  const { data, error, isLoading } = useSWR<IRecipe[]>(
     `recipe?category=${categoriesQuery}&cuisineType=${cuisinesQuery}`,
     () => recipeService.getRecipes(categoriesQuery, cuisinesQuery),
   );
   const { data: favsData, error: favsError, isLoading: isFavsLoading } = useSWR('favs', () => favsService.getFavs());
   const filteredRecipes = data?.filter((recipe) => recipe.title.toLowerCase().includes(searchValue));
 
-  if (error || favsError) return <div className='mt-10'>Data fetching error :(</div>;
+  if (error || favsError) return <div className='mt-10'>Data fetching error &#128577;</div>;
   if (isLoading || isFavsLoading)
     return (
       <div className='mt-10'>

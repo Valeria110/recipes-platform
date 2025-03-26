@@ -5,7 +5,6 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdatePasswordDto } from './dto/update-password.dto';
 import { PrismaService } from 'src/services/prisma.service';
 import { plainToClass } from 'class-transformer';
 import { User } from './entities/user.entity';
@@ -52,26 +51,20 @@ export class UserService {
       throw new BadRequestException('Invalid user id');
     }
 
-    const user = await this.prismaService.user.findUnique({ where: { id } });
+    const user = await this.prismaService.user.findUnique({
+      where: { id },
+      include: {
+        recipes: true,
+        favorites: {
+          select: { id: true, userId: true, recipeId: true, recipe: true },
+        },
+      },
+    });
     if (!user) {
       throw new NotFoundException('User with this id does not exist');
     }
 
     return user;
-  }
-
-  async update(id: string, updatePasswordDto: UpdatePasswordDto) {
-    const user = await this.findOne(id);
-    if (user) {
-      if (user.password !== updatePasswordDto.oldPassword) {
-        throw new BadRequestException('Incorrect old password');
-      }
-
-      return await this.prismaService.user.update({
-        where: { id },
-        data: { password: updatePasswordDto.newPassword },
-      });
-    }
   }
 
   async remove(id: string) {

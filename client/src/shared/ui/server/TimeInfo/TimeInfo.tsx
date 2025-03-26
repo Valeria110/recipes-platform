@@ -1,6 +1,5 @@
-import { clockSvg } from '@/shared/assets';
-import Image from 'next/image';
 import { memo } from 'react';
+import { CiClock2 } from 'react-icons/ci';
 
 interface IProps {
   time: number;
@@ -18,7 +17,7 @@ export const TimeInfo = memo(({ time }: IProps) => {
 
   return (
     <div className='flex items-center gap-2 text-orange-400'>
-      <Image src={clockSvg} width={25} alt='clock svg image' />
+      <CiClock2 size={25} />
       <span className='text-xs'>{transformTime(time) ?? '30 min'}</span>
     </div>
   );

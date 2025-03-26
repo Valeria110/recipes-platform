@@ -8,8 +8,15 @@ export function useUser(userId: string | null) {
     userId ? () => usersService.getUserById(userId) : null,
   );
 
+  if (isLoading) {
+    return { data: null, error: null, isLoading: true };
+  }
+
   if (!userId) {
-    return { data: { name: 'unknown author' }, error: null, isLoading: false };
+    return { data: null, error: 'userId is not defined', isLoading: false };
+  }
+  if (!data) {
+    return { data: null, error: 'user is undefined', isLoading: false };
   }
 
   return { data, error, isLoading };

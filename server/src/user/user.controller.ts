@@ -11,7 +11,6 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdatePasswordDto } from './dto/update-password.dto';
 import { plainToClass } from 'class-transformer';
 import { User } from './entities/user.entity';
 import { AuthGuard } from 'src/guards/auth.guard';
@@ -34,16 +33,6 @@ export class UserController {
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const user = await this.userService.findOne(id);
-    return plainToClass(User, user);
-  }
-
-  @UseGuards(AuthGuard)
-  @Put(':id')
-  async update(
-    @Param('id') id: string,
-    @Body() updateUserDto: UpdatePasswordDto,
-  ) {
-    const user = await this.userService.update(id, updateUserDto);
     return plainToClass(User, user);
   }
 

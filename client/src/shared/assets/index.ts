@@ -3,9 +3,9 @@ import foodImg from './img/foog-image.jpg';
 import headerLogo from './img/header-logo2.png';
 import signUpImg from './img/signup-img.jpg';
 import signUpImg2 from './img/signup-img2.jpg';
+import myImg from './img/my-img.jpg';
 
 // svg:
-import clockSvg from './svg/clock.svg';
 import peopleSvg from './svg/people.svg';
 import filtersSvg from './svg/filters.svg';
 import profileSvg from './svg/user-profile.svg';
@@ -17,16 +17,13 @@ import crossSvg from './svg/cross.svg';
 import downArrow from './svg/downArrow.svg';
 import upArrow from './svg/upArrow.svg';
 import searchSvg from './svg/search-svg.svg';
-import plusSvg from './svg/plus.svg';
-import minusSvg from './svg/minus.svg';
-import addImgSvg from './svg/add-img.svg';
 import trashSvg from './svg/trash.svg';
 
 export {
   foodImg,
   signUpImg,
   signUpImg2,
-  clockSvg,
+  myImg,
   peopleSvg,
   headerLogo,
   filtersSvg,
@@ -39,8 +36,5 @@ export {
   downArrow,
   upArrow,
   searchSvg,
-  plusSvg,
-  minusSvg,
-  addImgSvg,
   trashSvg,
 };
