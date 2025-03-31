@@ -16,7 +16,7 @@ export const schema = object({
   description: yup
     .string()
     .min(50, 'Small description is required')
-    .max(500, 'Description must not exceed 200 characters')
+    .max(1500, 'Description must not exceed 1500 characters')
     .required(),
 
   // Block "Preparation and Serving Information"
