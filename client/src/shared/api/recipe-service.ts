@@ -1,6 +1,6 @@
 import { BASE_URL } from '../config';
 import { IRecipe } from '../model';
-import { ICreateRecipeDto, IUpdateRecipeDto } from '../types';
+import { ICreateRecipeDto } from '../types';
 import { TokenService } from './token-service';
 
 class RecipeService {
@@ -57,7 +57,7 @@ class RecipeService {
     }
   }
 
-  async updateRecipe(recipeId: string, recipeUpdateDto: IUpdateRecipeDto) {
+  async updateRecipe(recipeId: string, recipeUpdateDto: Partial<ICreateRecipeDto>) {
     try {
       const res = await fetch(`${BASE_URL}/recipe/${recipeId}`, {
         method: 'PUT',

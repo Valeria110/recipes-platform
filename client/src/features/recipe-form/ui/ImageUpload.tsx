@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 import { CldUploadWidget } from 'next-cloudinary';
 import { cloudUploadPreset } from '../config/cloudinary-config';
 import { CiCirclePlus } from 'react-icons/ci';
-import { useSearchParams } from 'next/navigation';
 
 interface IProps {
   onChange: (e: string) => void;

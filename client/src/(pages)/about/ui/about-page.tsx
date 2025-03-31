@@ -26,7 +26,7 @@ export const AboutPage = () => {
             <h3 className='font-semibold mb-3'>View recipes</h3>
             <li className='ml-2'>A page with recipe cards displaying the title, image, short description.</li>
             <li className='ml-2'>Detailed recipe page with full details and comments.</li>
-            <li className='ml-2'>Add recipes to "Favorites" for quick access.</li>
+            <li className='ml-2'>Add recipes to &quot;Favorites&quot; for quick access.</li>
           </ul>
           <ul className='bg-gray-100 p-4 rounded-lg list-disc'>
             <h3 className='font-semibold mb-3'>User registration and authentication</h3>
@@ -80,11 +80,11 @@ export const AboutPage = () => {
               <p className='text-sm text-gray-500'>Full-stack developer</p>
             </div>
             <p className='text-gray-700'>
-              Hi, I'm Valerie, the creator of this platform. I'm passionate about cooking, <b>nutritionology</b>{' '}
-              &#129361; and <b>technology</b> 👩🏻‍💻, and I wanted to create a tool that combines both of these interests.
-              With a background in web-development, I aimed to build a platform that is not only functional but also
-              enjoyable to use. I hope you find this <b>Recipe Platform</b> helpful and inspiring for your culinary
-              adventures!
+              Hi, I&apos;m Valerie, the creator of this platform. I&apos;m passionate about cooking,{' '}
+              <b>nutritionology</b> &#129361; and <b>technology</b> 👩🏻‍💻, and I wanted to create a tool that combines both
+              of these interests. With a background in web-development, I aimed to build a platform that is not only
+              functional but also enjoyable to use. I hope you find this <b>Recipe Platform</b> helpful and inspiring
+              for your culinary adventures!
             </p>
             <div className='flex gap-10'>
               <a

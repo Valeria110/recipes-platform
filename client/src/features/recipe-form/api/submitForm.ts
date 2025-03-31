@@ -36,7 +36,7 @@ export const submitForm = async (formData: IRecipeForm, updateRecipeId: string |
   if (updateRecipeId) {
     const res = await recipeService.updateRecipe(updateRecipeId, recipeData);
     if (res.success) {
-      sessionStorage.getItem('formData') && sessionStorage.removeItem('formData');
+      if (sessionStorage.getItem('formData')) sessionStorage.removeItem('formData');
     }
     return res;
   } else {
