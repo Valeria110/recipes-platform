@@ -26,7 +26,7 @@ export const userSlice = createSlice({
     },
     removeFav: (state, action: PayloadAction<string>) => {
       state.favs.forEach((recipe, index) => {
-        if (recipe.recipeId === action.payload) {
+        if (recipe.id === action.payload) {
           state.favs.splice(index, 1);
         }
       });
