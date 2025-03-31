@@ -18,7 +18,7 @@ export const IngredientsForm = () => {
     if (!fields.length) {
       append({ name: '', quantity: 0, units: '' });
     }
-  }, []);
+  }, [fields.length]);
 
   return (
     <section className='flex flex-col w-full gap-5 p-4 min-h-dvh bg-orange-200/50 rounded-2xl'>

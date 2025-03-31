@@ -10,7 +10,7 @@ export const SectionWhy = () => {
       className='flex flex-col
     gap-8 w-full mb-10 mt-10'
     >
-      <h3 className='text-4xl font-medium'>Why you'll love it?</h3>
+      <h3 className='text-4xl font-medium'>Why you&apos;ll love it?</h3>
       <div className='grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-4 gap-10 justify-items-center'>
         <WhyCard title='Share your recipes' description='Post your recipes to share them with others'>
           <LuCookingPot size={80} className='text-orange-400' />

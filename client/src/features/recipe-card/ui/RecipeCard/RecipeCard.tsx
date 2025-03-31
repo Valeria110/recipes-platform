@@ -4,14 +4,15 @@ import { foodImg } from '@/shared/assets';
 import { memo, useEffect, useState } from 'react';
 import { useUser } from '@/shared/hooks/useUser';
 import { IFav } from '@/shared/model/fav';
-import { favsService } from '@/shared/api';
+import { favsService, TokenService } from '@/shared/api';
 import { HeartButton } from '@/shared/ui/client';
 import { useRouter } from 'next/navigation';
 import { Route } from '@/shared/types';
 import { ServingNumberInfo, TimeInfo } from '@/shared/ui/server';
+import { EditButton } from './EditButton';
 
 interface IRecipeCardProps {
-  imageUrl: string | null | File;
+  imageUrl: string | null;
   title: string;
   authorId: string | null;
   cookingTime: number;
@@ -31,6 +32,7 @@ export const RecipeCard = memo(
     const [isHeartLoading, setIsHeartLoading] = useState(false);
     const { data, error, isLoading } = useUser(authorId);
     const router = useRouter();
+    const [userId, setUserId] = useState<string | null>(null);
 
     useEffect(() => {
       const isRecipeFav = async () => {
@@ -45,6 +47,13 @@ export const RecipeCard = memo(
       };
       isRecipeFav();
     }, [favsData, recipeId]);
+
+    useEffect(() => {
+      const currentUserId = TokenService.getUserId();
+      if (currentUserId) {
+        setUserId(currentUserId);
+      }
+    }, []);
 
     const handleHeartClick = async () => {
       const start = Date.now();
@@ -95,7 +104,7 @@ export const RecipeCard = memo(
         className='recipe-card flex flex-col flex-grow gap-2 w-64 max-w-80 h-full max-h-80 lg:min-w-52 lg:flex-grow-0 p-2 shadow-lg rounded-xl bg-white hover:cursor-pointer'
         onClick={handleCardCLick}
       >
-        <div className='relative overflow-hidden flex justify-center items-center w-full h-44 rounded-xl'>
+        <div className='relative overflow-hidden flex justify-center items-center w-full h-44 rounded-xl group'>
           <img
             className='absolute object-cover w-full h-full hoverable:hover:scale-110 active:scale-110 hover:cursor-pointer transition-transform duration-500 ease-in-out'
             src={(imageUrl as string) ?? foodImg.src}
@@ -119,6 +128,7 @@ export const RecipeCard = memo(
           <TimeInfo time={cookingTime} />
           <span className='text-xs'>|</span>
           <ServingNumberInfo peopleNum={servingNum} />
+          {userId && userId === authorId && <EditButton recipeId={recipeId} />}
         </div>
       </div>
     );

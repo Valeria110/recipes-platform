@@ -15,11 +15,10 @@ export interface IRecipeForm {
 interface ITime {
   hours: number;
   minutes: number;
-  seconds: number;
 }
 
 export type IngredientType = {
   name: string;
-  quantity: number;
+  quantity?: number;
   units?: string;
 };

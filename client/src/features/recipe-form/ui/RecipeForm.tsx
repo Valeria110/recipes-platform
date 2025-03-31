@@ -9,60 +9,59 @@ import { IngredientsForm } from './IngredientsForm';
 import { InstructionsForm } from './InstructionsForm';
 import { ImageUpload } from './ImageUpload';
 import { Button } from '@/shared/ui/server';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { submitForm } from '../api';
 import { Route } from '@/shared/types';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TokenService } from '@/shared/api';
 import { toast, ToastContainer } from 'react-toastify';
 
 export const RecipeForm = () => {
-  const [formData, setFormData] = useState<IRecipeForm>(formDefaultValues);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const searchParams = useSearchParams();
+  const updateRecipeId = searchParams.get('updateRecipeId');
+
+  const defaultValues = useMemo(() => {
+    const savedFormData = sessionStorage.getItem('formData');
+    return savedFormData ? JSON.parse(savedFormData) : formDefaultValues;
+  }, []);
 
   const methods = useForm<IRecipeForm>({
     mode: 'onChange',
     resolver: yupResolver(schema),
-    defaultValues: formData,
+    defaultValues,
   });
+
   const { handleSubmit, control, getValues, reset } = methods;
   const router = useRouter();
 
   useEffect(() => {
     const accessToken = TokenService.getAccessToken();
 
-    if (accessToken) {
-      setIsLoggedIn(true);
-    } else {
+    if (!accessToken) {
+      setIsLoggedIn(false);
       router.replace(Route.LOGIN);
     }
   }, []);
 
-  useEffect(() => {
-    const savedFormData = sessionStorage.getItem('formData');
-
-    if (savedFormData) {
-      const parsedData: IRecipeForm = JSON.parse(savedFormData);
-      setFormData(parsedData);
-      reset(parsedData);
-    } else {
-      setFormData(formDefaultValues);
-    }
-  }, [reset]);
-
   const onFormSubmit: SubmitHandler<IRecipeForm> = async (formData) => {
-    const res = await submitForm(formData);
+    const res = await submitForm(formData, updateRecipeId);
+
     if (res.success) {
       router.replace(`${Route.RECIPES}`);
       reset(formDefaultValues);
-      toast.success('New recipe was successfully published');
+      toast.success(
+        `${updateRecipeId ? 'Your recipe was successfully updated!' : 'New recipe was successfully published'}`,
+      );
+    }
+    if (res.error) {
+      toast.error(`Something went wrong: ${res.error}`);
     }
   };
 
   const showPreview = useCallback(() => {
     const recipeFormData = getValues();
     sessionStorage.setItem('formData', JSON.stringify(recipeFormData));
-    setFormData(recipeFormData);
     router.push(`share-recipe/preview?data=${encodeURIComponent(JSON.stringify(recipeFormData))}`);
   }, [getValues, router]);
 

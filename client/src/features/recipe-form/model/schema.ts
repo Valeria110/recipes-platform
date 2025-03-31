@@ -16,7 +16,7 @@ export const schema = object({
   description: yup
     .string()
     .min(50, 'Small description is required')
-    .max(500, 'Description must not exceed 200 characters')
+    .max(1500, 'Description must not exceed 1500 characters')
     .required(),
 
   // Block "Preparation and Serving Information"
@@ -32,11 +32,6 @@ export const schema = object({
         .required('Preparation time is required')
         .min(0, 'Minutes cannot be negative')
         .max(59, 'Minutes cannot exceed 59'),
-      seconds: yup
-        .number()
-        .required('Preparation time is required')
-        .min(0, 'Seconds cannot be negative')
-        .max(59, 'Seconds cannot exceed 59'),
     })
     .required(),
   cookingTime: yup
@@ -51,11 +46,6 @@ export const schema = object({
         .required('Cooking time is required')
         .min(0, 'Minutes cannot be negative')
         .max(59, 'Minutes cannot exceed 59'),
-      seconds: yup
-        .number()
-        .required('Cooking time is required')
-        .min(0, 'Seconds cannot be negative')
-        .max(59, 'Seconds cannot exceed 59'),
     })
     .required(),
   servingNum: yup
@@ -75,7 +65,6 @@ export const schema = object({
             .number()
             .typeError('Quantity must be a number')
             .positive('Quantity must be positive')
-            .required('Quantity is required')
             .min(0.1, 'Quantity must be more than 0'),
           units: yup.string(),
         })

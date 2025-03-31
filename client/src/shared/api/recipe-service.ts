@@ -25,13 +25,13 @@ class RecipeService {
       const res = await fetch(`${BASE_URL}/recipe/${recipeId}`);
       if (!res.ok) {
         const errorData = await res.json();
-        return { errorMessage: errorData.message, status: res.status };
+        return { success: false, error: errorData.message, data: null };
       }
 
       const data: IRecipe = await res.json();
-      return data;
+      return { success: true, error: null, data };
     } catch (err) {
-      throw err;
+      return { success: false, error: err, data: null };
     }
   }
 
@@ -47,11 +47,33 @@ class RecipeService {
       });
       if (!res.ok) {
         const error = await res.json();
-
         return { success: false, data: null, error };
       }
-      const data = await res.json();
 
+      const data = await res.json();
+      return { success: true, data, error: null };
+    } catch (err) {
+      return { success: false, data: null, error: err };
+    }
+  }
+
+  async updateRecipe(recipeId: string, recipeUpdateDto: Partial<ICreateRecipeDto>) {
+    try {
+      const res = await fetch(`${BASE_URL}/recipe/${recipeId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${TokenService.accessToken}`,
+        },
+        body: JSON.stringify(recipeUpdateDto),
+      });
+
+      if (!res.ok) {
+        const error = await res.json();
+        return { success: false, data: null, error };
+      }
+
+      const data = await res.json();
       return { success: true, data, error: null };
     } catch (err) {
       return { success: false, data: null, error: err };

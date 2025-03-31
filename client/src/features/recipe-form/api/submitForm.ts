@@ -3,7 +3,7 @@ import { transformInMin, ingredientsIntoStr } from '../helpers';
 import { IRecipeForm } from '../model';
 import { ICreateRecipeDto } from '@/shared/types';
 
-export const submitForm = async (formData: IRecipeForm) => {
+export const submitForm = async (formData: IRecipeForm, updateRecipeId: string | null) => {
   const {
     recipeTitle: title,
     imageUrl,
@@ -11,14 +11,14 @@ export const submitForm = async (formData: IRecipeForm) => {
     ingredients,
     foodCategory: category,
     cuisineType,
-    cookingTime: { hours, minutes, seconds },
-    preparationTime: { hours: prepHours, minutes: prepMin, seconds: prepSec },
+    cookingTime: { hours, minutes },
+    preparationTime: { hours: prepHours, minutes: prepMin },
     servingNum,
     instructions,
   } = formData;
   const authorId = TokenService.getUserId();
-  const cookingTime = transformInMin(hours, minutes, seconds);
-  const preparationTime = transformInMin(prepHours, prepMin, prepSec);
+  const cookingTime = transformInMin(hours, minutes);
+  const preparationTime = transformInMin(prepHours, prepMin);
   const recipeData: ICreateRecipeDto = {
     title,
     imageUrl,
@@ -33,11 +33,19 @@ export const submitForm = async (formData: IRecipeForm) => {
     servingNum,
   };
 
-  const res = await recipeService.createRecipe(recipeData);
+  if (updateRecipeId) {
+    const res = await recipeService.updateRecipe(updateRecipeId, recipeData);
+    if (res.success) {
+      if (sessionStorage.getItem('formData')) sessionStorage.removeItem('formData');
+    }
+    return res;
+  } else {
+    const res = await recipeService.createRecipe(recipeData);
 
-  if (res.success) {
-    sessionStorage.removeItem('formData');
+    if (res.success) {
+      sessionStorage.removeItem('formData');
+    }
+
+    return res;
   }
-
-  return res;
 };

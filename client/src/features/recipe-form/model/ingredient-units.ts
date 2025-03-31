@@ -7,4 +7,5 @@ export const ingredientUnits = [
   'teaspoon (tsp)',
   'tablespoon (tbsp)',
   'ml',
+  'to your taste',
 ];

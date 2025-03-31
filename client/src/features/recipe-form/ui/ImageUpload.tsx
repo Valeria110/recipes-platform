@@ -1,3 +1,5 @@
+'use client';
+
 import { useFormContext } from 'react-hook-form';
 import { IRecipeForm } from '../model';
 import Image from 'next/image';
@@ -21,6 +23,7 @@ interface CloudinaryUploadResult {
 
 export const ImageUpload = ({ onChange }: IProps) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+
   const {
     formState: { errors },
   } = useFormContext<IRecipeForm>();
