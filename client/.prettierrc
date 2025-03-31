@@ -3,7 +3,7 @@
   "semi": true,
   "singleQuote": true,
   "printWidth": 120,
-  "endOfLine": "crlf",
+  "endOfLine": "lf",
   "jsxSingleQuote": true,
   "tabWidth": 2
 }
