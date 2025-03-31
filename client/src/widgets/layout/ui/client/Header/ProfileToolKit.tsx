@@ -54,7 +54,10 @@ export const ProfileToolKit = ({ closeMenu }: IProfileToolKitProps) => {
     <div className='flex flex-col sm:flex-row mt-5 sm:mt-0 gap-3 items-center'>
       <Button
         width='w-fit'
-        onClick={() => router.push(Route.SHARE_RECIPE)}
+        onClick={() => {
+          sessionStorage.removeItem('formData');
+          router.push(Route.SHARE_RECIPE);
+        }}
         className='p-3 lg:mr-3 bg-white !text-orange-400 hoverable:hover:!text-white order-3 sm:order-none'
       >
         Share your recipe

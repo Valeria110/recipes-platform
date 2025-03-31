@@ -31,14 +31,6 @@ export const PreparationInfoForm = () => {
             max={59}
             error={errors.preparationTime?.minutes}
           />
-          <NumberField
-            register={register}
-            registerName='preparationTime.seconds'
-            label=':second(s)'
-            placeholder='00'
-            max={59}
-            error={errors.preparationTime?.seconds}
-          />
         </div>
       </div>
       <div className='flex flex-col gap-2'>
@@ -58,14 +50,6 @@ export const PreparationInfoForm = () => {
             placeholder='00'
             max={59}
             error={errors.cookingTime?.minutes}
-          />
-          <NumberField
-            register={register}
-            registerName='cookingTime.seconds'
-            label=':second(s)'
-            placeholder='00'
-            max={59}
-            error={errors.cookingTime?.seconds}
           />
         </div>
       </div>
