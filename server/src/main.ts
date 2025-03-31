@@ -4,7 +4,9 @@ import 'dotenv/config';
 import { ValidationPipe } from '@nestjs/common';
 
 const PORT = Number(process.env.PORT) || 4000;
-const allowedOrigins = process.env.CLIENT_ORIGIN.split(',');
+const allowedOrigins = process.env.CLIENT_ORIGIN
+  ? process.env.CLIENT_ORIGIN.split(',').map((origin) => origin.trim())
+  : [];
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
