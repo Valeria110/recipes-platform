@@ -4,7 +4,6 @@ import 'dotenv/config';
 import { ValidationPipe } from '@nestjs/common';
 
 const PORT = Number(process.env.PORT) || 4000;
-const allowedOrigins = process.env.CLIENT_ORIGIN.split(',');
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -12,7 +11,28 @@ async function bootstrap() {
   });
 
   app.enableCors({
-    origin: allowedOrigins,
+    origin: (origin, callback) => {
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      const allowedOrigins = process.env.CLIENT_ORIGIN
+        ? process.env.CLIENT_ORIGIN.split(',').map((o) => o.trim())
+        : [];
+
+      const isAllowed = allowedOrigins.some((allowed) => {
+        return (
+          allowed === origin ||
+          (allowed.includes('*.vercel.app') && origin.endsWith('.vercel.app'))
+        );
+      });
+
+      if (isAllowed) {
+        return callback(null, true);
+      } else {
+        return callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   });
 
