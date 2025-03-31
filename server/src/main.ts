@@ -11,7 +11,10 @@ async function bootstrap() {
   });
 
   app.enableCors({
-    origin: 'http://localhost:3000', // Порт клиента
+    origin: [
+      'http://localhost:3000', // for the dev mode
+      'https://recipes-platform-valerjanochka.vercel.app', // for production
+    ],
     credentials: true,
   });
 
