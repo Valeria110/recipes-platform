@@ -24,11 +24,13 @@ export const schema = object({
     .object({
       hours: yup
         .number()
+        .typeError('Quantity must be a number')
         .required('Preparation time is required')
         .min(0, 'Hours cannot be negative')
         .max(23, 'Hours cannot exceed 23'),
       minutes: yup
         .number()
+        .typeError('Quantity must be a number')
         .required('Preparation time is required')
         .min(0, 'Minutes cannot be negative')
         .max(59, 'Minutes cannot exceed 59'),
@@ -38,11 +40,13 @@ export const schema = object({
     .object({
       hours: yup
         .number()
+        .typeError('Quantity must be a number')
         .required('Cooking time is required')
         .min(0, 'Hours cannot be negative')
         .max(23, 'Hours cannot exceed 23'),
       minutes: yup
         .number()
+        .typeError('Quantity must be a number')
         .required('Cooking time is required')
         .min(0, 'Minutes cannot be negative')
         .max(59, 'Minutes cannot exceed 59'),
@@ -62,10 +66,16 @@ export const schema = object({
         .object({
           name: yup.string().required('Ingredient name is required'),
           quantity: yup
-            .number()
-            .typeError('Quantity must be a number')
-            .positive('Quantity must be positive')
-            .min(0.1, 'Quantity must be more than 0'),
+            .mixed<string | number>()
+            .transform((_, originalValue) =>
+              originalValue === '' || originalValue === undefined ? undefined : Number(originalValue),
+            )
+            .test('is-number', 'Quantity must be a number', (value) => value === undefined || typeof value === 'number')
+            .test(
+              'is-positive',
+              'Quantity must be positive',
+              (value) => value === undefined || (typeof value === 'number' && value > 0),
+            ),
           units: yup.string(),
         })
         .required(),

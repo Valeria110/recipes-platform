@@ -110,7 +110,7 @@ export const AboutPage = () => {
           </div>
           <div className='pr-4'>
             <Image
-              className='rounded-2xl hoverable:hover:scale-105 ease-in-out duration-300'
+              className='rounded-2xl hoverable:hover:scale-105 ease-in-out duration-300 active:scale-105'
               src={myImg}
               alt='my image'
               width={300}

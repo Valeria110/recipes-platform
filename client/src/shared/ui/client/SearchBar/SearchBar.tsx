@@ -7,6 +7,7 @@ import { useDeboubce } from '@/shared/hooks/useDebounce';
 import { Route } from '@/shared/types/routes';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from 'react';
+import { IoSearch } from 'react-icons/io5';
 
 interface ISearchBar {
   children: string;
@@ -22,7 +23,7 @@ export const SearchBar = ({ children, className }: ISearchBar) => {
   const pathname = usePathname();
 
   useEffect(() => {
-    dispatch(setSearchValue(debouncedValue));
+    dispatch(setSearchValue(debouncedValue.toLowerCase()));
   }, [debouncedValue]);
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -45,17 +46,18 @@ export const SearchBar = ({ children, className }: ISearchBar) => {
   return (
     <form
       onSubmit={handleFormSubmit}
-      className={`flex justify-between gap-3 bg-white rounded-full p-2 w-fit ${className}`}
+      className={`flex justify-between gap-2 bg-white rounded-full p-2 w-fit ${className ? className : ''}`}
     >
       <input
         onChange={handleInputChange}
-        className='rounded-3xl p-2 focus:outline-0 w-48 md:w-72'
+        className='rounded-3xl p-2 focus:outline-0 min-w-fit w-48 md:w-72'
         type='search'
         placeholder={children}
         value={inputValue}
       />
-      <Button onClick={handleSearchBtnClick} width='w-24 w-28'>
-        Search
+      <Button onClick={handleSearchBtnClick} width='w-12 sm:w-24'>
+        <span className='hidden sm:inline'>Search</span>
+        <IoSearch size={25} className='text-white sm:hidden' />
       </Button>
     </form>
   );

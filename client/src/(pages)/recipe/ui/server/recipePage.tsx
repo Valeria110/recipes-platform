@@ -75,7 +75,7 @@ export const RecipePage = async ({ recipeData }: IProps) => {
         <p className='leading-7' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(instructions) }} />
       </div>
 
-      <div className='flex justify-between text-sm text-gray-400'>
+      <div className='flex flex-col sm:flex-row gap-1 items-start justify-between text-sm text-gray-400'>
         <p>{`created by ${authorName}, ${new Date(createdAt).toDateString()}`}</p>
         <p className=''>{`updated on ${new Date(updatedAt).toDateString()}`}</p>
       </div>
