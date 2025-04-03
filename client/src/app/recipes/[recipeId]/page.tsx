@@ -9,6 +9,7 @@ export async function generateStaticParams() {
 export default async function Page({ params }: { params: Promise<{ recipeId: string }> }) {
   const recipeId = (await params).recipeId;
   const recipeData = await recipeService.getRecipeById(recipeId);
+
   if (recipeData.success && recipeData.data) {
     return <RecipePage recipeData={recipeData.data} />;
   } else {

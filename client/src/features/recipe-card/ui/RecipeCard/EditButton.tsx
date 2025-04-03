@@ -35,7 +35,6 @@ export const EditButton = ({ recipeId }: IProps) => {
         preparationTime,
         imageUrl,
       } = res.data;
-      console.log(cookingTime, preparationTime);
 
       const formData: IRecipeForm = {
         recipeTitle: title,

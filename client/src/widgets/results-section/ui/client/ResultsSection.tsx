@@ -31,36 +31,37 @@ export const ResultsSection = () => {
     <section className='mt-10'>
       <h4 className='font-semibold'>Based on your search</h4>
       <div className='flex flex-col  sm:flex-row sm:flex-wrap gap-5 items-center sm:items-stretch'>
-        {filteredRecipes.map((recipe) => {
-          const {
-            imageUrl,
-            title,
-            authorId,
-            ingredients,
-            instructions,
-            cookingTime,
-            id,
-            createdAt,
-            updatedAt,
-            servingNum,
-          } = recipe;
-          return (
-            <RecipeCard
-              recipeId={id}
-              key={id}
-              imageUrl={imageUrl}
-              title={title}
-              authorId={authorId}
-              cookingTime={cookingTime}
-              ingredients={ingredients}
-              instructions={instructions}
-              createdAt={createdAt}
-              updatedAt={updatedAt}
-              favsData={favsData}
-              servingNum={servingNum}
-            />
-          );
-        })}
+        {filteredRecipes.length &&
+          filteredRecipes.map((recipe) => {
+            const {
+              imageUrl,
+              title,
+              authorId,
+              ingredients,
+              instructions,
+              cookingTime,
+              id,
+              createdAt,
+              updatedAt,
+              servingNum,
+            } = recipe;
+            return (
+              <RecipeCard
+                recipeId={id}
+                key={id}
+                imageUrl={imageUrl}
+                title={title}
+                authorId={authorId}
+                cookingTime={cookingTime}
+                ingredients={ingredients}
+                instructions={instructions}
+                createdAt={createdAt}
+                updatedAt={updatedAt}
+                favsData={favsData}
+                servingNum={servingNum}
+              />
+            );
+          })}
       </div>
     </section>
   );

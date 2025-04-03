@@ -72,9 +72,9 @@ export const schema = object({
             )
             .test('is-number', 'Quantity must be a number', (value) => value === undefined || typeof value === 'number')
             .test(
-              'is-positive',
-              'Quantity must be positive',
-              (value) => value === undefined || (typeof value === 'number' && value > 0),
+              'is-positive-or-zero',
+              'Quantity must be more or equal to 0',
+              (value) => value === undefined || (typeof value === 'number' && value >= 0),
             ),
           units: yup.string(),
         })

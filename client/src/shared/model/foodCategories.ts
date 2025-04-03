@@ -9,6 +9,7 @@ export const foodCategories = [
   'Lunch',
   'Dinner',
   'Dessert',
+  'Drinks',
   'Gluten free',
   'Lactose free',
   'Sugar free',

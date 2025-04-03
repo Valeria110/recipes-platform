@@ -12,7 +12,7 @@ import { ServingNumberInfo, TimeInfo } from '@/shared/ui/server';
 import { EditButton } from './EditButton';
 
 interface IRecipeCardProps {
-  imageUrl: string | null;
+  imageUrl: string;
   title: string;
   authorId: string | null;
   cookingTime: number;
@@ -91,7 +91,6 @@ export const RecipeCard = memo(
       } finally {
         setIsHeartLoading(false);
         worker.terminate();
-        console.log(`Время выполнения: ${Date.now() - start}ms`);
       }
     };
 

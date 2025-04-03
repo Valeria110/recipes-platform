@@ -18,10 +18,13 @@ export class RecipeService {
   ) {}
 
   async create(createRecipeDto: CreateRecipeDto) {
-    await this.userService.findOne(createRecipeDto.authorId);
+    const { authorId, ...recipeData } = createRecipeDto;
 
-    return await this.prismaService.recipe.create({
-      data: createRecipeDto,
+    return this.prismaService.recipe.create({
+      data: {
+        ...recipeData,
+        ...(authorId && { author: { connect: { id: authorId } } }),
+      },
     });
   }
 
@@ -61,18 +64,19 @@ export class RecipeService {
   }
 
   async update(id: string, updateRecipeDto: UpdateRecipeDto) {
-    const recipe = await this.findOne(id);
+    const { authorId, ...updateData } = updateRecipeDto;
 
-    if (recipe) {
-      if (updateRecipeDto.authorId) {
-        await this.userService.findOne(updateRecipeDto.authorId);
-      }
-
-      return this.prismaService.recipe.update({
-        where: { id },
-        data: updateRecipeDto,
-      });
+    if (authorId) {
+      await this.userService.findOne(authorId);
     }
+
+    return this.prismaService.recipe.update({
+      where: { id },
+      data: {
+        ...updateData,
+        ...(authorId && { author: { connect: { id: authorId } } }),
+      },
+    });
   }
 
   async remove(id: string) {
