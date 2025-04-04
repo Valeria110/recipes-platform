@@ -6,9 +6,12 @@ export const transformIngredients = (ingredient: string) => {
   }
 
   const [, name, qty, unit] = match;
+  const quantity = qty ? (parseFloat(qty) === 0 ? '' : parseFloat(qty)) : '';
+  console.log(quantity, typeof quantity);
+
   return {
     name: name.trim(),
-    quantity: qty ? parseFloat(qty) : '',
+    quantity,
     units: unit ? unit.trim() : '',
   };
 };
