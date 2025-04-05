@@ -28,19 +28,24 @@ export class RecipeService {
     });
   }
 
-  async findAll(filters: IRecipeFilters) {
-    if (!filters.category && !filters.cuisineType) {
-      return await this.prismaService.recipe.findMany();
-    }
+  async findAll(filters: IRecipeFilters, limit: number, page: number) {
+    const skip = (page - 1) * limit;
+    const where = {
+      AND: [
+        filters.category ? { category: filters.category } : {},
+        filters.cuisineType ? { cuisineType: filters.cuisineType } : {},
+      ],
+    };
 
-    return await this.prismaService.recipe.findMany({
-      where: {
-        AND: [
-          filters.category ? { category: filters.category } : {},
-          filters.cuisineType ? { cuisineType: filters.cuisineType } : {},
-        ],
-      },
-    });
+    const [recipes, totalCount] = await this.prismaService.$transaction([
+      this.prismaService.recipe.findMany({
+        skip,
+        take: limit,
+        where,
+      }),
+      this.prismaService.recipe.count({ where }),
+    ]);
+    return { recipes, totalCount };
   }
 
   async findOne(id: string) {

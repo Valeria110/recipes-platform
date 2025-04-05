@@ -56,7 +56,6 @@ export const RecipeCard = memo(
     }, []);
 
     const handleHeartClick = async () => {
-      const start = Date.now();
       const worker = new Worker(new URL('./heartWorker.ts', import.meta.url), {
         type: 'module',
       });

@@ -30,6 +30,8 @@ export class RecipeController {
   async findAll(
     @Query('category') category?: string,
     @Query('cuisineType') cuisineType?: string,
+    @Query('limit') limitStr?: string,
+    @Query('page') pageStr?: string,
   ) {
     const filters: IRecipeFilters = {};
     if (category) {
@@ -40,7 +42,11 @@ export class RecipeController {
       const cuisinesArr = cuisineType.split(',');
       filters.cuisineType = { hasSome: cuisinesArr };
     }
-    return this.recipeService.findAll(filters);
+
+    const limit = limitStr ? parseInt(limitStr, 10) : 10;
+    const page = pageStr ? parseInt(pageStr, 10) : 1;
+
+    return this.recipeService.findAll(filters, limit, page);
   }
 
   @Get(':id')

@@ -27,7 +27,6 @@ export const RecipePage = async ({ recipeData }: IProps) => {
     updatedAt,
     servingNum,
   } = recipeData;
-  console.log(ingredients);
 
   let authorName = 'unknown author';
   if (authorId) {
