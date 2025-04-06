@@ -37,7 +37,7 @@ export const RecipeForm = () => {
     control,
     getValues,
     reset,
-    formState: { isSubmitting, isValid },
+    formState: { isSubmitting },
   } = methods;
   const router = useRouter();
 

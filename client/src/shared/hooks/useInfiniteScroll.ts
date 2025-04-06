@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { IRecipe } from '../model';
 
 interface IParams {
   hasMore: boolean;

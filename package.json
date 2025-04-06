@@ -1,0 +1,13 @@
+{
+  "name": "recipes-platform",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "prettier:fix": "npm run prettier:fix --workspace=client",
+    "lint": "npm run lint --workspace=client && npm run lint --workspace=server",
+    "prepare": "husky install"
+  }
+}

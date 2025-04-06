@@ -1,0 +1,5 @@
+echo "Running Prettier..."
+npm run prettier:fix
+
+echo "Running Linter..."
+npm run lint
