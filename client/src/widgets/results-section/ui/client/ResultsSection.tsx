@@ -3,33 +3,17 @@
 import { useAppSelector } from '@/shared/hooks/store.hooks';
 import useSWR from 'swr';
 import { favsService } from '@/shared/api/favs-service';
-import { recipeService } from '@/shared/api';
 import { RecipeCard } from '@/features/recipe-card/ui/RecipeCard/RecipeCard';
-import { Loader } from '@/shared/ui/server';
-import { IRecipe } from '@/shared/model';
-import { useEffect, useMemo, useState } from 'react';
-import useSWRInfinite from 'swr/infinite';
+import { Loader, ScrollLoader } from '@/shared/ui/server';
+import { useMemo } from 'react';
+import { useInfiniteScroll, usePaginatedRecipes } from '@/shared/hooks';
 
 export const ResultsSection = () => {
   const { searchValue, filters } = useAppSelector((state) => state.search);
   const { categoriesQuery, cuisinesQuery } = filters;
 
   const { data: favsData, error: favsError, isLoading: isFavsLoading } = useSWR('favs', () => favsService.getFavs());
-
-  const getKey = (page: number, prevPageData: { recipes: IRecipe[]; totalCount: number }) => {
-    if (prevPageData && !prevPageData.recipes.length) return null;
-    return `recipe?category=${categoriesQuery}&cuisineType=${cuisinesQuery}&limit=10&page=${page + 1}`;
-  };
-
-  const { data, error, isLoading, size, setSize, isValidating } = useSWRInfinite(getKey, (key) => {
-    const url = new URLSearchParams(key.split('?')[1]);
-    const category = url.get('category') || '';
-    const cuisineType = url.get('cuisineType') || '';
-    const page = parseInt(url.get('page') || '1');
-    const limit = parseInt(url.get('limit') || '10');
-
-    return recipeService.getRecipes(category, cuisineType, page, limit);
-  });
+  const { data, error, isLoading, size, setSize, isValidating } = usePaginatedRecipes(categoriesQuery, cuisinesQuery);
 
   const allRecipes = data?.map((page) => page.recipes).flat() || [];
   const totalCount = data?.[0].totalCount || 0;
@@ -39,23 +23,11 @@ export const ResultsSection = () => {
     [allRecipes, searchValue],
   );
 
-  useEffect(() => {
-    const scrollHandler = () => {
-      const documentElement = document.documentElement;
-
-      if (
-        documentElement.scrollHeight - (documentElement.scrollTop + window.innerHeight) < 300 &&
-        allRecipes.length &&
-        allRecipes.length < totalCount &&
-        !isValidating
-      ) {
-        setSize(size + 1);
-      }
-    };
-
-    document.addEventListener('scroll', scrollHandler);
-    return () => document.removeEventListener('scroll', scrollHandler);
-  }, [allRecipes.length, totalCount, isValidating, size]);
+  useInfiniteScroll({
+    hasMore: allRecipes.length < totalCount,
+    isLoading: isValidating,
+    onLoadMore: () => setSize(size + 1),
+  });
 
   if (error || favsError) return <div className='mt-10'>Data fetching error &#128577;</div>;
   if (isLoading || isFavsLoading)
@@ -101,6 +73,11 @@ export const ResultsSection = () => {
               />
             );
           })}
+        {isValidating && allRecipes.length < totalCount && (
+          <div className='flex items-center justify-center w-64 max-w-80 sm:h-80 max-h-80 lg:min-w-52 lg:flex-grow-0 p-2'>
+            <ScrollLoader />
+          </div>
+        )}
       </div>
     </section>
   );
