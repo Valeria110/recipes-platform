@@ -28,6 +28,7 @@ const NumberFieldComponent = <T extends FieldValues>({
           max={props.max ?? Infinity}
           min={props.min ?? 0}
           step={props.step ?? 'any'}
+          {...props}
         />
         {label}
       </label>

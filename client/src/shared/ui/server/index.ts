@@ -8,3 +8,4 @@ export { PasswordToggle } from './PasswordToggle/PasswordToggle';
 export { Textarea } from './Textarea/Textarea';
 export { NumberField } from './NumberField/NumberField';
 export { TabButton } from './TabButton/TabButton';
+export { ScrollLoader } from './ScrollLoader/ScrollLoader';

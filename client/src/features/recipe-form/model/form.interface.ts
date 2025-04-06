@@ -19,6 +19,6 @@ interface ITime {
 
 export type IngredientType = {
   name: string;
-  quantity?: number;
+  quantity?: number | string;
   units?: string;
 };

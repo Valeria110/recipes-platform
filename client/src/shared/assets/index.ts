@@ -4,6 +4,8 @@ import headerLogo from './img/header-logo2.png';
 import signUpImg from './img/signup-img.jpg';
 import signUpImg2 from './img/signup-img2.jpg';
 import myImg from './img/my-img.jpg';
+import loginBg from './img/login-bg.jpg';
+import signupBg from './img/signup-bg.jpg';
 
 // svg:
 import peopleSvg from './svg/people.svg';
@@ -24,6 +26,8 @@ export {
   signUpImg,
   signUpImg2,
   myImg,
+  loginBg,
+  signupBg,
   peopleSvg,
   headerLogo,
   filtersSvg,

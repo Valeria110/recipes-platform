@@ -1,0 +1,26 @@
+{
+  "name": "recipes-platform",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "prettier:fix": "npm run prettier:fix --workspace=client",
+    "lint": "npm run lint --workspace=client && npm run lint --workspace=server",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "client/**/*.{js,ts,tsx}": [
+      "npm run prettier:fix --workspace=client",
+      "npm run lint --workspace=client"
+    ],
+    "server/**/*.{js,ts}": [
+      "npm run prettier:fix --workspace=server",
+      "npm run lint --workspace=server"
+    ]
+  },
+  "devDependencies": {
+    "lint-staged": "^15.5.0"
+  }
+}

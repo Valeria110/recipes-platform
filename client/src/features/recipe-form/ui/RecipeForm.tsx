@@ -32,7 +32,13 @@ export const RecipeForm = () => {
     defaultValues,
   });
 
-  const { handleSubmit, control, getValues, reset } = methods;
+  const {
+    handleSubmit,
+    control,
+    getValues,
+    reset,
+    formState: { isSubmitting },
+  } = methods;
   const router = useRouter();
 
   useEffect(() => {
@@ -90,7 +96,7 @@ export const RecipeForm = () => {
             <Button onClick={showPreview} type='button' width='w-1/2' buttonGroup='outlined'>
               Preview
             </Button>
-            <Button type='submit' width='w-1/2'>
+            <Button type='submit' width='w-1/2' disabled={isSubmitting}>
               Share recipe
             </Button>
           </div>

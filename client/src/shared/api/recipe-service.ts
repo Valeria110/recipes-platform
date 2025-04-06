@@ -4,17 +4,19 @@ import { ICreateRecipeDto } from '../types';
 import { TokenService } from './token-service';
 
 class RecipeService {
-  async getRecipes(category: string = '', cuisineType: string = '') {
+  async getRecipes(category: string = '', cuisineType: string = '', page: number = 1, limit: number = 10) {
     try {
-      const res = await fetch(`${BASE_URL}/recipe?category=${category}&cuisineType=${cuisineType}`);
+      const res = await fetch(
+        `${BASE_URL}/recipe?category=${category}&cuisineType=${cuisineType}&limit=${limit}&page=${page}`,
+      );
 
       if (!res.ok) {
         const errorData = await res.json();
         throw { errorMessage: errorData.message, status: res.status };
       }
 
-      const recipes: IRecipe[] = await res.json();
-      return recipes;
+      const data: { totalCount: number; recipes: IRecipe[] } = await res.json();
+      return data;
     } catch (err) {
       throw err;
     }

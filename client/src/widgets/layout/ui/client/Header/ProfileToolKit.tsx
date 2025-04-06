@@ -36,6 +36,9 @@ export const ProfileToolKit = ({ closeMenu }: IProfileToolKitProps) => {
     authService.logout();
     dispatch(logout());
     router.push(`${Route.HOME}`);
+    if (closeMenu) {
+      closeMenu();
+    }
   };
   const handleSignUp = () => {
     router.push(`${Route.SIGNUP}`);
@@ -55,6 +58,9 @@ export const ProfileToolKit = ({ closeMenu }: IProfileToolKitProps) => {
       <Button
         width='w-fit'
         onClick={() => {
+          if (closeMenu) {
+            closeMenu();
+          }
           sessionStorage.removeItem('formData');
           router.push(Route.SHARE_RECIPE);
         }}
@@ -62,7 +68,11 @@ export const ProfileToolKit = ({ closeMenu }: IProfileToolKitProps) => {
       >
         Share your recipe
       </Button>
-      <Link className='order-1 sm:order-none p-2 hoverable:hover:scale-110 ease-in-out duration-300' href='/profile'>
+      <Link
+        className='order-1 sm:order-none p-2 hoverable:hover:scale-110 ease-in-out duration-300'
+        href='/profile'
+        onClick={() => closeMenu && closeMenu()}
+      >
         <Image src={profileSvg} alt='user profile svg' width={45} />
       </Link>
       <Button width='w-28' className='border-white order-2 sm:order-none' onClick={handleLogOut}>

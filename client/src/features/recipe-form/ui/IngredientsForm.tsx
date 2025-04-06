@@ -40,10 +40,11 @@ export const IngredientsForm = () => {
                 <div className='flex flex-col gap-2'>
                   <p>Quantity</p>
                   <NumberField
-                    placeholder='00'
+                    placeholder='0'
                     registerName={`ingredients.${i}.quantity`}
                     register={register}
                     error={errors.ingredients?.[i]?.quantity}
+                    defaultValue={0}
                     width='w-full lg:w-24'
                   />
                 </div>

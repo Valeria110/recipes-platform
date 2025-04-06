@@ -22,17 +22,17 @@ model Recipe{
   id                String    @id @default(uuid())
   title             String
   description       String    @default("Default description")
-  ingredients       String[]
+  ingredients       String[]      
   instructions      String
   cookingTime       Int                     //in minutes
   preparationTime   Int       @default(0)   //in minutes
-  imageUrl          String?
+  imageUrl          String
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
-  authorId          String?
+  authorId          String?   
   author            User?      @relation(fields: [authorId], references: [id], onDelete: SetNull )
   comments          Comment[]
-  favorites         Favorite[]
+  favorites         Favorite[] 
   servingNum        Int        @default(4)
 
   // Filtration:

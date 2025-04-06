@@ -1,0 +1,8 @@
+echo "Running Prettier..."
+npm run prettier:fix
+
+echo "Running Linter..."
+npm run lint
+
+# echo "Running lint-staged..."
+# npx lint-staged
