@@ -2,8 +2,8 @@ import { RecipePage } from '@/(pages)/recipe/ui/server';
 import { recipeService } from '@/shared/api';
 
 export async function generateStaticParams() {
-  const recipes = await recipeService.getRecipes();
-  return recipes.map((recipe) => ({ recipeId: recipe.id }));
+  const data = await recipeService.getRecipes();
+  return data.recipes.map((recipe) => ({ recipeId: recipe.id }));
 }
 
 export default async function Page({ params }: { params: Promise<{ recipeId: string }> }) {

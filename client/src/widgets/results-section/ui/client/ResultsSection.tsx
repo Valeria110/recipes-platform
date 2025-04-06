@@ -15,7 +15,7 @@ export const ResultsSection = () => {
   const { data: favsData, error: favsError, isLoading: isFavsLoading } = useSWR('favs', () => favsService.getFavs());
   const { data, error, isLoading, size, setSize, isValidating } = usePaginatedRecipes(categoriesQuery, cuisinesQuery);
 
-  const allRecipes = data?.map((page) => page.recipes).flat() || [];
+  const allRecipes = useMemo(() => data?.map((page) => page.recipes).flat() || [], [data]);
   const totalCount = data?.[0].totalCount || 0;
 
   const filteredRecipes = useMemo(
