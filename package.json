@@ -8,7 +8,7 @@
   "scripts": {
     "prettier:fix": "npm run prettier:fix --workspace=client",
     "lint": "npm run lint --workspace=client && npm run lint --workspace=server",
-    "prepare": "if [ \"$CI\" != \"true\" ]; then husky install; fi"
+    "prepare": "node -e \"if (process.env.NODE_ENV !== 'production'){process.exit(1)} \" || husky install"
   },
   "lint-staged": {
     "client/**/*.{js,ts,tsx}": [
