@@ -46,16 +46,16 @@ export const SearchBar = ({ children, className }: ISearchBar) => {
   return (
     <form
       onSubmit={handleFormSubmit}
-      className={`flex justify-between gap-2 bg-white rounded-full p-2 w-fit ${className ? className : ''}`}
+      className={`flex justify-between gap-2 bg-white rounded-full p-2 w-full max-w-sm ${className ? className : ''}`}
     >
       <input
         onChange={handleInputChange}
-        className='rounded-3xl p-2 focus:outline-0 min-w-fit w-48 md:w-72'
+        className='flex-1 rounded-3xl p-2 focus:outline-0'
         type='search'
         placeholder={children}
         value={inputValue}
       />
-      <Button onClick={handleSearchBtnClick} width='w-12 sm:w-24'>
+      <Button onClick={handleSearchBtnClick} width='w-11 sm:w-24'>
         <span className='hidden sm:inline'>Search</span>
         <IoSearch size={25} className='text-white sm:hidden' />
       </Button>
