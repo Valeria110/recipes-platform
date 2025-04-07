@@ -51,8 +51,8 @@ export const ProfilePage = () => {
                 <FiltersBtn />
               </div>
             )}
-            {error && <div className='mt-10'>Data fetching error &#128577;</div>}
-            {isLoading && !error ? (
+            {selectedSection !== 'edit' && error && <div className='mt-10'>Data fetching error &#128577;</div>}
+            {selectedSection !== 'edit' && isLoading && !error ? (
               <Loader />
             ) : (
               (selectedSection === 'favorites' && (

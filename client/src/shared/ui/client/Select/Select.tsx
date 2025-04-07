@@ -59,20 +59,20 @@ export const Select = <T extends FieldValues>({
               >
                 <Image src={searchSvg} alt='search svg image' width={25} />
                 <input
-                  className='w-fit focus:outline-none hover:cursor-pointer text-sm sm:text-base'
+                  className='w-fit focus:outline-none hover:cursor-pointer text-sm bg-transparent placeholder:text-sm '
                   placeholder={props['aria-placeholder']}
                   type='text'
                   readOnly
                   value={isMultiSelect ? '' : value}
                 />
                 <Image
-                  className='absolute right-1 flex ml-auto'
+                  className='absolute right-2 flex ml-auto'
                   src={isOpen ? upArrow : downArrow}
                   alt='down arrow svg'
                 />
               </div>
               {isOpen && (
-                <li className='flex flex-col mt-3 text-sm sm:text-base'>
+                <li className='flex flex-col mt-3 text-base'>
                   {options.map((option, i) => (
                     <Option
                       handleSelect={() => handleSelect(option)}
