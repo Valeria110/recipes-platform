@@ -47,7 +47,7 @@ export const ProfilePage = () => {
           <section className='flex flex-col gap-5 w-full h-fit'>
             {(selectedSection === 'favorites' || selectedSection === 'my recipes') && (
               <div className='flex flex-col lg:flex-row md:items-end lg:justify-end lg:items-center gap-8'>
-                <SearchBar className='border-1 border-gray-300 w-full md:w-fit'>Search for recipes...</SearchBar>
+                <SearchBar className='border-1 border-gray-300'>Search for recipes...</SearchBar>
                 <FiltersBtn />
               </div>
             )}
