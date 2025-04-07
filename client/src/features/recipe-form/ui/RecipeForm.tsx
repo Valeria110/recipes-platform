@@ -92,11 +92,11 @@ export const RecipeForm = () => {
             render={({ field: { onChange } }) => <ImageUpload onChange={onChange} />}
           />
 
-          <div className='flex gap-5 justify-between w-full'>
-            <Button onClick={showPreview} type='button' width='w-1/2' buttonGroup='outlined'>
+          <div className='flex flex-col sm:flex-row gap-5 items-center justify-between w-full'>
+            <Button onClick={showPreview} type='button' width='w-2/3 sm:w-1/2' buttonGroup='outlined'>
               Preview
             </Button>
-            <Button type='submit' width='w-1/2' disabled={isSubmitting}>
+            <Button type='submit' width='w-2/3 sm:w-1/2' disabled={isSubmitting}>
               Share recipe
             </Button>
           </div>
