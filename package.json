@@ -12,12 +12,11 @@
   },
   "lint-staged": {
     "client/**/*.{js,ts,tsx}": [
-      "npm run prettier:fix --workspace=client",
-      "npm run lint --workspace=client"
+      "npm run prettier:fix",
+      "npm run lint"
     ],
     "server/**/*.{js,ts}": [
-      "npm run prettier:fix --workspace=server",
-      "npm run lint --workspace=server"
+      "npm run lint"
     ]
   },
   "devDependencies": {
