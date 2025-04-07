@@ -54,12 +54,12 @@ export const Select = <T extends FieldValues>({
             {label}
             <div>
               <div
-                className={`relative flex gap-2 p-2 border-1 bg-white border-gray-400 rounded-full hoverable:hover:cursor-pointer ${width}`}
+                className={`relative flex gap-2 p-2 border-1 bg-white border-gray-400 rounded-full text-sm sm:text-base hoverable:hover:cursor-pointer ${width}`}
                 onClick={toggleOptions}
               >
                 <Image src={searchSvg} alt='search svg image' width={25} />
                 <input
-                  className='w-fit focus:outline-none hover:cursor-pointer text-sm sm:text-md'
+                  className='w-fit focus:outline-none hover:cursor-pointer text-sm sm:text-base'
                   placeholder={props['aria-placeholder']}
                   type='text'
                   readOnly
@@ -72,7 +72,7 @@ export const Select = <T extends FieldValues>({
                 />
               </div>
               {isOpen && (
-                <li className='flex flex-col mt-3'>
+                <li className='flex flex-col mt-3 text-sm sm:text-base'>
                   {options.map((option, i) => (
                     <Option
                       handleSelect={() => handleSelect(option)}

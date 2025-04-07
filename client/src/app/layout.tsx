@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Poppins } from 'next/font/google';
 import './globals.scss';
 import { Header } from '@/widgets/layout/ui/client';
@@ -14,6 +14,12 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: 'Recipe platform',
   description: 'Recipe platform where users can share their recipes and inspire each other',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({

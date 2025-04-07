@@ -46,7 +46,7 @@ export const SearchBar = ({ children, className }: ISearchBar) => {
   return (
     <form
       onSubmit={handleFormSubmit}
-      className={`flex justify-between gap-2 bg-white rounded-full p-2 w-full max-w-sm ${className ? className : ''}`}
+      className={`flex justify-between gap-2 bg-white rounded-full p-2 w-full max-w-sm text-sm sm:text-base ${className ? className : ''}`}
     >
       <input
         onChange={handleInputChange}
