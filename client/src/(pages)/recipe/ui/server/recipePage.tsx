@@ -1,8 +1,9 @@
 import { usersService } from '@/shared/api';
 import { IRecipe } from '@/shared/model';
-import { RecipeImage } from '@/shared/ui/client';
-import { ServingNumberInfo, TimeInfo } from '@/shared/ui/server';
+import { RecipeImage, ServingNumberInfo, TimeInfo } from '@/shared/ui/client';
 import DOMPurify from 'isomorphic-dompurify';
+import { DateTimeFormatOptions } from 'next-intl';
+import { getFormatter, getTranslations } from 'next-intl/server';
 
 interface IRecipeData extends Omit<IRecipe, 'authorId' | 'id'> {
   authorId?: string | null;
@@ -14,6 +15,14 @@ interface IProps {
 }
 
 export const RecipePage = async ({ recipeData }: IProps) => {
+  const t = await getTranslations('RecipePage');
+  const format = await getFormatter();
+  const formatConfig: DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  };
+
   const {
     title,
     description,
@@ -55,12 +64,12 @@ export const RecipePage = async ({ recipeData }: IProps) => {
       </div>
 
       <div>
-        <h4 className='text-lg font-semibold mb-3'>&#128204; Description:</h4>
+        <h4 className='text-lg font-semibold mb-3'>&#128204; {t('description')}:</h4>
         <p>{description}</p>
       </div>
 
       <div>
-        <h4 className='text-lg font-semibold mb-3'>&#129361; Ingredients:</h4>
+        <h4 className='text-lg font-semibold mb-3'>&#129361; {t('ingredients')}:</h4>
         <ul className='flex flex-col gap-2 ml-5'>
           {ingredients.map((ingredient, i) => (
             <li className='list-disc' key={i}>
@@ -71,13 +80,13 @@ export const RecipePage = async ({ recipeData }: IProps) => {
       </div>
 
       <div>
-        <h4 className='text-lg font-semibold mb-3'>&#128221; Instructions:</h4>
+        <h4 className='text-lg font-semibold mb-3'>&#128221; {t('instructions')}:</h4>
         <p className='leading-7' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(instructions) }} />
       </div>
 
       <div className='flex flex-col sm:flex-row gap-1 items-start justify-between text-sm text-gray-400'>
-        <p>{`created by ${authorName}, ${new Date(createdAt).toDateString()}`}</p>
-        <p className=''>{`updated on ${new Date(updatedAt).toDateString()}`}</p>
+        <p>{`${t('createdBy')} ${authorName}, ${format.dateTime(new Date(createdAt), formatConfig)}`}</p>
+        <p className=''>{`${t('updatedOn')} ${format.dateTime(new Date(updatedAt), formatConfig)}`}</p>
       </div>
     </div>
   );

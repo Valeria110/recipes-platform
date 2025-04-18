@@ -1,14 +1,15 @@
 'use client';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch } from '@/shared/hooks/store.hooks';
 import { login } from '@/features/user/user.slice';
 import { useState } from 'react';
 import { authService } from '@/shared/api';
-import { schema } from '../../model/login.schema';
+import { getLoginSchema } from '../../model/login.schema';
 import { FormInput, Button } from '@/shared/ui/server';
+import { useLocale, useTranslations } from 'next-intl';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 export interface ILoginForm {
   email: string;
@@ -16,15 +17,23 @@ export interface ILoginForm {
 }
 
 export const Form = () => {
+  const locale = useLocale();
+  const schema = getLoginSchema(locale);
+
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<ILoginForm>({ mode: 'onChange', resolver: yupResolver(schema) });
+  } = useForm<ILoginForm>({
+    mode: 'onChange',
+    resolver: yupResolver(schema),
+  });
+
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [loginError, setLoginError] = useState('');
   const [isPending, setIsPending] = useState<boolean>(false);
+  const t = useTranslations('LoginForm');
 
   const handleFormSubmit: SubmitHandler<ILoginForm> = async (formData) => {
     setIsPending(true);
@@ -48,7 +57,7 @@ export const Form = () => {
         register={register}
         type='email'
         name='email'
-        label='Email'
+        label={t('email')}
         errors={errors}
         handleInput={() => setLoginError('')}
       />
@@ -56,12 +65,12 @@ export const Form = () => {
         register={register}
         type='password'
         name='password'
-        label='Password'
+        label={t('password')}
         errors={errors}
         handleInput={() => setLoginError('')}
       />
       <Button width='w-full' disabled={!isValid || isPending} type='submit'>
-        Login
+        {t('login')}
       </Button>
       <span className='text-md text-red-500'>{loginError}</span>
     </form>

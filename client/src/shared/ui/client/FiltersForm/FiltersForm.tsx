@@ -1,4 +1,3 @@
-import { cuisineTypes, foodCategories } from '@/shared/model';
 import { useEffect, useState } from 'react';
 import { FilterHeader } from './FilterHeader';
 import { ShowMoreOrLessBtn } from './ShowMoreOrLessBtn';
@@ -13,8 +12,13 @@ import {
   setCuisines,
   setCuisinesQuery,
 } from '@/features/user/search.slice';
+import { useLocale, useTranslations } from 'next-intl';
+import { localizedCuisineTypes } from '@/shared/model/cuisineTypes';
+import { localizedFoodCategories } from '@/shared/model/foodCategories';
 
 export const FiltersForm = () => {
+  const t = useTranslations('FiltersForm');
+  const locale = useLocale();
   const [showCuisineTypes, setShowCuisineTypes] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
   const [cuisinesVisibleLimit, setCuisinesVisibleLimit] = useState<number>(3);
@@ -22,8 +26,14 @@ export const FiltersForm = () => {
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const { categoriesQuery, cuisinesQuery } = useAppSelector((state) => state.search.filters);
 
-  const cuisineTypesList = cuisineTypes.slice(0, cuisinesVisibleLimit);
-  const categories = foodCategories.slice(0, categoriesVisibleLimit);
+  const cuisineTypesList = [...(locale === 'ru' ? localizedCuisineTypes.ru : localizedCuisineTypes.en)].slice(
+    0,
+    cuisinesVisibleLimit,
+  );
+  const categories = [...(locale === 'ru' ? localizedFoodCategories.ru : localizedFoodCategories.en)].slice(
+    0,
+    categoriesVisibleLimit,
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -58,10 +68,10 @@ export const FiltersForm = () => {
       className='flex flex-col gap-5 w-full'
       action=''
     >
-      <h4 className='font-semibold text-xl border-b-1 border-black/20 w-full h-fit mb-1'>Filters</h4>
+      <h4 className='font-semibold text-xl border-b-1 border-black/20 w-full h-fit mb-1'>{t('Header')}</h4>
       <div>
         <FilterHeader
-          filterName='Cuisine type'
+          filterName={t('CuisineType')}
           showAllOptions={showCuisineTypes}
           setShowAllOptions={setShowCuisineTypes}
           setVisibleLimit={setCuisinesVisibleLimit}
@@ -84,7 +94,7 @@ export const FiltersForm = () => {
 
       <div>
         <FilterHeader
-          filterName='Food category'
+          filterName={t('FoodCategory')}
           showAllOptions={showCategories}
           setShowAllOptions={setShowCategories}
           setVisibleLimit={setCategoriesVisibleLimit}
@@ -105,11 +115,11 @@ export const FiltersForm = () => {
       </div>
 
       <Button disabled={isDisabled} width='w-full' className='mt-5' onClick={handleApplyBtnClick}>
-        Apply filters
+        {t('ApplyFiltersBtn')}
       </Button>
 
       <Button width='w-full' onClick={handleResetBtnClick}>
-        Reset filters
+        {t('ResetBtn')}
       </Button>
     </form>
   );

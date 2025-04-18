@@ -1,4 +1,5 @@
 import { BASE_URL } from '../config';
+import { deleteCookie } from '../helpers';
 
 export class TokenService {
   static accessToken: string = '';
@@ -9,14 +10,13 @@ export class TokenService {
 
   static storeAccessToken(accessToken: string) {
     this.accessToken = accessToken;
-    document.cookie = `isUserLoggedIn=${true};`;
   }
 
   static async refreshToken() {
     const refreshToken = this.getRefreshToken();
 
     if (!refreshToken) {
-      document.cookie = 'isUserLoggedIn=; max-age=-1';
+      deleteCookie('isUserLoggedIn');
       this.removeUserId();
       return { success: false, errorMessage: 'No refresh token available' };
     }
@@ -30,7 +30,7 @@ export class TokenService {
       });
 
       if (!res.ok) {
-        document.cookie = 'isUserLoggedIn=; max-age=-1';
+        deleteCookie('isUserLoggedIn');
         const error = await res.json();
         this.removeUserId();
         return { success: false, errorMessage: error.message, statusCode: error.statusCode };
@@ -38,7 +38,6 @@ export class TokenService {
 
       const { accessToken, refreshToken: newRefreshToken } = await res.json();
       this.storeAccessToken(accessToken);
-      this.storeRefreshToken(newRefreshToken);
       return { accessToken, newRefreshToken, success: true };
     } catch (err) {
       return { success: false, errorMessage: err };
@@ -54,10 +53,6 @@ export class TokenService {
     }
 
     return null;
-  }
-
-  static storeRefreshToken(refreshToken: string) {
-    document.cookie = `refreshToken=${refreshToken};`;
   }
 
   static getUserId() {

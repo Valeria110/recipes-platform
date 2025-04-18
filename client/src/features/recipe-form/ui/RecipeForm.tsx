@@ -3,7 +3,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler, FormProvider, Controller } from 'react-hook-form';
 import { RecipeDetailsForm } from './RecipeDetailsForm';
-import { formDefaultValues, IRecipeForm, schema } from '../model';
+import { formDefaultValues, IRecipeForm, getRecipeFormSchema } from '../model';
 import { PreparationInfoForm } from './PreparationInfoForm';
 import { IngredientsForm } from './IngredientsForm';
 import { InstructionsForm } from './InstructionsForm';
@@ -15,16 +15,19 @@ import { Route } from '@/shared/types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TokenService } from '@/shared/api';
 import { toast, ToastContainer } from 'react-toastify';
+import { useLocale } from 'next-intl';
 
 export const RecipeForm = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const searchParams = useSearchParams();
   const updateRecipeId = searchParams.get('updateRecipeId');
+  const locale = useLocale();
 
   const defaultValues = useMemo(() => {
     const savedFormData = sessionStorage.getItem('formData');
     return savedFormData ? JSON.parse(savedFormData) : formDefaultValues;
   }, []);
+  const schema = getRecipeFormSchema(locale);
 
   const methods = useForm<IRecipeForm>({
     mode: 'onChange',

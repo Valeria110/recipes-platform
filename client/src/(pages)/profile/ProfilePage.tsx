@@ -1,11 +1,13 @@
 'use client';
 
 import { EditProfileForm, ProfileSidebar, Recipes } from '@/features/profile/ui';
+import { resetAllFilters, setSearchValue } from '@/features/user/search.slice';
 import { TokenService } from '@/shared/api';
-import { useUser } from '@/shared/hooks';
+import { useAppDispatch, useUser } from '@/shared/hooks';
 import { Route } from '@/shared/types';
 import { ErrorBoundary, FiltersBtn, SearchBar } from '@/shared/ui/client';
 import { Loader } from '@/shared/ui/server';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -14,6 +16,8 @@ export const ProfilePage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [userId, setUserId] = useState('');
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const t = useTranslations('SearchBlock');
 
   useEffect(() => {
     const accessToken = TokenService.getAccessToken();
@@ -25,6 +29,11 @@ export const ProfilePage = () => {
       router.replace(Route.LOGIN);
     }
   }, [router]);
+
+  useEffect(() => {
+    dispatch(resetAllFilters());
+    dispatch(setSearchValue(''));
+  }, []);
 
   const { data: userData, error, isLoading } = useUser(userId);
 
@@ -47,7 +56,7 @@ export const ProfilePage = () => {
           <section className='flex flex-col gap-5 w-full h-fit'>
             {(selectedSection === 'favorites' || selectedSection === 'my recipes') && (
               <div className='flex flex-col lg:flex-row md:items-end lg:justify-end lg:items-center gap-8'>
-                <SearchBar className='border-1 border-gray-300'>Search for recipes...</SearchBar>
+                <SearchBar className='border-1 border-gray-300'>{t('placeholder')}</SearchBar>
                 <FiltersBtn />
               </div>
             )}

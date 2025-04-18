@@ -8,6 +8,7 @@ import { Route } from '@/shared/types/routes';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from 'react';
 import { IoSearch } from 'react-icons/io5';
+import { useTranslations } from 'next-intl';
 
 interface ISearchBar {
   children: string;
@@ -21,6 +22,7 @@ export const SearchBar = ({ children, className }: ISearchBar) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslations('SearchBlock');
 
   useEffect(() => {
     dispatch(setSearchValue(debouncedValue.toLowerCase()));
@@ -56,7 +58,7 @@ export const SearchBar = ({ children, className }: ISearchBar) => {
         value={inputValue}
       />
       <Button onClick={handleSearchBtnClick} width='w-11 sm:w-24'>
-        <span className='hidden sm:inline'>Search</span>
+        <span className='hidden sm:inline'>{t('ButtonText')}</span>
         <IoSearch size={25} className='text-white sm:hidden' />
       </Button>
     </form>
