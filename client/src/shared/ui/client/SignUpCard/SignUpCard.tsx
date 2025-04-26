@@ -2,9 +2,9 @@
 
 import Image, { StaticImageData } from 'next/image';
 import { Button } from '../../server/Button/Button';
-import { useRouter } from 'next/navigation';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
 import { useTranslations } from 'next-intl';
+import { useRouter } from '@/shared/config/i18n/navigation';
 
 interface ISignUpCard {
   imgSrc: StaticImageData;

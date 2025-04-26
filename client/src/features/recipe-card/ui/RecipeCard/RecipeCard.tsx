@@ -6,10 +6,10 @@ import { useUser } from '@/shared/hooks/useUser';
 import { IFav } from '@/shared/model/fav';
 import { favsService, TokenService } from '@/shared/api';
 import { HeartButton, ServingNumberInfo, TimeInfo } from '@/shared/ui/client';
-import { useRouter } from 'next/navigation';
 import { Route } from '@/shared/types';
 import { EditButton } from './EditButton';
 import { useTranslations } from 'next-intl';
+import { useRouter } from '@/shared/config/i18n/navigation';
 
 interface IRecipeCardProps {
   imageUrl: string;

@@ -12,7 +12,7 @@ export const SectionSignUp = async () => {
       className='flex flex-col
          gap-8 w-full mb-10 mt-10'
     >
-      <h3 className='text-4xl font-medium'>{t('Header')}</h3>
+      <h3 className='text-xl sm:text-3xl md:text-4xl font-medium'>{t('Header')}</h3>
       <div className={`w-full flex flex-col lg:flex-row gap-10 items-center ${styles.cardsContainer}`}>
         <SignUpCard imgSrc={signUpImg}>{t('SignUpCard1.title')}</SignUpCard>
         <SignUpCard imgSrc={signUpImg2}>{t('SignUpCard2.title')}</SignUpCard>

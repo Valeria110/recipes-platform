@@ -9,8 +9,8 @@ import { logout } from '@/features/user/user.slice';
 import { authService } from '@/shared/api';
 import { Route } from '@/shared/types';
 import { useAppDispatch } from '@/shared/hooks';
-import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { useRouter } from '@/shared/config/i18n/navigation';
 
 interface IProps {
   setSelectedSection: Dispatch<SetStateAction<'favorites' | 'edit' | 'my recipes'>>;

@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { CldUploadWidget } from 'next-cloudinary';
 import { cloudUploadPreset } from '../config/cloudinary-config';
 import { CiCirclePlus } from 'react-icons/ci';
+import { useTranslations } from 'next-intl';
 
 interface IProps {
   onChange: (e: string) => void;
@@ -23,6 +24,7 @@ interface CloudinaryUploadResult {
 
 export const ImageUpload = ({ onChange }: IProps) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const t = useTranslations('ShareRecipePage.RecipeForm.ImageUpload');
 
   const {
     formState: { errors },
@@ -56,11 +58,8 @@ export const ImageUpload = ({ onChange }: IProps) => {
   return (
     <section className='flex flex-col gap-10'>
       <div>
-        <h3 className='text-2xl font-semibold mb-2'>Gallery</h3>
-        <p className='text-gray-500'>
-          Boost reliability and engagement by sharing up to 8 images of your mouthwatering creations! (An image should
-          not exceed 5Mb)
-        </p>
+        <h3 className='text-2xl font-semibold mb-2'>{t('title')}</h3>
+        <p className='text-gray-500'>{t('subtitle')}</p>
 
         <div className='relative flex justify-center items-center w-72 h-72 md:w-48 md:h-48 lg:w-36 lg:h-36 mt-3 border-2 overflow-hidden border-orange-400 border-dashed rounded-2xl'>
           {imageUrl ? (

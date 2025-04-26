@@ -12,7 +12,7 @@ export const SectionWhy = async () => {
       className='flex flex-col
     gap-8 w-full mb-10 mt-10'
     >
-      <h3 className='text-4xl font-medium'>{t('Header')}</h3>
+      <h3 className='text-xl sm:text-3xl md:text-4xl font-medium'>{t('Header')}</h3>
       <div className='grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-4 gap-10 justify-items-center'>
         <WhyCard title={t('ShareRecipe.title')} description={t('ShareRecipe.description')}>
           <LuCookingPot size={80} className='text-orange-400' />

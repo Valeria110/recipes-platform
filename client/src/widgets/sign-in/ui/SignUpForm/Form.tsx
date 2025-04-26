@@ -3,13 +3,13 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { getSignUpSchema } from '@/widgets/sign-in/model/signup.schema';
-import { useRouter } from 'next/navigation';
 import { login } from '@/features/user/user.slice';
 import { useAppDispatch } from '@/shared/hooks/store.hooks';
 import { useState } from 'react';
 import { authService } from '@/shared/api';
 import { FormInput, Button } from '@/shared/ui/server';
 import { useLocale, useTranslations } from 'next-intl';
+import { useRouter } from '@/shared/config/i18n/navigation';
 
 export interface ISignUpForm {
   name: string;

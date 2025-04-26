@@ -1,7 +1,6 @@
 'use client';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
 import { useAppDispatch } from '@/shared/hooks/store.hooks';
 import { login } from '@/features/user/user.slice';
 import { useState } from 'react';
@@ -10,6 +9,7 @@ import { getLoginSchema } from '../../model/login.schema';
 import { FormInput, Button } from '@/shared/ui/server';
 import { useLocale, useTranslations } from 'next-intl';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter } from '@/shared/config/i18n/navigation';
 
 export interface ILoginForm {
   email: string;

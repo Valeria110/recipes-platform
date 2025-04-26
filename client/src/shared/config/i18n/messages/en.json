@@ -193,5 +193,73 @@
       "foodCategoryRequired": "Please select at least one category",
       "ingredients": "At least 1 ingredient is required"
     }
+  },
+  "ShareRecipePage": {
+    "title": "Share your recipe",
+    "subtitle": " Let your culinary creations shine! Share your delicious recipes with our audience by filling out the form below. Your expertise can inspire and delight others in our flavorful community.",
+    "RecipeForm": {
+      "RecipeDetails": "Recipe Details",
+      "RecipeTitle": {
+        "label": "Recipe title",
+        "placeholder": "Enter recipe title"
+      },
+      "FoodCategory": {
+        "label": "Food Category",
+        "placeholder": "Search food category"
+      },
+      "CuisineType": {
+        "label": "Cuisine type",
+        "placeholder": "Search cuisine type"
+      },
+      "SmallDesc": {
+        "label": "Small description",
+        "placeholder": "Enter a small description"
+      },
+      "PrepAndServingInfo": {
+        "title": "Preparation and Serving Information",
+        "prepTimeTitle": "Preparation time",
+        "cookingTimeTitle": "Cooking time",
+        "hours": {
+          "label": ":hour(s)",
+          "placeholder": "00"
+        },
+        "minutes": {
+          "label": ":minute(s)",
+          "placeholder": "00"
+        },
+        "servingNum": {
+          "title": "Serving number",
+          "label": "Enter serving number",
+          "placeholder": "0"
+        }
+      },
+      "ingredients": {
+        "title": "Ingredients",
+        "ingredientName": {
+          "label": "Ingredient",
+          "placeholder": "Enter ingredient"
+        },
+        "quantity": {
+          "label": "Quantity",
+          "placeholder": "0"
+        },
+        "units": {
+          "label": "Units",
+          "placeholder": "Search for unit"
+        }
+      },
+      "instructions": {
+        "title": "Instructions",
+        "subtitle": "To unlock the full flavor and perfect your culinary masterpiece, it&apos;s crucial to meticulously detail every step of the recipe!",
+        "placeholder": "Write here your instructions for the recipe..."
+      },
+      "DeepenEngagement": "Deepen user engagement with your recipe",
+      "ImageUpload": {
+        "title": "Gallery",
+        "subtitle": "Boost reliability and engagement by sharing up to 8 images of your mouthwatering creations! (An image should not exceed 5Mb)"
+      },
+      "PreviewBtn": "Preview",
+      "ShareRecipeBtn": "Share recipe"
+    }
   }
 }

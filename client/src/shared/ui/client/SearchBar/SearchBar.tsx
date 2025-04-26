@@ -5,10 +5,10 @@ import { setSearchValue } from '@/features/user/search.slice';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/store.hooks';
 import { useDeboubce } from '@/shared/hooks/useDebounce';
 import { Route } from '@/shared/types/routes';
-import { usePathname, useRouter } from 'next/navigation';
 import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from 'react';
 import { IoSearch } from 'react-icons/io5';
 import { useTranslations } from 'next-intl';
+import { usePathname, useRouter } from '@/shared/config/i18n/navigation';
 
 interface ISearchBar {
   children: string;

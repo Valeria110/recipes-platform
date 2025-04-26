@@ -1,18 +1,24 @@
 'use client';
 
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 interface IOptionProps {
   option: string;
+  optionKey: string;
   isSelected: boolean;
   handleSelect: (option: string) => void;
 }
 
-export const Option = memo(({ option, isSelected, handleSelect }: IOptionProps) => {
+export const Option = memo(({ option, isSelected, handleSelect, optionKey }: IOptionProps) => {
   const [isChecked, setIsChecked] = useState<boolean>(isSelected);
+
+  useEffect(() => {
+    setIsChecked(isSelected);
+  }, [isSelected]);
+
   const handleChange = () => {
     setIsChecked(!isChecked);
-    handleSelect(option);
+    handleSelect(optionKey);
   };
 
   return (
@@ -24,7 +30,7 @@ export const Option = memo(({ option, isSelected, handleSelect }: IOptionProps) 
         type='checkbox'
         checked={isChecked}
         onChange={handleChange}
-        value={option}
+        value={optionKey}
       ></input>
       {option}
       <svg

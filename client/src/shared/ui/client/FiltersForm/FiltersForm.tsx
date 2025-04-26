@@ -13,12 +13,12 @@ import {
   setCuisinesQuery,
 } from '@/features/user/search.slice';
 import { useLocale, useTranslations } from 'next-intl';
-import { localizedCuisineTypes } from '@/shared/model/cuisineTypes';
-import { localizedFoodCategories } from '@/shared/model/foodCategories';
+import { cuisineTypes } from '@/shared/model/cuisineTypes';
+import { foodCategories } from '@/shared/model/foodCategories';
 
 export const FiltersForm = () => {
   const t = useTranslations('FiltersForm');
-  const locale = useLocale();
+  const locale = useLocale() as 'ru' | 'en';
   const [showCuisineTypes, setShowCuisineTypes] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
   const [cuisinesVisibleLimit, setCuisinesVisibleLimit] = useState<number>(3);
@@ -26,14 +26,9 @@ export const FiltersForm = () => {
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const { categoriesQuery, cuisinesQuery } = useAppSelector((state) => state.search.filters);
 
-  const cuisineTypesList = [...(locale === 'ru' ? localizedCuisineTypes.ru : localizedCuisineTypes.en)].slice(
-    0,
-    cuisinesVisibleLimit,
-  );
-  const categories = [...(locale === 'ru' ? localizedFoodCategories.ru : localizedFoodCategories.en)].slice(
-    0,
-    categoriesVisibleLimit,
-  );
+  const cuisineTypesList = cuisineTypes.slice(0, cuisinesVisibleLimit);
+  const categories = foodCategories.slice(0, categoriesVisibleLimit);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -80,7 +75,7 @@ export const FiltersForm = () => {
         {showCuisineTypes && (
           <div className='flex flex-col gap-2 mt-4'>
             {cuisineTypesList.map((type, index) => {
-              return <Checkbox key={index} label={type} filterName={FilterType.CUISINE} />;
+              return <Checkbox key={index} filterKey={type.key} label={type[locale]} filterName={FilterType.CUISINE} />;
             })}
 
             <ShowMoreOrLessBtn
@@ -102,7 +97,14 @@ export const FiltersForm = () => {
         {showCategories && (
           <div className='flex flex-col gap-2 mt-4'>
             {categories.map((category, index) => {
-              return <Checkbox key={index} label={category} filterName={FilterType.CATEGORY} />;
+              return (
+                <Checkbox
+                  key={index}
+                  filterKey={category.key}
+                  label={category[locale]}
+                  filterName={FilterType.CATEGORY}
+                />
+              );
             })}
 
             <ShowMoreOrLessBtn

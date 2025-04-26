@@ -9,19 +9,21 @@ import { IngredientsForm } from './IngredientsForm';
 import { InstructionsForm } from './InstructionsForm';
 import { ImageUpload } from './ImageUpload';
 import { Button } from '@/shared/ui/server';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { submitForm } from '../api';
 import { Route } from '@/shared/types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TokenService } from '@/shared/api';
 import { toast, ToastContainer } from 'react-toastify';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from '@/shared/config/i18n/navigation';
 
 export const RecipeForm = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const searchParams = useSearchParams();
   const updateRecipeId = searchParams.get('updateRecipeId');
   const locale = useLocale();
+  const t = useTranslations('ShareRecipePage');
 
   const defaultValues = useMemo(() => {
     const savedFormData = sessionStorage.getItem('formData');
@@ -86,7 +88,7 @@ export const RecipeForm = () => {
           <InstructionsForm />
           <div className='flex justify-center items-center w-full p-5 bg-orange-200/50 h-80 rounded-2xl'>
             <h2 className='text-center sm:text-2xl text-xl lg:text-3xl font-semibold text-orange-950'>
-              Deepen user engagement with your recipe
+              {t('RecipeForm.DeepenEngagement')}
             </h2>
           </div>
           <Controller
@@ -97,10 +99,10 @@ export const RecipeForm = () => {
 
           <div className='flex flex-col sm:flex-row gap-5 items-center justify-between w-full'>
             <Button onClick={showPreview} type='button' width='w-2/3 sm:w-1/2' buttonGroup='outlined'>
-              Preview
+              {t('RecipeForm.PreviewBtn')}
             </Button>
             <Button type='submit' width='w-2/3 sm:w-1/2' disabled={isSubmitting}>
-              Share recipe
+              {t('RecipeForm.ShareRecipeBtn')}
             </Button>
           </div>
         </form>

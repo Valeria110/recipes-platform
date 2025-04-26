@@ -3,12 +3,12 @@
 import { EditProfileForm, ProfileSidebar, Recipes } from '@/features/profile/ui';
 import { resetAllFilters, setSearchValue } from '@/features/user/search.slice';
 import { TokenService } from '@/shared/api';
+import { useRouter } from '@/shared/config/i18n/navigation';
 import { useAppDispatch, useUser } from '@/shared/hooks';
 import { Route } from '@/shared/types';
 import { ErrorBoundary, FiltersBtn, SearchBar } from '@/shared/ui/client';
 import { Loader } from '@/shared/ui/server';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export const ProfilePage = () => {

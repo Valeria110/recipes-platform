@@ -6,9 +6,9 @@ import { MouseEvent } from 'react';
 import { FaEdit } from 'react-icons/fa';
 import { transformTime } from '../../helpers';
 import { transformIngredients } from '../../helpers/transformIngredients';
-import { useRouter } from 'next/navigation';
 import { Route } from '@/shared/types';
 import useSWR from 'swr';
+import { useRouter } from '@/shared/config/i18n/navigation';
 
 interface IProps {
   recipeId: string;
