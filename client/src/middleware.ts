@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 import { routing } from './shared/config';
+import { Route } from './shared/types';
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -18,9 +19,10 @@ export function middleware(request: NextRequest) {
     const isAuthRoute = authRoutes.some((route) => pathWithoutLocale.startsWith(route));
 
     const isUserLoggedIn = request.cookies.has('isUserLoggedIn');
+    console.log(request.cookies.getAll());
 
     if (isProtectedRoute && !isUserLoggedIn) {
-      return NextResponse.redirect(new URL(`/${routing.defaultLocale}/login`, request.url));
+      return NextResponse.redirect(new URL(`/${routing.defaultLocale}/${Route.LOGIN}`, request.url));
     }
 
     if (isAuthRoute && isUserLoggedIn) {

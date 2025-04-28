@@ -35,6 +35,7 @@ async function bootstrap() {
       }
     },
     credentials: true,
+    exposedHeaders: ['set-cookie'],
   });
 
   app.useGlobalPipes(new ValidationPipe());
