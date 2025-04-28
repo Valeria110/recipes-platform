@@ -34,7 +34,7 @@ export class AuthController {
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       sameSite: 'none',
       path: '/',
       maxAge: 1000 * 60 * 60 * 24 * 7,
@@ -44,7 +44,7 @@ export class AuthController {
       httpOnly: false,
       path: '/',
       maxAge: 1000 * 60 * 60 * 24 * 7,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       sameSite: 'none',
     });
 
@@ -60,7 +60,7 @@ export class AuthController {
       await this.authService.login(loginUserDto);
 
     res.cookie('refreshToken', refreshToken, {
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       sameSite: 'none',
       path: '/',
       maxAge: 1000 * 60 * 60 * 24 * 7, // 1 неделя
@@ -69,7 +69,7 @@ export class AuthController {
     res.cookie('isUserLoggedIn', 'true', {
       path: '/',
       maxAge: 1000 * 60 * 60 * 24 * 7,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       sameSite: 'none',
     });
 
@@ -84,7 +84,7 @@ export class AuthController {
     const { accessToken, refreshToken, userId } =
       await this.authService.refresh(refreshTokenDto);
     res.cookie('refreshToken', refreshToken, {
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       sameSite: 'none',
       path: '/',
       maxAge: 1000 * 60 * 60 * 24 * 7,
