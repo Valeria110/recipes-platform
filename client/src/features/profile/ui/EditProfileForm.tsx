@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { authService } from '@/shared/api';
 import { toast, ToastContainer } from 'react-toastify';
 import { Button } from '@/shared/ui/server';
+import { useTranslations } from 'next-intl';
 
 interface IProps {
   name?: string;
@@ -13,6 +14,7 @@ interface IProps {
 }
 
 export const EditProfileForm = ({ name = '', email = '' }: IProps) => {
+  const t = useTranslations('ProfilePage.EditProfileForm');
   const {
     register,
     formState: { errors, isValid, isSubmitting },
@@ -33,13 +35,13 @@ export const EditProfileForm = ({ name = '', email = '' }: IProps) => {
     const { success, error } = await authService.updateUserAuthData(formData);
     if (!success && error) {
       setSubmitError(error);
-      toast.error(`Oops, error occured: ${error}`);
+      toast.error(`${t('toastErrorMsg')}: ${error}`);
     }
     if (success && !error) {
       setSubmitError(null);
       resetField('oldPassword');
       resetField('newPassword');
-      toast.success('Data was successfully updated');
+      toast.success(t('toastSuccessMsg'));
     }
   };
 
@@ -53,10 +55,10 @@ export const EditProfileForm = ({ name = '', email = '' }: IProps) => {
   return (
     <div className='w-full flex justify-center'>
       <form action='' className='w-80 flex flex-col gap-8' onSubmit={handleSubmit(handleFormSubmit)}>
-        <TextField label='Name' register={register} registerName='name' width='w-full' error={errors.name} />
-        <TextField label='Email' register={register} registerName='email' width='w-full' error={errors.email} />
+        <TextField label={t('name')} register={register} registerName='name' width='w-full' error={errors.name} />
+        <TextField label={t('email')} register={register} registerName='email' width='w-full' error={errors.email} />
         <TextField
-          label='Old password'
+          label={t('oldPassword')}
           register={register}
           registerName='oldPassword'
           type='password'
@@ -64,7 +66,7 @@ export const EditProfileForm = ({ name = '', email = '' }: IProps) => {
           error={errors.oldPassword}
         />
         <TextField
-          label='New password'
+          label={t('newPassword')}
           register={register}
           registerName='newPassword'
           type='password'
@@ -72,7 +74,7 @@ export const EditProfileForm = ({ name = '', email = '' }: IProps) => {
           error={errors.newPassword}
         />
         <Button width='w-full' type='submit' disabled={!isFormChanged || !isValid || isSubmitting}>
-          Save
+          {t('saveBtn')}
         </Button>
         {submitError && <p className='text-red-500 text-sm'>{submitError}</p>}
       </form>

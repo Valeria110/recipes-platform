@@ -7,8 +7,10 @@ import { RecipeCard } from '@/features/recipe-card/ui/RecipeCard/RecipeCard';
 import { Loader, ScrollLoader } from '@/shared/ui/server';
 import { useMemo } from 'react';
 import { useInfiniteScroll, usePaginatedRecipes } from '@/shared/hooks';
+import { useTranslations } from 'next-intl';
 
 export const ResultsSection = () => {
+  const t = useTranslations('RecipesPage');
   const { searchValue, filters } = useAppSelector((state) => state.search);
   const { categoriesQuery, cuisinesQuery } = filters;
 
@@ -40,7 +42,7 @@ export const ResultsSection = () => {
 
   return (
     <section className='mt-10'>
-      <h4 className='font-semibold'>Based on your search</h4>
+      <h4 className='font-semibold'>{t('ResultsSection')}</h4>
       <div className='flex flex-col  sm:flex-row sm:flex-wrap gap-5 items-center sm:items-stretch'>
         {filteredRecipes.length &&
           filteredRecipes.map((recipe) => {

@@ -1,4 +1,5 @@
-import { BASE_URL } from '../config';
+import { BASE_URL, AUTH_BASE_URL } from '../config';
+import { deleteCookie } from '../helpers';
 import { IUserUpdateDto } from '../model';
 import { TokenService } from './token-service';
 
@@ -16,22 +17,20 @@ export interface IErrorInfo {
 export class AuthService {
   async login(email: string, password: string): Promise<ILoginRes | IErrorInfo | string> {
     try {
-      const res = await fetch(`${BASE_URL}/auth/login`, {
+      const res = await fetch(`${AUTH_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
+        credentials: 'include',
       });
       if (!res.ok) {
         const errorData = await res.json();
-        document.cookie = 'isUserLoggedIn=; max-age=-1';
         throw { errorMessage: errorData.message, status: res.status };
       }
 
       const { accessToken, refreshToken, userId }: ILoginRes = await res.json();
       TokenService.storeAccessToken(accessToken);
-      TokenService.storeRefreshToken(refreshToken);
       TokenService.storeUserId(userId);
-      document.cookie = `isUserLoggedIn=${true};`;
 
       return { accessToken, refreshToken, userId };
     } catch (err) {
@@ -41,17 +40,17 @@ export class AuthService {
 
   async signup(name: string, email: string, password: string) {
     try {
-      const res = await fetch(`${BASE_URL}/auth/signup`, {
+      const res = await fetch(`${AUTH_BASE_URL}/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ name, email, password }),
+        credentials: 'include',
       });
 
       if (!res.ok) {
         const errorData = await res.json();
-        document.cookie = 'isUserLoggedIn=; max-age=-1';
         throw { errorMessage: errorData.message, status: res.status };
       }
 
@@ -66,8 +65,8 @@ export class AuthService {
   logout() {
     TokenService.accessToken = '';
     TokenService.removeUserId();
-    document.cookie = 'refreshToken=; max-age=-1';
-    document.cookie = 'isUserLoggedIn=; max-age=-1';
+    deleteCookie('refreshToken');
+    deleteCookie('isUserLoggedIn');
   }
 
   async refreshToken() {

@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { headerLogo } from '@/shared/assets';
 import { memo } from 'react';
+import { Link } from '@/shared/config/i18n/navigation';
 
 interface ILogoProps {
   onClick?: () => void;

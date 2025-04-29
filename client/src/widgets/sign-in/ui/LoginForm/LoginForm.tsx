@@ -5,8 +5,10 @@ import { headerLogo } from '@/shared/assets';
 import { Form } from './Form';
 import { ErrorBoundary } from '@/shared/ui/client/ErrorBoundary/ErrorBoundary';
 import { StoreProvider } from '@/shared/ui/client';
+import { useTranslations } from 'next-intl';
 
 export const LoginForm = () => {
+  const t = useTranslations('LoginForm');
   return (
     <StoreProvider>
       <ErrorBoundary>
@@ -14,7 +16,7 @@ export const LoginForm = () => {
           <div className='flex justify-center'>
             <Image src={headerLogo} alt='recipe platform logo' width={60} />
           </div>
-          <h2 className='text-xl lg:text-2xl font-semibold text-left'>Welcome back!</h2>
+          <h2 className='text-xl lg:text-2xl font-semibold text-left'>{t('title')}</h2>
           <Form />
         </div>
       </ErrorBoundary>

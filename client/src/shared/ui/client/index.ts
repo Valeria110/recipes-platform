@@ -11,3 +11,6 @@ export { Select } from './Select/Select';
 export { Option } from './Option/Option';
 export { RecipeImage } from './RecipeImage/RecipeImage';
 export { TextField } from './TextField/TextField';
+export { TimeInfo } from './TimeInfo/TimeInfo';
+export { ServingNumberInfo } from './ServingNumberInfo/ServingNumberInfo';
+export { LangButton } from './LangButton/LangButton';

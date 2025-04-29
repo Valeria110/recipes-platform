@@ -2,13 +2,14 @@
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { schema } from '@/widgets/sign-in/model/signup.schema';
-import { useRouter } from 'next/navigation';
+import { getSignUpSchema } from '@/widgets/sign-in/model/signup.schema';
 import { login } from '@/features/user/user.slice';
 import { useAppDispatch } from '@/shared/hooks/store.hooks';
 import { useState } from 'react';
 import { authService } from '@/shared/api';
 import { FormInput, Button } from '@/shared/ui/server';
+import { useLocale, useTranslations } from 'next-intl';
+import { useRouter } from '@/shared/config/i18n/navigation';
 
 export interface ISignUpForm {
   name: string;
@@ -17,6 +18,9 @@ export interface ISignUpForm {
 }
 
 export const Form = () => {
+  const locale = useLocale();
+  const t = useTranslations('SignUpForm');
+  const schema = getSignUpSchema(locale);
   const {
     register,
     handleSubmit,
@@ -48,7 +52,7 @@ export const Form = () => {
       <FormInput<ISignUpForm>
         register={register}
         name='name'
-        label='Name'
+        label={t('name')}
         errors={errors}
         handleInput={() => setSignUpError('')}
       />
@@ -56,7 +60,7 @@ export const Form = () => {
         register={register}
         type='email'
         name='email'
-        label='Email'
+        label={t('email')}
         errors={errors}
         handleInput={() => setSignUpError('')}
       />
@@ -64,12 +68,12 @@ export const Form = () => {
         register={register}
         type='password'
         name='password'
-        label='Password'
+        label={t('password')}
         errors={errors}
         handleInput={() => setSignUpError('')}
       />
       <Button width='w-full' disabled={!isValid || isPending} type='submit'>
-        Sign up
+        {t('signUp')}
       </Button>
       <span className='text-md text-red-500'>{signUpError}</span>
     </form>

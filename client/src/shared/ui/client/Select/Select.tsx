@@ -5,11 +5,13 @@ import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { downArrow, searchSvg, upArrow } from '@/shared/assets';
 import { useState } from 'react';
 import { Option } from '@/shared/ui/client';
+import { FilterOptionType } from '@/shared/types';
+import { useLocale } from 'next-intl';
 
 interface ISelectProps<T extends FieldValues> extends React.SelectHTMLAttributes<HTMLSelectElement> {
   control: Control<T>;
   registerName: Path<T>;
-  options: string[];
+  options: string[] | FilterOptionType[];
   isMultiSelect?: boolean;
   label: string;
   width?: string;
@@ -27,6 +29,7 @@ export const Select = <T extends FieldValues>({
   ...props
 }: ISelectProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
+  const locale = useLocale() as 'ru' | 'en';
 
   return (
     <Controller
@@ -72,16 +75,21 @@ export const Select = <T extends FieldValues>({
                 />
               </div>
               {isOpen && (
-                <li className='flex flex-col mt-3 text-base'>
-                  {options.map((option, i) => (
-                    <Option
-                      handleSelect={() => handleSelect(option)}
-                      key={i}
-                      option={option}
-                      isSelected={value.includes(option)}
-                    />
-                  ))}
-                </li>
+                <div className='flex flex-col mt-3 text-base'>
+                  {options.map((option, i) => {
+                    const key = typeof option === 'string' ? option : option.key;
+
+                    return (
+                      <Option
+                        handleSelect={() => handleSelect(key)}
+                        key={i}
+                        option={typeof option === 'string' ? option : option[locale]}
+                        optionKey={key}
+                        isSelected={Array.isArray(value) ? value.includes(key) : false}
+                      />
+                    );
+                  })}
+                </div>
               )}
             </div>
             {error && <p className='text-red-500 text-sm'>{error}</p>}

@@ -5,8 +5,10 @@ import { Select, TextField } from '@/shared/ui/client';
 import { useEffect } from 'react';
 import { HiOutlineMinus } from 'react-icons/hi';
 import { BsPlusLg } from 'react-icons/bs';
+import { useTranslations } from 'next-intl';
 
 export const IngredientsForm = () => {
+  const t = useTranslations('ShareRecipePage.RecipeForm.ingredients');
   const {
     register,
     formState: { errors },
@@ -22,7 +24,7 @@ export const IngredientsForm = () => {
 
   return (
     <section className='flex flex-col w-full gap-5 p-4 min-h-dvh bg-orange-200/50 rounded-2xl'>
-      <h3 className='text-2xl font-semibold'>Ingredients</h3>
+      <h3 className='text-2xl font-semibold'>{t('title')}</h3>
 
       <div className='flex w-full gap-5 justify-between items-end'>
         <div className='flex w-full flex-col gap-12 lg:gap-10 items-center justify-between'>
@@ -30,17 +32,17 @@ export const IngredientsForm = () => {
             return (
               <div key={field.id} className='flex flex-col lg:flex-row gap-5 w-full items-start'>
                 <TextField
-                  label='Ingredient'
-                  placeholder='Enter ingredient'
+                  label={t('ingredientName.label')}
+                  placeholder={t('ingredientName.placeholder')}
                   register={register}
                   registerName={`ingredients.${i}.name`}
                   error={errors.ingredients?.[i]?.name}
                   width='w-full lg:w-3/5'
                 />
                 <div className='flex flex-col gap-2'>
-                  <p>Quantity</p>
+                  <p>{t('quantity.label')}</p>
                   <NumberField
-                    placeholder='0'
+                    placeholder={t('quantity.label')}
                     registerName={`ingredients.${i}.quantity`}
                     register={register}
                     error={errors.ingredients?.[i]?.quantity}
@@ -49,10 +51,10 @@ export const IngredientsForm = () => {
                   />
                 </div>
                 <Select
-                  label='Units'
+                  label={t('units.label')}
                   registerName={`ingredients.${i}.units`}
                   control={control}
-                  aria-placeholder='Search for unit'
+                  aria-placeholder={t('units.label')}
                   options={ingredientUnits}
                   error={errors?.ingredients?.[i]?.units && errors.ingredients[i].units.message}
                 />

@@ -14,9 +14,3 @@ export interface IRecipe {
   category: string[];
   cuisineType: string[];
 }
-
-// interface Ingredient {
-//   name: string;
-//   quantity?: number;
-//   units: string;
-// }

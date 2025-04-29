@@ -8,37 +8,38 @@ import { memo, useEffect, useState } from 'react';
 interface ICheckboxProps {
   label: string;
   filterName?: FilterType;
+  filterKey: string;
 }
 
-export const Checkbox = memo(({ label, filterName }: ICheckboxProps) => {
+export const Checkbox = memo(({ label, filterName, filterKey }: ICheckboxProps) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { categories, cuisineTypes } = useAppSelector((state) => state.search.filters);
 
   useEffect(() => {
-    if (categories.includes(label) || cuisineTypes.includes(label)) {
+    if (categories.includes(filterKey) || cuisineTypes.includes(filterKey)) {
       setIsChecked(true);
     } else {
       setIsChecked(false);
     }
-  }, [categories, cuisineTypes]);
+  }, [categories, cuisineTypes, filterKey]);
 
   const handleChange = () => {
     setIsChecked(!isChecked);
 
     if (filterName === FilterType.CATEGORY) {
       if (!isChecked) {
-        dispatch(addCategory(label));
+        dispatch(addCategory(filterKey));
       } else {
-        dispatch(removeCategory(label));
+        dispatch(removeCategory(filterKey));
       }
     }
 
     if (filterName === FilterType.CUISINE) {
       if (!isChecked) {
-        dispatch(addCuisineType(label));
+        dispatch(addCuisineType(filterKey));
       } else {
-        dispatch(removeCuisineType(label));
+        dispatch(removeCuisineType(filterKey));
       }
     }
   };
@@ -50,7 +51,7 @@ export const Checkbox = memo(({ label, filterName }: ICheckboxProps) => {
         type='checkbox'
         checked={isChecked}
         onChange={handleChange}
-        value={label}
+        value={filterKey}
       />
       {label}
       <svg

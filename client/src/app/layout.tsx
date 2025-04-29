@@ -1,39 +1,8 @@
-import type { Metadata, Viewport } from 'next';
-import { Poppins } from 'next/font/google';
-import './globals.scss';
-import { Header } from '@/widgets/layout/ui/client';
-import { Footer } from '@/widgets/layout/ui/server';
-
-const poppins = Poppins({
-  weight: ['400', '500', '600', '700', '800'],
-  subsets: ['latin'],
-  style: ['italic', 'normal'],
-  variable: '--font-poppins',
-});
-
-export const metadata: Metadata = {
-  title: 'Recipe platform',
-  description: 'Recipe platform where users can share their recipes and inspire each other',
+import { ReactNode } from 'react';
+type Props = {
+  children: ReactNode;
 };
 
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 1,
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang='en' className={`${poppins.variable} scroll-smooth`}>
-      <body>
-        <Header />
-        {children}
-        <Footer />
-      </body>
-    </html>
-  );
+export default function RootLayout({ children }: Props) {
+  return children;
 }

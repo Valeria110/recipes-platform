@@ -5,11 +5,11 @@ import { memo, useEffect, useState } from 'react';
 import { useUser } from '@/shared/hooks/useUser';
 import { IFav } from '@/shared/model/fav';
 import { favsService, TokenService } from '@/shared/api';
-import { HeartButton } from '@/shared/ui/client';
-import { useRouter } from 'next/navigation';
+import { HeartButton, ServingNumberInfo, TimeInfo } from '@/shared/ui/client';
 import { Route } from '@/shared/types';
-import { ServingNumberInfo, TimeInfo } from '@/shared/ui/server';
 import { EditButton } from './EditButton';
+import { useTranslations } from 'next-intl';
+import { useRouter } from '@/shared/config/i18n/navigation';
 
 interface IRecipeCardProps {
   imageUrl: string;
@@ -27,6 +27,7 @@ interface IRecipeCardProps {
 
 export const RecipeCard = memo(
   ({ recipeId, imageUrl, title, authorId, cookingTime, servingNum, favsData = [] }: IRecipeCardProps) => {
+    const t = useTranslations('RecipeCard');
     const [isFave, setIsFave] = useState(false);
     const [favId, setFavId] = useState('');
     const [isHeartLoading, setIsHeartLoading] = useState(false);
@@ -115,7 +116,7 @@ export const RecipeCard = memo(
 
         <div className='flex justify-between items-center'>
           <div className='flex flex-col text-gray-400'>
-            <span className='text-xs'>created by</span>
+            <span className='text-xs'>{t('CreatedBy')}</span>
             <span className='text-sm'>{error || isLoading ? 'Unknown author' : data?.name}</span>
           </div>
 

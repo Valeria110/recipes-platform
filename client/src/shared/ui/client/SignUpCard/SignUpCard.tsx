@@ -2,8 +2,9 @@
 
 import Image, { StaticImageData } from 'next/image';
 import { Button } from '../../server/Button/Button';
-import { useRouter } from 'next/navigation';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
+import { useTranslations } from 'next-intl';
+import { useRouter } from '@/shared/config/i18n/navigation';
 
 interface ISignUpCard {
   imgSrc: StaticImageData;
@@ -12,6 +13,7 @@ interface ISignUpCard {
 
 export const SignUpCard = ({ imgSrc, children }: ISignUpCard) => {
   const router = useRouter();
+  const t = useTranslations('HomePage.SectionSignUp');
 
   return (
     <ErrorBoundary>
@@ -19,11 +21,9 @@ export const SignUpCard = ({ imgSrc, children }: ISignUpCard) => {
         <Image className='w-full md:w-1/2 rounded-lg' src={imgSrc} alt='sugn up card image' width={200} />
         <div className='flex flex-col gap-3 justify-between w-full md:w-1/2 px-4 py-5 ml-3'>
           <h4 className='font-bold text-mlg'>{children}</h4>
-          <p className='text-sm text-gray-400'>
-            Create an account and explore your desired recipes and follow your favorite creators and many more!
-          </p>
-          <Button width={'w-28'} onClick={() => router.push('/signup')}>
-            Sign up
+          <p className='text-sm text-gray-400'>{t('description')}</p>
+          <Button width={'min-w-fit w-28'} className='pl-2 pr-2' onClick={() => router.push('/signup')}>
+            {t('Button')}
           </Button>
         </div>
       </div>

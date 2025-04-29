@@ -9,7 +9,8 @@ import { logout } from '@/features/user/user.slice';
 import { authService } from '@/shared/api';
 import { Route } from '@/shared/types';
 import { useAppDispatch } from '@/shared/hooks';
-import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { useRouter } from '@/shared/config/i18n/navigation';
 
 interface IProps {
   setSelectedSection: Dispatch<SetStateAction<'favorites' | 'edit' | 'my recipes'>>;
@@ -20,6 +21,7 @@ interface IProps {
 export const ProfileSidebar = ({ setSelectedSection, selectedSection, userData }: IProps) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const t = useTranslations('ProfilePage.ProfileSidebar');
 
   const handleLogOut = () => {
     authService.logout();
@@ -38,12 +40,12 @@ export const ProfileSidebar = ({ setSelectedSection, selectedSection, userData }
 
           <div className='flex gap-2'>
             <div className='flex flex-col items-center gap-1'>
-              <p>posts</p>
+              <p>{t('posts')}</p>
               <p className='text-sm text-gray-500'>{userData.recipes.length}</p>
             </div>
             <p className='text-md text-gray-300'>|</p>
             <div className='flex flex-col items-center gap-1'>
-              <p>favs</p>
+              <p>{t('favs')}</p>
               <p className='text-sm text-gray-500'>{userData.favorites.length}</p>
             </div>
           </div>
@@ -52,24 +54,24 @@ export const ProfileSidebar = ({ setSelectedSection, selectedSection, userData }
 
       <div className='w-full flex flex-col gap-4'>
         <TabButton
-          text='Favorite recipes'
+          text={t('favRecipesTabBtn')}
           onClick={() => setSelectedSection('favorites')}
           isSelected={selectedSection === 'favorites'}
         />
         <TabButton
-          text='My recipes'
+          text={t('myRecipesTabBtn')}
           onClick={() => setSelectedSection('my recipes')}
           isSelected={selectedSection === 'my recipes'}
         />
         <TabButton
-          text='Edit profile'
+          text={t('editProfileTabBtn')}
           onClick={() => setSelectedSection('edit')}
           isSelected={selectedSection === 'edit'}
         />
       </div>
 
       <Button width='w-full' className='border-white order-2 sm:order-none mt-5' onClick={handleLogOut}>
-        Log out
+        {t('logOutBtn')}
         <Image src={logoutSvg} alt='logout svg' width={25} />
       </Button>
     </div>

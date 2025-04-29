@@ -2,8 +2,6 @@ export { Button } from './Button/Button';
 export { Loader } from './Loader/Loader';
 export { Logo } from './Logo/Logo';
 export { FormInput } from './FormInput/FormInput';
-export { TimeInfo } from './TimeInfo/TimeInfo';
-export { ServingNumberInfo } from './ServingNumberInfo/ServingNumberInfo';
 export { PasswordToggle } from './PasswordToggle/PasswordToggle';
 export { Textarea } from './Textarea/Textarea';
 export { NumberField } from './NumberField/NumberField';
