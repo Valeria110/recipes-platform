@@ -17,6 +17,8 @@ import { User } from 'src/user/entities/user.entity';
 import { UpdateUserDto } from './dto/updateAuthData.dto';
 import { Response } from 'express';
 
+const isProd = process.env.NODE_ENV === 'production';
+
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -33,19 +35,17 @@ export class AuthController {
     });
 
     res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
+      secure: isProd,
+      sameSite: 'lax',
       path: '/',
       maxAge: 1000 * 60 * 60 * 24 * 7,
     });
 
     res.cookie('isUserLoggedIn', 'true', {
-      httpOnly: false,
+      secure: isProd,
+      sameSite: 'lax',
       path: '/',
       maxAge: 1000 * 60 * 60 * 24 * 7,
-      secure: true,
-      sameSite: 'none',
     });
 
     return user;
@@ -60,8 +60,8 @@ export class AuthController {
       await this.authService.login(loginUserDto);
 
     res.cookie('refreshToken', refreshToken, {
-      secure: true,
-      sameSite: 'none',
+      secure: isProd,
+      sameSite: 'lax',
       path: '/',
       maxAge: 1000 * 60 * 60 * 24 * 7, // 1 неделя
     });
@@ -69,8 +69,8 @@ export class AuthController {
     res.cookie('isUserLoggedIn', 'true', {
       path: '/',
       maxAge: 1000 * 60 * 60 * 24 * 7,
-      secure: true,
-      sameSite: 'none',
+      secure: isProd,
+      sameSite: 'lax',
     });
 
     return { accessToken, refreshToken, userId };
@@ -84,8 +84,8 @@ export class AuthController {
     const { accessToken, refreshToken, userId } =
       await this.authService.refresh(refreshTokenDto);
     res.cookie('refreshToken', refreshToken, {
-      secure: true,
-      sameSite: 'none',
+      secure: isProd,
+      sameSite: 'lax',
       path: '/',
       maxAge: 1000 * 60 * 60 * 24 * 7,
     });

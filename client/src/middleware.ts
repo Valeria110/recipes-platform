@@ -10,8 +10,8 @@ const authRoutes = ['/login', '/signup'];
 
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-
   const intlResponse = intlMiddleware(request);
+
   if (intlResponse) {
     const pathWithoutLocale = pathname.replace(/^\/(en|ru|fr)/, '') || '/';
 
@@ -19,7 +19,6 @@ export function middleware(request: NextRequest) {
     const isAuthRoute = authRoutes.some((route) => pathWithoutLocale.startsWith(route));
 
     const isUserLoggedIn = request.cookies.has('isUserLoggedIn');
-    console.log(request.cookies.getAll());
 
     if (isProtectedRoute && !isUserLoggedIn) {
       return NextResponse.redirect(new URL(`/${routing.defaultLocale}/${Route.LOGIN}`, request.url));
