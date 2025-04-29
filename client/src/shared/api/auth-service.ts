@@ -1,4 +1,4 @@
-import { BASE_URL } from '../config';
+import { BASE_URL, AUTH_BASE_URL } from '../config';
 import { deleteCookie } from '../helpers';
 import { IUserUpdateDto } from '../model';
 import { TokenService } from './token-service';
@@ -17,7 +17,7 @@ export interface IErrorInfo {
 export class AuthService {
   async login(email: string, password: string): Promise<ILoginRes | IErrorInfo | string> {
     try {
-      const res = await fetch(`${BASE_URL}/auth/login`, {
+      const res = await fetch(`${AUTH_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -40,7 +40,7 @@ export class AuthService {
 
   async signup(name: string, email: string, password: string) {
     try {
-      const res = await fetch(`${BASE_URL}/auth/signup`, {
+      const res = await fetch(`${AUTH_BASE_URL}/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

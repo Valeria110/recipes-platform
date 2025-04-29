@@ -1,4 +1,4 @@
-import { BASE_URL } from '../config';
+import { AUTH_BASE_URL } from '../config';
 import { deleteCookie } from '../helpers';
 
 export class TokenService {
@@ -22,7 +22,7 @@ export class TokenService {
     }
 
     try {
-      const res = await fetch(`${BASE_URL}/auth/refresh`, {
+      const res = await fetch(`${AUTH_BASE_URL}/auth/refresh`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
